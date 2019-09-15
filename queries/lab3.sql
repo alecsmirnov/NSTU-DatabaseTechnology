@@ -11,7 +11,26 @@ VALUES ('S6', 'P1', 'J6', 1),
 -- access 
 
 GRANT USAGE ON SCHEMA pmib6706 TO "pmi-b6711";
-GRANT SELECT on s, spj TO "pmi-b6711";
+
+GRANT SELECT ON s, spj TO "pmi-b6711";
+
+GRANT UPDATE ON s, spj TO "pmi-b6711";
+
+GRANT DELETE ON s, spj TO "pmi-b6711";
+
+REVOKE ALL ON s, spj FROM "pmi-b6711";
+
+-- other scheme
+
+UPDATE pmib6711.s
+SET name = 'Смирнов'
+WHERE name = 'Трухин';
+
+DELETE FROM pmib6711.s
+WHERE pmib6711.s.name = 'Смирнов';
+
+DELETE FROM pmib6711.spj
+WHERE pmib6711.spj.n_post = 'S6';
 
 -- 1
 
