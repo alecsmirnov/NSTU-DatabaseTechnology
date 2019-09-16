@@ -1,9 +1,11 @@
--- create db
+-- Создание таблицы поставщиков 
 
 CREATE TABLE s (n_post varchar(6) PRIMARY KEY,
                 name varchar(20),
                 reiting integer,
                 town varchar(20));
+
+-- Создание таблицы деталей
 
 CREATE TABLE p (n_det varchar(6) PRIMARY KEY,
                 name varchar(20),
@@ -11,9 +13,13 @@ CREATE TABLE p (n_det varchar(6) PRIMARY KEY,
                 ves integer,
                 town varchar(20));
 
+-- Создание таблицы изделий
+
 CREATE TABLE j (n_izd varchar(6) PRIMARY KEY,
                 name varchar(20),
                 town varchar(20));
+
+-- Создание таблицы поставок
 
 CREATE TABLE spj (n_post varchar(6),
                   n_det varchar(6),
@@ -21,7 +27,8 @@ CREATE TABLE spj (n_post varchar(6),
                   kol integer,
                   PRIMARY KEY (n_post, n_det, n_izd));
 
--- fill db
+
+-- Заполнение таблиц
 
 INSERT INTO s VALUES
 	('S1', 'Смит', 20, 'Лондон'),
@@ -73,10 +80,13 @@ INSERT INTO spj VALUES
 	('S5', 'P5', 'J4', 400),
 	('S5', 'P6', 'J4', 500);
 
--- other
+
+-- Копирование таблицы
 
 SELECT *
 INTO temp
 FROM spj;
+
+-- Удаление таблиц
 
 DROP TABLE s, p, j, spj;
