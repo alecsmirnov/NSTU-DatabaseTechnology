@@ -1,8 +1,8 @@
-﻿#include <stdio.h>
+#include <stdio.h>
 
-EXEC SQL INCLUDE "esqlFunctionExec.hec"
+EXEC SQL INCLUDE "esqlFunctionExec.h";
 
-static void firstTask() {
+static void task1() {
 	EXEC SQL BEGIN DECLARE SECTION;
 	int count;
 	EXEC SQL END DECLARE SECTION;
@@ -24,7 +24,7 @@ static void firstTask() {
 }
 
 int main(int argc, char* argv[]) {
-	functionExec(argc, argv, firstTask);
+	functionExec(argc, argv, task1);
 
 	return 0;
 }

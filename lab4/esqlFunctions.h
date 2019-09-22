@@ -1,7 +1,7 @@
-﻿#ifndef ESQLFUNCTIONS_HEC
+#ifndef ESQLFUNCTIONS_HEC
 #define ESQLFUNCTIONS_HEC
 
-EXEC SQL INCLUDE "esqlDefines.hec"
+EXEC SQL INCLUDE "esqlDefines.h";
 
 void errorHandle(const char* error_name) {
 	if (sqlca.sqlcode != ECPG_NO_ERROR && sqlca.sqlcode != ECPG_NOT_FOUND) {

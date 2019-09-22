@@ -1,8 +1,9 @@
-﻿#include <stdio.h>
+#include <stdio.h>
 
-EXEC SQL INCLUDE "esqlFunctionExec.hec";
+EXEC SQL INCLUDE "esqlFunctionExec.h";
 
-static void secondTask() {
+static void task2() {
+	printf("Table p before update\n");
 	selectALLFromPTable("SELECT * FROM p");
 
 	EXEC SQL BEGIN WORK;
@@ -21,12 +22,12 @@ static void secondTask() {
 
 	EXEC SQL COMMIT WORK;
 
-	printf("\n");
+	printf("\nTable p after update\n");
 	selectALLFromPTable("SELECT * FROM p");
 }
 
 int main(int argc, char* argv[]) {
-	functionExec(argc, argv, secondTask);
+	functionExec(argc, argv, task2);
 
 	return 0;
 }

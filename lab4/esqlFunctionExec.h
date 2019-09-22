@@ -1,10 +1,10 @@
-﻿#ifndef ESQLFUNCTIONEXEC_HEC
+#ifndef ESQLFUNCTIONEXEC_HEC
 #define ESQLFUNCTIONEXEC_HEC
 
 #include <stdlib.h>
 #include <string.h>
 
-EXEC SQL INCLUDE "esqlFunctions.hec"
+EXEC SQL INCLUDE "esqlFunctions.h";
 
 #define ARGS_COUNT 4
 

@@ -1,4 +1,4 @@
-﻿#ifndef ESQLDEFINES_HEC
+#ifndef ESQLDEFINES_HEC
 #define ESQLDEFINES_HEC
 
 EXEC SQL DEFINE SERVER "students@fpm2.ami.nstu.ru";

@@ -1,8 +1,8 @@
-﻿#include <stdio.h>
+#include <stdio.h>
 
-EXEC SQL INCLUDE "esqlFunctionExec.hec";
+EXEC SQL INCLUDE "esqlFunctionExec.h";
 
-void fifthTask() {
+static void task5() {
 	const char* query_text = "SELECT p.*\
 							  FROM p\
 							  WHERE p.n_det IN (SELECT spj.n_det\
@@ -21,7 +21,7 @@ void fifthTask() {
 }
 
 int main(int argc, char* argv[]) {
-	functionExec(argc, argv, fifthTask);
+	functionExec(argc, argv, task5);
 
 	return 0;
 }
