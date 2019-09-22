@@ -43,24 +43,29 @@ void selectALLFromPTable(const char* query_text) {
 	PTable p;
 	EXEC SQL END DECLARE SECTION;
 
-	EXEC SQL PREPARE query FROM :sql_query_text;		// Приготовить динамический запрос
+	EXEC SQL PREPARE query FROM :sql_query_text;			// Приготовить динамический запрос
 
-	EXEC SQL DECLARE p_cursor CURSOR FOR query;			// Определить курсор для динамического запроса
+	EXEC SQL DECLARE p_cursor CURSOR FOR query;				// Определить курсор для динамического запроса
+	//EXEC SQL DECLARE p_cursor SCROLL CURSOR FOR query;	// Определить скроллящий курсор
 	errorHandle("cursor declaration");
 
-	EXEC SQL OPEN p_cursor;								// Открыть курсор
+	EXEC SQL OPEN p_cursor;									// Открыть курсор
 	errorHandle("cursor opening");
 
 	printf("n_det name cvet ves town\n");
-	while (sqlca.sqlcode == ECPG_NO_ERROR) {										// Пока не конец всех записей
-		EXEC SQL FETCH p_cursor INTO :p.n_det, :p.name, :p.cvet, :p.ves, :p.town;	// Первая выборка в отношении курсора
+	while (sqlca.sqlcode == ECPG_NO_ERROR) {												// Пока не конец всех записей
+		EXEC SQL FETCH p_cursor INTO :p.n_det, :p.name, :p.cvet, :p.ves, :p.town;			// Первая выборка в отношении курсора
+		//EXEC SQL FETCH NEXT p_cursor INTO :p.n_det, :p.name, :p.cvet, :p.ves, :p.town;	// Следующая строка активного множества
+		//EXEC SQL FETCH PREVIOUS p_cursor INTO :p.n_det, :p.name, :p.cvet, :p.ves, :p.town;// Предыдущая строка активного множества
+		//EXEC SQL FETCH FIRST p_cursor INTO :p.n_det, :p.name, :p.cvet, :p.ves, :p.town;	// Первая строка активного множества
+		//EXEC SQL FETCH LAST p_cursor INTO :p.n_det, :p.name, :p.cvet, :p.ves, :p.town;	// Последняя строка активного множества
 
 		if (sqlca.sqlcode == ECPG_NO_ERROR)
 			printf("%s %s %s %d %s\n", p.n_det, p.name, p.cvet, p.ves, p.town);
 	}
 	errorHandle("p table output");
 
-	EXEC SQL CLOSE p_cursor;							// Закрыть курсор
+	EXEC SQL CLOSE p_cursor;								// Закрыть курсор
 	errorHandle("cursor close");
 }
 
