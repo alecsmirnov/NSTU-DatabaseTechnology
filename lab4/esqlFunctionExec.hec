@@ -1,0 +1,39 @@
+﻿#ifndef ESQLFUNCTIONEXEC_HEC
+#define ESQLFUNCTIONEXEC_HEC
+
+#include <stdlib.h>
+#include <string.h>
+
+EXEC SQL INCLUDE "esqlFunctions.hec"
+
+#define ARGS_COUNT 4
+
+typedef void (*func_ptr_t)();
+
+static inline char* dynamicStrCpy(char* str) {
+	char* new_str = (char*)malloc(sizeof(char) * strlen(str));
+	strcpy(new_str, str);
+
+	return new_str;
+}
+
+static inline void functionExec(int argc, char* argv[], func_ptr_t func) {
+	if (argc != ARGS_COUNT)
+		fprintf(stderr, "Invalid count of command line items!\n");
+	else {
+		char* user_login    = dynamicStrCpy(argv[1]);
+		char* user_password = dynamicStrCpy(argv[2]);
+		char* user_scheme   = dynamicStrCpy(argv[3]);
+
+		connectToDatabase(user_login, user_password);
+		connectToScheme(user_scheme);
+
+		func();
+
+		free(user_login);
+		free(user_password);
+		free(user_scheme);
+	}
+}
+
+#endif
