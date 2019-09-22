@@ -2,6 +2,7 @@
 
 EXEC SQL INCLUDE "esqlFunctionExec.h";
 
+// Выбрать поставщиков, не поставивших ни одной из деталей, поставляемых для изделий из Парижа.
 static void task4() {
 	const char* query_text = "SELECT s.*\
 							  FROM s\

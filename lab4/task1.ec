@@ -2,6 +2,7 @@
 
 EXEC SQL INCLUDE "esqlFunctionExec.h";
 
+// Выдать число деталей, поставлявшихся для изделий, у которых есть поставки с весом от 5000 до 6000.
 static void task1() {
 	EXEC SQL BEGIN DECLARE SECTION;
 	int count;

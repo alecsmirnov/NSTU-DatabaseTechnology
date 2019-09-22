@@ -2,6 +2,9 @@
 
 EXEC SQL INCLUDE "esqlFunctionExec.h";
 
+// Поменять местами вес деталей из Рима и из Парижа, т. е. деталям из Рима 
+// установить вес детали из Парижа, а деталям из Парижа установить вес детали из Рима. 
+// Если деталей несколько, брать наименьший вес.
 static void task2() {
 	printf("Table p before update\n");
 	selectALLFromPTable("SELECT * FROM p");

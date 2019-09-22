@@ -3,17 +3,19 @@
 
 EXEC SQL INCLUDE "esqlDefines.h";
 
+// Отлов ошибок и вывода информации на экран
 void errorHandle(const char* error_name) {
 	if (sqlca.sqlcode != ECPG_NO_ERROR && sqlca.sqlcode != ECPG_NOT_FOUND) {
 		fprintf(stderr, "Error: %s\n", error_name);
 		fprintf(stderr, "Code %d: %s\n", sqlca.sqlcode, sqlca.sqlerrm.sqlerrmc);
 		
-		EXEC SQL ROLLBACK WORK;
+		EXEC SQL ROLLBACK WORK;				// Откат транзакции на начало
 
-		exit(EXIT_FAILURE);
+		exit(EXIT_FAILURE);					// Прекращение работы
 	}
 }
 
+// Подключение к базе данных по указанному логину и паролю
 void connectToDatabase(const char* login, const char* password) {
 	EXEC SQL BEGIN DECLARE SECTION;
 	const char* sql_login = login;
@@ -21,47 +23,48 @@ void connectToDatabase(const char* login, const char* password) {
 	EXEC SQL END DECLARE SECTION;
 
 	EXEC SQL CONNECT TO SERVER USER :sql_login USING :sql_password;
-
 	errorHandle("database connection");
 }
 
+// Подключение к указанной схеме бд
 void connectToScheme(const char* scheme_name) {
 	EXEC SQL BEGIN DECLARE SECTION;
 	const char* sql_scheme_name = scheme_name;
 	EXEC SQL END DECLARE SECTION;
 
 	EXEC SQL SET search_path TO :sql_scheme_name;
-
 	errorHandle("scheme connection");
 }
 
+// Выполнить SELECT * запрос таблицы p для динамического условия
 void selectALLFromPTable(const char* query_text) {
 	EXEC SQL BEGIN DECLARE SECTION;
 	const char* sql_query_text = query_text;
 	PTable p;
 	EXEC SQL END DECLARE SECTION;
 
-	EXEC SQL PREPARE query FROM :sql_query_text;
+	EXEC SQL PREPARE query FROM :sql_query_text;		// Приготовить динамический запрос
 
-	EXEC SQL DECLARE p_cursor CURSOR FOR query;
+	EXEC SQL DECLARE p_cursor CURSOR FOR query;			// Определить курсор для динамического запроса
 	errorHandle("cursor declaration");
 
-	EXEC SQL OPEN p_cursor;
+	EXEC SQL OPEN p_cursor;								// Открыть курсор
 	errorHandle("cursor opening");
 
 	printf("n_det name cvet ves town\n");
-	while (sqlca.sqlcode == ECPG_NO_ERROR) {
-		EXEC SQL FETCH p_cursor INTO :p.n_det, :p.name, :p.cvet, :p.ves, :p.town;
+	while (sqlca.sqlcode == ECPG_NO_ERROR) {										// Пока не конец всех записей
+		EXEC SQL FETCH p_cursor INTO :p.n_det, :p.name, :p.cvet, :p.ves, :p.town;	// Первая выборка в отношении курсора
 
 		if (sqlca.sqlcode == ECPG_NO_ERROR)
 			printf("%s %s %s %d %s\n", p.n_det, p.name, p.cvet, p.ves, p.town);
 	}
 	errorHandle("p table output");
 
-	EXEC SQL CLOSE p_cursor;
+	EXEC SQL CLOSE p_cursor;							// Закрыть курсор
 	errorHandle("cursor close");
 }
 
+// Выполнить SELECT * запрос таблицы s для динамического условия
 void selectALLFromSTable(const char* query_text) {
 	EXEC SQL BEGIN DECLARE SECTION;
 	const char* sql_query_text = query_text;

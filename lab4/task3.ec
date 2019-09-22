@@ -2,6 +2,8 @@
 
 EXEC SQL INCLUDE "esqlFunctionExec.h";
 
+// Найти детали, имеющие поставки, объем которых не превышает
+// половину максимального объема поставки этой детали поставщиком из Парижа.
 static void task3() {
 	const char* query_text = "SELECT p.*\
 							  FROM p\
