@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-EXEC SQL INCLUDE "esqlFunctionExec.h";
+EXEC SQL INCLUDE "esqlFunctionExec.hec";
 
 // Выдать число деталей, поставлявшихся для изделий, у которых есть поставки с весом от 5000 до 6000.
 static void task1() {

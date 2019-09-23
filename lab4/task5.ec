@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-EXEC SQL INCLUDE "esqlFunctionExec.h";
+EXEC SQL INCLUDE "esqlFunctionExec.hec";
 
 // Выдать полную информацию о деталях, которые поставлялись ТОЛЬКО поставщиками, проживающими в Афинах.
 static void task5() {

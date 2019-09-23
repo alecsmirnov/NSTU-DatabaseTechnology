@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-EXEC SQL INCLUDE "esqlFunctionExec.h";
+EXEC SQL INCLUDE "esqlFunctionExec.hec";
 
 // Поменять местами вес деталей из Рима и из Парижа, т. е. деталям из Рима 
 // установить вес детали из Парижа, а деталям из Парижа установить вес детали из Рима. 

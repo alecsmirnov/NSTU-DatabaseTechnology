@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-EXEC SQL INCLUDE "esqlFunctionExec.h";
+EXEC SQL INCLUDE "esqlFunctionExec.hec";
 
 // Выбрать поставщиков, не поставивших ни одной из деталей, поставляемых для изделий из Парижа.
 static void task4() {

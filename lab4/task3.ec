@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-EXEC SQL INCLUDE "esqlFunctionExec.h";
+EXEC SQL INCLUDE "esqlFunctionExec.hec";
 
 // Найти детали, имеющие поставки, объем которых не превышает
 // половину максимального объема поставки этой детали поставщиком из Парижа.

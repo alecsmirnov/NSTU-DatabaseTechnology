@@ -1,7 +1,7 @@
 #ifndef ESQLFUNCTIONS_HEC
 #define ESQLFUNCTIONS_HEC
 
-EXEC SQL INCLUDE "esqlDefines.h";
+EXEC SQL INCLUDE "esqlDefines.hec";
 
 #include <stdbool.h>
 

@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-EXEC SQL INCLUDE "esqlFunctions.h";
+EXEC SQL INCLUDE "esqlFunctions.hec";
 
 #define ARGS_COUNT 4				// Количество входных параметров
 
