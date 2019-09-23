@@ -21,6 +21,8 @@ static void task2() {
                                  END)
              WHERE p.town IN ('Рим', 'Париж');
 
+    printf("\nRows processed: %d\n", sqlca.sqlerrd[2]);
+
 	errorHandle("task 2");
 
 	EXEC SQL COMMIT WORK;
