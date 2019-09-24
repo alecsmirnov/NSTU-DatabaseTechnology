@@ -16,7 +16,7 @@ FROM spj
 JOIN p ON spj.n_det = p.n_det
 JOIN j ON spj.n_izd = j.n_izd
 WHERE j.town = 'Афины'
-GROUP BY j.n_izd, p.n_det
+GROUP BY j.n_izd, p.n_det;
 
 -- 3) Ввести номер детали P*. Найти города, в которые поставлялась
 --    деталь P*, и определить, какой процент составляют поставки в каждый
