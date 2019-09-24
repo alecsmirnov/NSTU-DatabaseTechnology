@@ -1,0 +1,88 @@
+#ifndef ESQLFUNCTIONS_HEC
+#define ESQLFUNCTIONS_HEC
+
+#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
+
+EXEC SQL DEFINE SERVER "students@fpm2.ami.nstu.ru";
+
+#define EMPTY_STRING ""						// Пустая строка для аргумента запроса
+
+// Отлов ошибок и вывода информации на экран
+static inline void errorHandle(const char* error_name) {
+	if (sqlca.sqlcode != ECPG_NO_ERROR && sqlca.sqlcode != ECPG_NOT_FOUND) {
+		fprintf(stderr, "Error: %s\n", error_name);
+		fprintf(stderr, "Code %d: %s\n", sqlca.sqlcode, sqlca.sqlerrm.sqlerrmc);
+		
+		EXEC SQL ROLLBACK WORK;				// Откат транзакции на начало
+
+		exit(EXIT_FAILURE);					// Прекращение работы
+	}
+}
+
+// Копирование строки в динамическую строку
+static inline char* dynamicStrCpy(char* str) {
+	char* new_str = (char*)malloc(sizeof(char) * strlen(str) + 1);
+	strcpy(new_str, str);
+
+	return new_str;
+}
+
+// Проверка строки на пустоту
+static inline bool isEmptyString(const char* str) {
+	return strcmp(str, EMPTY_STRING) == 0;
+}
+
+// Проверка таблицы на пустоту
+bool isEmptyTable(const char* query_text, const char* query_arg) {
+	EXEC SQL BEGIN DECLARE SECTION;
+	const char* sql_query_text = query_text;
+	const char* sql_query_arg = query_arg;
+	EXEC SQL END DECLARE SECTION;
+
+	bool result = false;
+
+	EXEC SQL PREPARE query FROM :sql_query_text;
+	EXEC SQL DECLARE check_cursor CURSOR FOR query;
+	errorHandle("cursor declaration");
+
+	// Проверка таблицы по запросу с аргументом или без
+	if (isEmptyString(query_arg))
+		EXEC SQL OPEN check_cursor;
+	else 
+		EXEC SQL OPEN check_cursor USING :sql_query_arg;
+	errorHandle("cursor opening");
+
+	EXEC SQL FETCH check_cursor;
+
+	if (sqlca.sqlcode == ECPG_NOT_FOUND)
+		result = true;
+
+	EXEC SQL CLOSE check_cursor;
+
+	return result;
+}
+
+// Подключение к базе данных по указанному логину и паролю
+void connectToDatabase(const char* login, const char* password) {
+	EXEC SQL BEGIN DECLARE SECTION;
+	const char* sql_login = login;
+	const char* sql_password = password;
+	EXEC SQL END DECLARE SECTION;
+
+	EXEC SQL CONNECT TO SERVER USER :sql_login USING :sql_password;
+	errorHandle("database connection");
+}
+
+// Подключение к указанной схеме бд
+void connectToScheme(const char* scheme_name) {
+	EXEC SQL BEGIN DECLARE SECTION;
+	const char* sql_scheme_name = scheme_name;
+	EXEC SQL END DECLARE SECTION;
+
+	EXEC SQL SET search_path TO :sql_scheme_name;
+	errorHandle("scheme connection");
+}
+
+#endif
