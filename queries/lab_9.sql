@@ -392,15 +392,34 @@ DROP TABLE s, p, j, spj, c, e, q, r, v, w;
 --    * процент этой суммы от общей суммы по всем изделиям за год.
 -- Упорядочить по году и проценту. Выделить строки, где процент не меньше 50.
 
-SELECT year_post.year, year_post.n_izd, year_post.max_post, year_post.total_sum_post, ROUND(year_post.total_sum_post * 100 / total.sum::numeric, 2) AS percent
+SELECT izd.year, izd.n_izd, izd.max_post, izd.total_sum_post, ROUND(izd.total_sum_post * 100 / total.sum::numeric, 2) AS percent
 FROM (SELECT EXTRACT(year FROM spj.date_post) AS year, spj.n_izd, MAX(spj.kol * p.ves) AS max_post, SUM(spj.kol * spj.cost) AS total_sum_post
       FROM spj
       JOIN p ON spj.n_det = p.n_det
       GROUP BY year, spj.n_izd
-     ) year_post
+     ) izd
 JOIN (SELECT EXTRACT(year FROM spj.date_post) AS year, SUM(spj.kol * spj.cost) AS sum
       FROM spj
       GROUP BY year
      ) total
-ON year_post.year = total.year
-ORDER BY year_post.year, percent;
+ON izd.year = total.year
+ORDER BY izd.year, percent;
+
+-- 2) Для указанных изделия и года по каждой поставке вывести:
+--    * сумму поставки;
+--    * разницу между ценой детали в поставке и средней ценой детали за год.
+
+SELECT post.n_post, post.sum, ABS(post.cost - avg.avg_price) AS difference
+FROM (SELECT EXTRACT(year FROM spj.date_post) AS year, spj.n_izd, spj.n_post, SUM(spj.kol * spj.cost), spj.cost
+      FROM spj
+      WHERE EXTRACT(year FROM spj.date_post) = 2011
+      AND spj.n_izd = (SELECT j.n_izd
+                       FROM j                 
+                       WHERE name = 'Считыватель')
+      GROUP BY year, spj.n_izd, spj.n_post, spj.cost
+     ) post
+JOIN (SELECT EXTRACT(year FROM spj.date_post) AS year, spj.n_izd, ROUND(AVG(spj.cost), 2) AS avg_price
+      FROM spj
+      GROUP BY year, spj.n_izd
+     ) avg
+ON post.year = avg.year AND post.n_izd = avg.n_izd;
