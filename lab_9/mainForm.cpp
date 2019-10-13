@@ -177,25 +177,37 @@ int TForm1::processTable(const std::vector<String>& table_headers) {
 }
 
 void TForm1::selectQuery(String query_text, const std::vector<String>& table_headers) {	
-	Form1->ADOQuery1->Close();
-	
-	Form1->ADOQuery1->SQL->Clear();
-	Form1->ADOQuery1->SQL->Text = query_text;
-	
-	Form1->DataSource1->DataSet = Form1->ADOQuery1;
-	Form1->ADOQuery1->Open();
-	
-	auto row_processed = processTable(table_headers);
+	try {
+		Form1->ADOConnection1->BeginTrans();
 
-	if (0 < row_processed)
-		DBGrid1->Show();
-	else {
-		DBGrid1->Hide();
-		resizeForm(WINDOW_WIDTH_MIN, WINDOW_HEIGHT_MIN);
-		resultMessage("Записей обработано: 0");
+		Form1->ADOQuery1->Close();
+		
+		Form1->ADOQuery1->SQL->Clear();
+		Form1->ADOQuery1->SQL->Text = query_text;
+	
+		Form1->DataSource1->DataSet = Form1->ADOQuery1;
+		Form1->ADOQuery1->Open();
+	
+		auto row_processed = processTable(table_headers);
+
+		Form1->ADOConnection1->CommitTrans();
+
+		if (0 < row_processed)
+			DBGrid1->Show();
+		else {
+			DBGrid1->Hide();
+			resizeForm(WINDOW_WIDTH_MIN, WINDOW_HEIGHT_MIN);
+			resultMessage("Записей обработано: 0");
+		}
+
+		Label1->Caption = "Записей обработано: " + IntToStr(row_processed);
+	} 
+	catch (Exception &exception) {
+		Form1->ADOConnection1->RollbackTrans();
+		Form1->ADOConnection1->Close();
+
+		errorMessage("Произошла ошибка при выполнении запроса!");
 	}
-
-	Label1->Caption = "Записей обработано: " + IntToStr(row_processed);
 }
 
 void TForm1::task1() {
@@ -257,16 +269,28 @@ void TForm1::task3() {
 			auto query_text = "UPDATE pmib6706.spj\
 							   SET cost = " + price + "\
 							   WHERE pmib6706.spj.n_spj = \'" + n_post + "\'";
-
-			Form1->ADOQuery1->Close();
+			
+			try {
+				Form1->ADOConnection1->BeginTrans();
 	
-			Form1->ADOQuery1->SQL->Clear();
-			Form1->ADOQuery1->SQL->Text = query_text;
+				Form1->ADOQuery1->Close();
+				
+				Form1->ADOQuery1->SQL->Clear();
+				Form1->ADOQuery1->SQL->Text = query_text;
 	
-			Form1->DataSource1->DataSet = Form1->ADOQuery1;
-			Form1->ADOQuery1->ExecSQL();
+				Form1->DataSource1->DataSet = Form1->ADOQuery1;
+				Form1->ADOQuery1->ExecSQL();
 
-			resultMessage("Записей обработано: " + IntToStr(Form1->ADOQuery1->RowsAffected));
+				Form1->ADOConnection1->CommitTrans();
+
+				resultMessage("Записей обработано: " + IntToStr(Form1->ADOQuery1->RowsAffected));
+            } 
+			catch (Exception &exception) {
+				Form1->ADOConnection1->RollbackTrans();
+				Form1->ADOConnection1->Close();
+		
+				errorMessage("Произошла ошибка при выполнении запроса!");
+			}
 		}
 		else 
 			errorMessage("Указанная цена не является числом!");

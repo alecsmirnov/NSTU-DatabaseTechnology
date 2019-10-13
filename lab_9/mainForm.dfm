@@ -114,6 +114,7 @@ object Form1: TForm1
     OnClick = Button2Click
   end
   object ADOConnection1: TADOConnection
+    Connected = True
     ConnectionString = 
       'Provider=MSDASQL.1;Password=Ickejev3;Persist Security Info=True;' +
       'User ID=pmi-b6706;Extended Properties="DSN=PostgreSQL30;DATABASE' +
@@ -128,7 +129,6 @@ object Form1: TForm1
       '=0;ByteaAsLongVarBinary=0;UseServerSidePrepare=0;LowerCaseIdenti' +
       'fier=0;XaOpt=1"'
     LoginPrompt = False
-    Provider = 'MSDASQL.1'
     Left = 392
     Top = 24
   end
