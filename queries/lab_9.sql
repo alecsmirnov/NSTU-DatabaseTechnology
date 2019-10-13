@@ -415,7 +415,7 @@ FROM (SELECT EXTRACT(year FROM spj.date_post) AS year, spj.n_izd, spj.n_spj, SUM
       WHERE EXTRACT(year FROM spj.date_post) = 2011
       AND spj.n_izd = (SELECT j.n_izd
                        FROM j                 
-                       WHERE name = 'Считыватель')
+                       WHERE j.name = 'Считыватель')
       GROUP BY year, spj.n_izd, spj.n_spj, spj.cost
      ) post
 JOIN (SELECT EXTRACT(year FROM spj.date_post) AS year, spj.n_izd, ROUND(AVG(spj.cost), 2) AS avg_price
