@@ -409,17 +409,23 @@ ORDER BY izd.year, percent;
 --    * сумму поставки;
 --    * разницу между ценой детали в поставке и средней ценой детали за год.
 
-SELECT post.n_post, post.sum, ABS(post.cost - avg.avg_price) AS difference
-FROM (SELECT EXTRACT(year FROM spj.date_post) AS year, spj.n_izd, spj.n_post, SUM(spj.kol * spj.cost), spj.cost
+SELECT post.n_spj, post.sum, ABS(post.cost - avg.avg_price) AS difference
+FROM (SELECT EXTRACT(year FROM spj.date_post) AS year, spj.n_izd, spj.n_spj, SUM(spj.kol * spj.cost), spj.cost
       FROM spj
       WHERE EXTRACT(year FROM spj.date_post) = 2011
       AND spj.n_izd = (SELECT j.n_izd
                        FROM j                 
                        WHERE name = 'Считыватель')
-      GROUP BY year, spj.n_izd, spj.n_post, spj.cost
+      GROUP BY year, spj.n_izd, spj.n_spj, spj.cost
      ) post
 JOIN (SELECT EXTRACT(year FROM spj.date_post) AS year, spj.n_izd, ROUND(AVG(spj.cost), 2) AS avg_price
       FROM spj
       GROUP BY year, spj.n_izd
      ) avg
 ON post.year = avg.year AND post.n_izd = avg.n_izd;
+
+-- 3) Изменить цену детали в поставке.
+
+UPDATE spj 
+SET cost = 16
+WHERE spj.n_spj = 'N30';
