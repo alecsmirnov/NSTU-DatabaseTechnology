@@ -22,6 +22,8 @@ __published:
 	void __fastcall RadioButton1Click(TObject *Sender);
 	void __fastcall RadioButton2Click(TObject *Sender);
 	void __fastcall RadioButton3Click(TObject *Sender);
+	void __fastcall DBGrid1DrawColumnCell(TObject* Sender, const TRect &Rect, int DataCol,
+										  TColumn* Column, TGridDrawState State);
 
 __published:
 	TADOConnection* ADOConnection1;
@@ -47,8 +49,10 @@ private:
 	void resizeForm(int new_width, int new_height);
 	void viewSelect();
 	void viewInput(String edit1_hint, String edit2_hint);
+    void errorMessage(String text);
 	void warningMessage(String text);
-    void resultMessage(String text);
+	void resultMessage(String text);
+    bool isIntValue(String string);
 
 	int processTable(const std::vector<String>& table_headers);
 	void selectQuery(String query_text, const std::vector<String>& table_headers);

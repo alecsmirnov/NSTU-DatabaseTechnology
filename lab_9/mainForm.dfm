@@ -54,6 +54,7 @@ object Form1: TForm1
     TitleFont.Name = 'Tahoma'
     TitleFont.Style = []
     Visible = False
+    OnDrawColumnCell = DBGrid1DrawColumnCell
   end
   object Edit1: TEdit
     Left = 199

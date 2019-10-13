@@ -6,6 +6,9 @@
 #pragma package(smart_init)
 #pragma resource "*.dfm"
 
+#include <string>
+#include <cctype>
+
 TForm1* Form1;
 
 static constexpr auto DBGRID_CELL_FAULT  = 5;     
@@ -19,6 +22,8 @@ static constexpr auto WINDOW_HEIGHT_MIN = 124;
 
 static constexpr auto OBJ_POSITION_1 = 159;
 static constexpr auto OBJ_POSITION_2 = 262;
+
+static constexpr auto HIGH_PERCENTAGE = 30;
 
 
 __fastcall TForm1::TForm1(TComponent* Owner) : TForm(Owner) {
@@ -93,12 +98,37 @@ void TForm1::viewInput(String edit1_hint, String edit2_hint) {
 	Form1->Button1->Left = OBJ_POSITION_2;
 }
 
+void TForm1::errorMessage(String text) {
+	Application->MessageBox(text.c_str(), L"Ошибка", MB_ICONERROR);
+}
+
 void TForm1::warningMessage(String text) {
 	Application->MessageBox(text.c_str(), L"Внимание", MB_ICONWARNING);
 }
 
 void TForm1::resultMessage(String text) {
 	Application->MessageBox(text.c_str(), L"Результат", NULL);
+}
+
+bool TForm1::isIntValue(String string) {
+	AnsiString ansi_str(string.c_str());
+	std::string s(ansi_str.c_str());
+
+	auto it = s.cbegin();
+	while (it != s.end() && std::isdigit(*it)) 
+		++it;
+
+	return !s.empty() && it == s.end();
+}
+
+void __fastcall TForm1::DBGrid1DrawColumnCell(TObject* Sender, const TRect &Rect,
+											  int DataCol, TColumn* Column, TGridDrawState State) {
+	if (Form1->RadioButton1->Checked && HIGH_PERCENTAGE <= Form1->ADOQuery1->FieldByName("percent")->AsInteger) {	
+		DBGrid1->Canvas->Brush->Color = clRed;
+		DBGrid1->Canvas->Font->Color = clWhite;
+		
+		DBGrid1->Canvas->TextRect(Rect, Rect.Left, Rect.Top, Column->Field->DisplayText);
+	}
 }
 
 int TForm1::processTable(const std::vector<String>& table_headers) {
@@ -191,26 +221,29 @@ void TForm1::task2() {
 	auto izd_name = Form1->Edit1->Text;
 	auto year = Form1->Edit2->Text;
 
-	if (!izd_name.IsEmpty() && !year.IsEmpty()) {
-		auto query_text = "SELECT post.n_spj, post.sum, ABS(post.cost - avg.avg_price) AS difference\
-						   FROM (SELECT EXTRACT(year FROM pmib6706.spj.date_post) AS year, pmib6706.spj.n_izd, pmib6706.spj.n_spj, SUM(pmib6706.spj.kol * pmib6706.spj.cost), pmib6706.spj.cost\
-								 FROM pmib6706.spj\
-								 WHERE EXTRACT(year FROM pmib6706.spj.date_post) = \'" + year + "\'\
-								 AND pmib6706.spj.n_izd = (SELECT pmib6706.j.n_izd\
-														   FROM pmib6706.j\
-														   WHERE pmib6706.j.name = \'" + izd_name + "\')\
-								 GROUP BY year, pmib6706.spj.n_izd, pmib6706.spj.n_spj, pmib6706.spj.cost\
-								) post\
-						   JOIN (SELECT EXTRACT(year FROM pmib6706.spj.date_post) AS year, pmib6706.spj.n_izd, ROUND(AVG(pmib6706.spj.cost), 2) AS avg_price\
-								 FROM pmib6706.spj\
-								 GROUP BY year, pmib6706.spj.n_izd\
-								) avg\
-						   ON post.year = avg.year AND post.n_izd = avg.n_izd";
+	if (!izd_name.IsEmpty() && !year.IsEmpty())
+		if (isIntValue(year)) {
+			auto query_text = "SELECT post.n_spj, post.sum, ABS(post.cost - avg.avg_price) AS difference\
+							   FROM (SELECT EXTRACT(year FROM pmib6706.spj.date_post) AS year, pmib6706.spj.n_izd, pmib6706.spj.n_spj, SUM(pmib6706.spj.kol * pmib6706.spj.cost), pmib6706.spj.cost\
+									 FROM pmib6706.spj\
+									 WHERE EXTRACT(year FROM pmib6706.spj.date_post) = \'" + year + "\'\
+									 AND pmib6706.spj.n_izd = (SELECT pmib6706.j.n_izd\
+															   FROM pmib6706.j\
+															   WHERE pmib6706.j.name = \'" + izd_name + "\')\
+									 GROUP BY year, pmib6706.spj.n_izd, pmib6706.spj.n_spj, pmib6706.spj.cost\
+									) post\
+							   JOIN (SELECT EXTRACT(year FROM pmib6706.spj.date_post) AS year, pmib6706.spj.n_izd, ROUND(AVG(pmib6706.spj.cost), 2) AS avg_price\
+									 FROM pmib6706.spj\
+									 GROUP BY year, pmib6706.spj.n_izd\
+									) avg\
+							   ON post.year = avg.year AND post.n_izd = avg.n_izd";
 
-		std::vector<String> table_headers = {"Номер поставки", "Сумма", "Разность"};
+			std::vector<String> table_headers = {"Номер поставки", "Сумма", "Разность"};
 
-		selectQuery(query_text, table_headers);
-	}
+			selectQuery(query_text, table_headers);
+		}
+		else 
+			errorMessage("Указанный год не является числом!");
 	else 
 		warningMessage("Значение поля для ввода не может быть пустым!");
 }
@@ -219,21 +252,24 @@ void TForm1::task3() {
 	auto n_post = Form1->Edit1->Text;
 	auto price = Form1->Edit2->Text;
 
-	if (!n_post.IsEmpty() && !price.IsEmpty()) {
-		 auto query_text = "UPDATE pmib6706.spj\
-							SET cost = " + price + "\
-							WHERE pmib6706.spj.n_spj = \'" + n_post + "\'";
+	if (!n_post.IsEmpty() && !price.IsEmpty())
+		if (isIntValue(price)) {
+			auto query_text = "UPDATE pmib6706.spj\
+							   SET cost = " + price + "\
+							   WHERE pmib6706.spj.n_spj = \'" + n_post + "\'";
 
-		Form1->ADOQuery1->Close();
+			Form1->ADOQuery1->Close();
 	
-		Form1->ADOQuery1->SQL->Clear();
-		Form1->ADOQuery1->SQL->Text = query_text;
+			Form1->ADOQuery1->SQL->Clear();
+			Form1->ADOQuery1->SQL->Text = query_text;
 	
-		Form1->DataSource1->DataSet = Form1->ADOQuery1;
-		Form1->ADOQuery1->ExecSQL();
+			Form1->DataSource1->DataSet = Form1->ADOQuery1;
+			Form1->ADOQuery1->ExecSQL();
 
-		resultMessage("Записей обработано: " + IntToStr(Form1->ADOQuery1->RowsAffected));
-	}
+			resultMessage("Записей обработано: " + IntToStr(Form1->ADOQuery1->RowsAffected));
+		}
+		else 
+			errorMessage("Указанная цена не является числом!");
 	else 
 		warningMessage("Значение поля для ввода не может быть пустым!");
 }
