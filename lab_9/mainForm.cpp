@@ -1,4 +1,4 @@
-#include <vcl.h>
+п»ї#include <vcl.h>
 #pragma hdrstop
 
 #include "mainForm.h"
@@ -57,11 +57,11 @@ void __fastcall TForm1::RadioButton1Click(TObject* Sender) {
 }
 
 void __fastcall TForm1::RadioButton2Click(TObject* Sender) {
-	viewInput("Изделие", "Год");
+	viewInput("РР·РґРµР»РёРµ", "Р“РѕРґ");
 }
 
 void __fastcall TForm1::RadioButton3Click(TObject *Sender) {
-	viewInput("№ поставки", "Цена");
+	viewInput("в„– РїРѕСЃС‚Р°РІРєРё", "Р¦РµРЅР°");
 }
 
 void TForm1::resizeForm(int new_width, int new_height) {
@@ -99,15 +99,15 @@ void TForm1::viewInput(String edit1_hint, String edit2_hint) {
 }
 
 void TForm1::errorMessage(String text) {
-	Application->MessageBox(text.c_str(), L"Ошибка", MB_ICONERROR);
+	Application->MessageBox(text.c_str(), L"РћС€РёР±РєР°", MB_ICONERROR);
 }
 
 void TForm1::warningMessage(String text) {
-	Application->MessageBox(text.c_str(), L"Внимание", MB_ICONWARNING);
+	Application->MessageBox(text.c_str(), L"Р’РЅРёРјР°РЅРёРµ", MB_ICONWARNING);
 }
 
 void TForm1::resultMessage(String text) {
-	Application->MessageBox(text.c_str(), L"Результат", NULL);
+	Application->MessageBox(text.c_str(), L"Р РµР·СѓР»СЊС‚Р°С‚", NULL);
 }
 
 bool TForm1::isIntValue(String string) {
@@ -197,16 +197,16 @@ void TForm1::selectQuery(String query_text, const std::vector<String>& table_hea
 		else {
 			DBGrid1->Hide();
 			resizeForm(WINDOW_WIDTH_MIN, WINDOW_HEIGHT_MIN);
-			resultMessage("Записей обработано: 0");
+			resultMessage("Р—Р°РїРёСЃРµР№ РѕР±СЂР°Р±РѕС‚Р°РЅРѕ: 0");
 		}
 
-		Label1->Caption = "Записей обработано: " + IntToStr(row_processed);
+		Label1->Caption = "Р—Р°РїРёСЃРµР№ РѕР±СЂР°Р±РѕС‚Р°РЅРѕ: " + IntToStr(row_processed);
 	} 
 	catch (Exception &exception) {
 		Form1->ADOConnection1->RollbackTrans();
 		Form1->ADOConnection1->Close();
 
-		errorMessage("Произошла ошибка при выполнении запроса!");
+		errorMessage("РџСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР° РїСЂРё РІС‹РїРѕР»РЅРµРЅРёРё Р·Р°РїСЂРѕСЃР°!");
 	}
 }
 
@@ -224,7 +224,7 @@ void TForm1::task1() {
 					   ON izd.year = total.year\
 					   ORDER BY izd.year, percent";
 					   
-	std::vector<String> table_headers = {"Год", "Номер изделия", "Максимальная поставка", "Сумма поставок", "Процент"};
+	std::vector<String> table_headers = {"Р“РѕРґ", "РќРѕРјРµСЂ РёР·РґРµР»РёСЏ", "РњР°РєСЃРёРјР°Р»СЊРЅР°СЏ РїРѕСЃС‚Р°РІРєР°", "РЎСѓРјРјР° РїРѕСЃС‚Р°РІРѕРє", "РџСЂРѕС†РµРЅС‚"};
 	
 	selectQuery(query_text, table_headers);
 }
@@ -250,14 +250,14 @@ void TForm1::task2() {
 									) avg\
 							   ON post.year = avg.year AND post.n_izd = avg.n_izd";
 
-			std::vector<String> table_headers = {"Номер поставки", "Сумма", "Разность"};
+			std::vector<String> table_headers = {"РќРѕРјРµСЂ РїРѕСЃС‚Р°РІРєРё", "РЎСѓРјРјР°", "Р Р°Р·РЅРѕСЃС‚СЊ"};
 
 			selectQuery(query_text, table_headers);
 		}
 		else 
-			errorMessage("Указанный год не является числом!");
+			errorMessage("РЈРєР°Р·Р°РЅРЅС‹Р№ РіРѕРґ РЅРµ СЏРІР»СЏРµС‚СЃСЏ С‡РёСЃР»РѕРј!");
 	else 
-		warningMessage("Значение поля для ввода не может быть пустым!");
+		warningMessage("Р—РЅР°С‡РµРЅРёРµ РїРѕР»СЏ РґР»СЏ РІРІРѕРґР° РЅРµ РјРѕР¶РµС‚ Р±С‹С‚СЊ РїСѓСЃС‚С‹Рј!");
 }
 
 void TForm1::task3() {
@@ -283,17 +283,17 @@ void TForm1::task3() {
 
 				Form1->ADOConnection1->CommitTrans();
 
-				resultMessage("Записей обработано: " + IntToStr(Form1->ADOQuery1->RowsAffected));
+				resultMessage("Р—Р°РїРёСЃРµР№ РѕР±СЂР°Р±РѕС‚Р°РЅРѕ: " + IntToStr(Form1->ADOQuery1->RowsAffected));
             } 
 			catch (Exception &exception) {
 				Form1->ADOConnection1->RollbackTrans();
 				Form1->ADOConnection1->Close();
 		
-				errorMessage("Произошла ошибка при выполнении запроса!");
+				errorMessage("РџСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР° РїСЂРё РІС‹РїРѕР»РЅРµРЅРёРё Р·Р°РїСЂРѕСЃР°!");
 			}
 		}
 		else 
-			errorMessage("Указанная цена не является числом!");
+			errorMessage("РЈРєР°Р·Р°РЅРЅР°СЏ С†РµРЅР° РЅРµ СЏРІР»СЏРµС‚СЃСЏ С‡РёСЃР»РѕРј!");
 	else 
-		warningMessage("Значение поля для ввода не может быть пустым!");
+		warningMessage("Р—РЅР°С‡РµРЅРёРµ РїРѕР»СЏ РґР»СЏ РІРІРѕРґР° РЅРµ РјРѕР¶РµС‚ Р±С‹С‚СЊ РїСѓСЃС‚С‹Рј!");
 }
