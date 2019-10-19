@@ -393,9 +393,8 @@ DROP TABLE s, p, j, spj, c, e, q, r, v, w;
 -- Упорядочить по году и проценту. Выделить строки, где процент не меньше 50.
 
 SELECT izd.year, izd.n_izd, izd.max_post, izd.total_sum_post, ROUND(izd.total_sum_post * 100 / total.sum::numeric, 2) AS percent
-FROM (SELECT EXTRACT(year FROM spj.date_post) AS year, spj.n_izd, MAX(spj.kol * p.ves) AS max_post, SUM(spj.kol * spj.cost) AS total_sum_post
+FROM (SELECT EXTRACT(year FROM spj.date_post) AS year, spj.n_izd, MAX(spj.kol) AS max_post, SUM(spj.kol * spj.cost) AS total_sum_post
       FROM spj
-      JOIN p ON spj.n_det = p.n_det
       GROUP BY year, spj.n_izd
      ) izd
 JOIN (SELECT EXTRACT(year FROM spj.date_post) AS year, SUM(spj.kol * spj.cost) AS sum
@@ -409,7 +408,7 @@ ORDER BY izd.year, percent;
 --    * сумму поставки;
 --    * разницу между ценой детали в поставке и средней ценой детали за год.
 
-SELECT post.n_spj, post.sum, ABS(post.cost - avg.avg_price) AS difference
+SELECT post.n_spj, post.sum, post.cost - avg.avg_price AS difference
 FROM (SELECT EXTRACT(year FROM spj.date_post) AS year, spj.n_izd, spj.n_spj, SUM(spj.kol * spj.cost), spj.cost
       FROM spj
       WHERE EXTRACT(year FROM spj.date_post) = 2011
