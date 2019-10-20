@@ -79,7 +79,7 @@ void updateQuery(TADOConnection* connection, TADOQuery* query,
 
 		resultMessage("Записей обработано: " + IntToStr(query->RowsAffected));
 	}
-	catch (Exception &exception) {
+	catch (Exception& exception) {
 		// Откатываем транзакцию в случае неудачи
 		connection->RollbackTrans();
 

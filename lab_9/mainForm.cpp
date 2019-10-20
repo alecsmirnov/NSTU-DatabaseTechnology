@@ -28,7 +28,7 @@ __fastcall TForm1::TForm1(TComponent* Owner) : TForm(Owner) {
 }
 
 // Закраска строк DBGrid в зависимости от условия (Процент продаж не меньше указанного значения)
-void __fastcall TForm1::DBGrid1DrawColumnCell(TObject* Sender, const TRect &Rect,
+void __fastcall TForm1::DBGrid1DrawColumnCell(TObject* Sender, const TRect& Rect,
 											  int DataCol, TColumn* Column, TGridDrawState State) {
 	if (high_percentage <= Form1->ADOQuery1->FieldByName("percent")->AsInteger) {
 		DBGrid1->Canvas->Brush->Color = clRed;

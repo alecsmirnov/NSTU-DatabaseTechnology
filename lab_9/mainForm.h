@@ -21,7 +21,7 @@ public:
 
 __published:
 	// Закраска строк DBGrid в зависимости от условия
-	void __fastcall DBGrid1DrawColumnCell(TObject* Sender, const TRect &Rect, int DataCol,
+	void __fastcall DBGrid1DrawColumnCell(TObject* Sender, const TRect& Rect, int DataCol,
 										  TColumn* Column, TGridDrawState State);
     // Событие DBGrid при переходе от одной строки к другой
 	void __fastcall ADOQuery1AfterScroll(TDataSet* DataSet);
