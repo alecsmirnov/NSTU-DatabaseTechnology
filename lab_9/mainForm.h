@@ -11,8 +11,8 @@
 #include <Vcl.Grids.hpp>
 #include <Vcl.Menus.hpp>
 
-#include "updateForm.h"
 #include "dbFunctions.h"
+#include "updateForm.h"
 
 
 class TForm1 : public TForm {
@@ -20,19 +20,29 @@ public:
 	__fastcall TForm1(TComponent* Owner);
 
 __published:
+	// Закраска строк DBGrid в зависимости от условия
 	void __fastcall DBGrid1DrawColumnCell(TObject* Sender, const TRect &Rect, int DataCol,
 										  TColumn* Column, TGridDrawState State);
+    // Событие DBGrid при переходе от одной строки к другой
 	void __fastcall ADOQuery1AfterScroll(TDataSet* DataSet);
+    // Изменение значения процента для выделения строк
 	void __fastcall Edit1Change(TObject* Sender);
-	void __fastcall Button1Click(TObject *Sender);
+
+	// Отображение формы для запроса 3
+	void __fastcall Button1Click(TObject* Sender);
 
 private:
+    // Текущее значение граничного значения процентов
 	int high_percentage;
 
 __published:
+	// Связь приложения с Бд
 	TADOConnection* ADOConnection1;
+    // Формирование запроса к Бд
 	TADOQuery* ADOQuery1;
-    TDataSource* DataSource1;
+    // Соединение DBGrid и подключенной Бд
+	TDataSource* DataSource1;
+    // Табличное отображение данных
 	TDBGrid* DBGrid1;
 	TLabel* Label1;
 

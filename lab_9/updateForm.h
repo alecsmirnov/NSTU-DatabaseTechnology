@@ -20,13 +20,19 @@ public:
 	__fastcall TForm2(TComponent* Owner);
 
 __published:
+	// Событие DBGrid при переходе от одной строки к другой
 	void __fastcall ADOQuery1AfterScroll(TDataSet* DataSet);
+    // Выполнение запроса на обновление цены детали выбранной поставки
 	void __fastcall Button1Click(TObject* Sender);
 
 __published:
-	TADOConnection *ADOConnection1;
+    // Связь приложения с Бд
+	TADOConnection* ADOConnection1;
+    // Формирование запроса к Бд
 	TADOQuery* ADOQuery1;
+    // Соединение DBGrid и подключенной Бд
 	TDataSource* DataSource1;
+    // Табличное отображение данных
 	TDBGrid* DBGrid1;
 
 	TADOConnection* ADOConnection2;
