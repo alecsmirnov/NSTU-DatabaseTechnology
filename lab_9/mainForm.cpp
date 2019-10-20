@@ -12,7 +12,7 @@ TForm1* Form1;
 static constexpr int DEFAULT_PERCENTAGE = 50;
 
 // Названия заголовков для таблицы из запроса 1
-static const std::vector<String> GRID1_HEADERS = {"Год", "Номер изделия", "Максимальная поставка",
+static const std::vector<String> GRID1_HEADERS = {"Год", "Название изделия", "Максимальная поставка",
 												  "Сумма поставок", "Процент"};
 // Названия заголовков для таблицы из запроса 2
 static const std::vector<String> GRID2_HEADERS = {"Номер поставки", "Сумма", "Разность"};
