@@ -2,9 +2,9 @@ object Form1: TForm1
   Left = 0
   Top = 0
   BorderStyle = bsDialog
-  Caption = #1051#1072#1073#1086#1088#1072#1090#1086#1088#1085#1072#1103' '#1085#1086#1084#1077#1088' - 9'
-  ClientHeight = 446
-  ClientWidth = 855
+  Caption = #1047#1072#1087#1088#1086#1089' 1, 2'
+  ClientHeight = 223
+  ClientWidth = 851
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -16,18 +16,18 @@ object Form1: TForm1
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
-    Left = 16
+    Left = 8
     Top = 194
-    Width = 176
+    Width = 117
     Height = 13
-    Caption = #1050#1086#1083#1080#1095#1077#1089#1090#1074#1086' '#1086#1073#1088#1072#1086#1090#1072#1085#1085#1099#1093' '#1089#1090#1088#1086#1082': 0'
+    Caption = #1047#1072#1087#1080#1089#1077#1081' '#1086#1073#1088#1072#1073#1086#1090#1072#1085#1086': 0'
   end
   object Label2: TLabel
-    Left = 556
+    Left = 548
     Top = 194
-    Width = 176
+    Width = 117
     Height = 13
-    Caption = #1050#1086#1083#1080#1095#1077#1089#1090#1074#1086' '#1086#1073#1088#1072#1086#1090#1072#1085#1085#1099#1093' '#1089#1090#1088#1086#1082': 0'
+    Caption = #1047#1072#1087#1080#1089#1077#1081' '#1086#1073#1088#1072#1073#1086#1090#1072#1085#1086': 0'
   end
   object Label3: TLabel
     Left = 8
@@ -80,6 +80,15 @@ object Form1: TForm1
     TabOrder = 2
     Text = '50'
     OnChange = Edit1Change
+  end
+  object Button1: TButton
+    Left = 781
+    Top = 193
+    Width = 61
+    Height = 18
+    Caption = #1047#1072#1087#1088#1086#1089' 3'
+    TabOrder = 3
+    OnClick = Button1Click
   end
   object ADOConnection1: TADOConnection
     Connected = True
