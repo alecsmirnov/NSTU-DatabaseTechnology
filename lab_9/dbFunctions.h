@@ -1,4 +1,4 @@
-#ifndef DBFUNCTIONS_H
+п»ї#ifndef DBFUNCTIONS_H
 #define DBFUNCTIONS_H
 
 #include <Data.Win.ADODB.hpp>
@@ -7,26 +7,26 @@
 #include <vector>
 
 
-// Вывод окна сообщения с предупреждением
+// Р’С‹РІРѕРґ РѕРєРЅР° СЃРѕРѕР±С‰РµРЅРёСЏ СЃ РїСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµРј
 static inline void warningMessage(String text) {
-	Application->MessageBox(text.c_str(), L"Внимание", MB_ICONWARNING);
+	Application->MessageBox(text.c_str(), L"Р’РЅРёРјР°РЅРёРµ", MB_ICONWARNING);
 }
 
-// Вывод окна сообщения с результатом
+// Р’С‹РІРѕРґ РѕРєРЅР° СЃРѕРѕР±С‰РµРЅРёСЏ СЃ СЂРµР·СѓР»СЊС‚Р°С‚РѕРј
 static inline void resultMessage(String text) {
-	Application->MessageBox(text.c_str(), L"Результат", NULL);
+	Application->MessageBox(text.c_str(), L"Р РµР·СѓР»СЊС‚Р°С‚", NULL);
 }
 
-// Проверка строки на целое число
+// РџСЂРѕРІРµСЂРєР° СЃС‚СЂРѕРєРё РЅР° С†РµР»РѕРµ С‡РёСЃР»Рѕ
 bool isIntValue(String string);
 
-// Выполнение SELECT запросов
+// Р’С‹РїРѕР»РЅРµРЅРёРµ SELECT Р·Р°РїСЂРѕСЃРѕРІ
 void selectQuery(TADOConnection* connection, TADOQuery* query, TDBGrid* grid, TLabel* label,
 				 const std::vector<String>& headers,
 				 const std::vector<String>& parameters = std::vector<String>(),
 				 TADOQuery* source_query = nullptr);
 
-// Выполнение UPDATE запросов
+// Р’С‹РїРѕР»РЅРµРЅРёРµ UPDATE Р·Р°РїСЂРѕСЃРѕРІ
 void updateQuery(TADOConnection* connection, TADOQuery* query,
 				 const std::vector<String>& parameters,
 				 const std::vector<String>& values);

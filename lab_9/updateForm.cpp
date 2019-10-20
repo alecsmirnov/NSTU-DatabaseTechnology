@@ -1,4 +1,4 @@
-#include <vcl.h>
+п»ї#include <vcl.h>
 #pragma hdrstop
 
 #include "updateForm.h"
@@ -8,11 +8,11 @@
 
 TForm2* Form2;
 
-// Названия заголовков для таблицы из запроса 3
-static const std::vector<String> GRID_HEADERS = {"Номер поставки", "Номер поставщика", "Номер детали",
-												 "Номер изделия", "Кол-во", "Дата", "Цена детали"};
+// РќР°Р·РІР°РЅРёСЏ Р·Р°РіРѕР»РѕРІРєРѕРІ РґР»СЏ С‚Р°Р±Р»РёС†С‹ РёР· Р·Р°РїСЂРѕСЃР° 3
+static const std::vector<String> GRID_HEADERS = {"РќРѕРјРµСЂ РїРѕСЃС‚Р°РІРєРё", "РќРѕРјРµСЂ РїРѕСЃС‚Р°РІС‰РёРєР°", "РќРѕРјРµСЂ РґРµС‚Р°Р»Рё",
+												 "РќРѕРјРµСЂ РёР·РґРµР»РёСЏ", "РљРѕР»-РІРѕ", "Р”Р°С‚Р°", "Р¦РµРЅР° РґРµС‚Р°Р»Рё"};
 
-// Названия параметров для 3-го запроса
+// РќР°Р·РІР°РЅРёСЏ РїР°СЂР°РјРµС‚СЂРѕРІ РґР»СЏ 3-РіРѕ Р·Р°РїСЂРѕСЃР°
 static const std::vector<String> QUERY_PARAMS = {"n_spj", "cost"};
 
 
@@ -20,13 +20,13 @@ __fastcall TForm2::TForm2(TComponent* Owner) : TForm(Owner) {
 	selectQuery(ADOConnection1, ADOQuery1, DBGrid1, Label2, GRID_HEADERS);
 }
 
-// Выбор номера поставки и цены детали по текущей строке таблицы поставок
+// Р’С‹Р±РѕСЂ РЅРѕРјРµСЂР° РїРѕСЃС‚Р°РІРєРё Рё С†РµРЅС‹ РґРµС‚Р°Р»Рё РїРѕ С‚РµРєСѓС‰РµР№ СЃС‚СЂРѕРєРµ С‚Р°Р±Р»РёС†С‹ РїРѕСЃС‚Р°РІРѕРє
 void __fastcall TForm2::ADOQuery1AfterScroll(TDataSet* DataSet) {
 	Label1->Caption = ADOQuery1->FieldByName(QUERY_PARAMS[0])->AsString;
 	Edit1->Text = ADOQuery1->FieldByName(QUERY_PARAMS[1])->AsString;
 }
 
-// Выполнение запроса на обновление цены детали выбранной поставки
+// Р’С‹РїРѕР»РЅРµРЅРёРµ Р·Р°РїСЂРѕСЃР° РЅР° РѕР±РЅРѕРІР»РµРЅРёРµ С†РµРЅС‹ РґРµС‚Р°Р»Рё РІС‹Р±СЂР°РЅРЅРѕР№ РїРѕСЃС‚Р°РІРєРё
 void __fastcall TForm2::Button1Click(TObject* Sender) {
 	if (isIntValue(Edit1->Text)) {
 		updateQuery(ADOConnection2, ADOQuery2, QUERY_PARAMS, {Label1->Caption, Edit1->Text});
@@ -34,5 +34,5 @@ void __fastcall TForm2::Button1Click(TObject* Sender) {
         selectQuery(ADOConnection1, ADOQuery1, DBGrid1, Label2, GRID_HEADERS);
 	}
 	else
-		warningMessage("Цена может быть только положительным целым числом!");
+		warningMessage("Р¦РµРЅР° РјРѕР¶РµС‚ Р±С‹С‚СЊ С‚РѕР»СЊРєРѕ РїРѕР»РѕР¶РёС‚РµР»СЊРЅС‹Рј С†РµР»С‹Рј С‡РёСЃР»РѕРј!");
 }

@@ -1,4 +1,4 @@
-#ifndef MAINFORM_H
+п»ї#ifndef MAINFORM_H
 #define MAINFORM_H
 
 #include <System.Classes.hpp>
@@ -20,29 +20,29 @@ public:
 	__fastcall TForm1(TComponent* Owner);
 
 __published:
-	// Закраска строк DBGrid в зависимости от условия
+	// Р—Р°РєСЂР°СЃРєР° СЃС‚СЂРѕРє DBGrid РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ СѓСЃР»РѕРІРёСЏ
 	void __fastcall DBGrid1DrawColumnCell(TObject* Sender, const TRect &Rect, int DataCol,
 										  TColumn* Column, TGridDrawState State);
-    // Событие DBGrid при переходе от одной строки к другой
+    // РЎРѕР±С‹С‚РёРµ DBGrid РїСЂРё РїРµСЂРµС…РѕРґРµ РѕС‚ РѕРґРЅРѕР№ СЃС‚СЂРѕРєРё Рє РґСЂСѓРіРѕР№
 	void __fastcall ADOQuery1AfterScroll(TDataSet* DataSet);
-    // Изменение значения процента для выделения строк
+    // РР·РјРµРЅРµРЅРёРµ Р·РЅР°С‡РµРЅРёСЏ РїСЂРѕС†РµРЅС‚Р° РґР»СЏ РІС‹РґРµР»РµРЅРёСЏ СЃС‚СЂРѕРє
 	void __fastcall Edit1Change(TObject* Sender);
 
-	// Отображение формы для запроса 3
+	// РћС‚РѕР±СЂР°Р¶РµРЅРёРµ С„РѕСЂРјС‹ РґР»СЏ Р·Р°РїСЂРѕСЃР° 3
 	void __fastcall Button1Click(TObject* Sender);
 
 private:
-    // Текущее значение граничного значения процентов
+    // РўРµРєСѓС‰РµРµ Р·РЅР°С‡РµРЅРёРµ РіСЂР°РЅРёС‡РЅРѕРіРѕ Р·РЅР°С‡РµРЅРёСЏ РїСЂРѕС†РµРЅС‚РѕРІ
 	int high_percentage;
 
 __published:
-	// Связь приложения с Бд
+	// РЎРІСЏР·СЊ РїСЂРёР»РѕР¶РµРЅРёСЏ СЃ Р‘Рґ
 	TADOConnection* ADOConnection1;
-    // Формирование запроса к Бд
+    // Р¤РѕСЂРјРёСЂРѕРІР°РЅРёРµ Р·Р°РїСЂРѕСЃР° Рє Р‘Рґ
 	TADOQuery* ADOQuery1;
-    // Соединение DBGrid и подключенной Бд
+    // РЎРѕРµРґРёРЅРµРЅРёРµ DBGrid Рё РїРѕРґРєР»СЋС‡РµРЅРЅРѕР№ Р‘Рґ
 	TDataSource* DataSource1;
-    // Табличное отображение данных
+    // РўР°Р±Р»РёС‡РЅРѕРµ РѕС‚РѕР±СЂР°Р¶РµРЅРёРµ РґР°РЅРЅС‹С…
 	TDBGrid* DBGrid1;
 	TLabel* Label1;
 

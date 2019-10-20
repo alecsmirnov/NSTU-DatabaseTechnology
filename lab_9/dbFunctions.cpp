@@ -1,9 +1,9 @@
-#include "dbFunctions.h"
+п»ї#include "dbFunctions.h"
 
 #include <string>
 #include <cctype>
 
-// Проверка строки на целое число
+// РџСЂРѕРІРµСЂРєР° СЃС‚СЂРѕРєРё РЅР° С†РµР»РѕРµ С‡РёСЃР»Рѕ
 bool isIntValue(String string) {
 	AnsiString ansi_str(string.c_str());
 	std::string s(ansi_str.c_str());
@@ -15,78 +15,78 @@ bool isIntValue(String string) {
 	return !s.empty() && it == s.end();
 }
 
-// Выполнение SELECT запросов
+// Р’С‹РїРѕР»РЅРµРЅРёРµ SELECT Р·Р°РїСЂРѕСЃРѕРІ
 void selectQuery(TADOConnection* connection, TADOQuery* query, TDBGrid* grid, TLabel* label,
 				 const std::vector<String>& headers,
 				 const std::vector<String>& parameters,
 				 TADOQuery* source_query) {
 	try {
-		// Начало транзакции
+		// РќР°С‡Р°Р»Рѕ С‚СЂР°РЅР·Р°РєС†РёРё
 		connection->BeginTrans();
 
-		// Прекращение работы запроса
+		// РџСЂРµРєСЂР°С‰РµРЅРёРµ СЂР°Р±РѕС‚С‹ Р·Р°РїСЂРѕСЃР°
 		query->Close();
 
-		// Установка параметров
+		// РЈСЃС‚Р°РЅРѕРІРєР° РїР°СЂР°РјРµС‚СЂРѕРІ
 		for (auto i = 0; i != parameters.size(); ++i)
 			query->Parameters->ParamValues[parameters[i]] = source_query->FieldByName(parameters[i])->AsString;
 
-		// Открытие запроса
+		// РћС‚РєСЂС‹С‚РёРµ Р·Р°РїСЂРѕСЃР°
 		query->Open();
 
-        // Установка заголовков таблицы
+        // РЈСЃС‚Р°РЅРѕРІРєР° Р·Р°РіРѕР»РѕРІРєРѕРІ С‚Р°Р±Р»РёС†С‹
 		for (auto i = 0; i != headers.size(); ++i)
 			grid->Columns->Items[i]->Title->Caption = headers[i];
 
-		// Вывести результат выполнения запроса
-		label->Caption = "Записей обработано: " + IntToStr(grid->DataSource->DataSet->RecordCount);
+		// Р’С‹РІРµСЃС‚Рё СЂРµР·СѓР»СЊС‚Р°С‚ РІС‹РїРѕР»РЅРµРЅРёСЏ Р·Р°РїСЂРѕСЃР°
+		label->Caption = "Р—Р°РїРёСЃРµР№ РѕР±СЂР°Р±РѕС‚Р°РЅРѕ: " + IntToStr(grid->DataSource->DataSet->RecordCount);
 
-		// Подтверждаем транзакцию (сделанные изменения)
+		// РџРѕРґС‚РІРµСЂР¶РґР°РµРј С‚СЂР°РЅР·Р°РєС†РёСЋ (СЃРґРµР»Р°РЅРЅС‹Рµ РёР·РјРµРЅРµРЅРёСЏ)
 		connection->CommitTrans();
 	}
 	catch (Exception& exception) {
-		// Откатываем транзакцию в случае неудачи
+		// РћС‚РєР°С‚С‹РІР°РµРј С‚СЂР°РЅР·Р°РєС†РёСЋ РІ СЃР»СѓС‡Р°Рµ РЅРµСѓРґР°С‡Рё
 		connection->RollbackTrans();
 
-		// Вывод сообщения об ошибке
-		MessageDlg("Произошла ошибка: " + exception.Message, mtError, TMsgDlgButtons() << mbOK, 0);
+		// Р’С‹РІРѕРґ СЃРѕРѕР±С‰РµРЅРёСЏ РѕР± РѕС€РёР±РєРµ
+		MessageDlg("РџСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР°: " + exception.Message, mtError, TMsgDlgButtons() << mbOK, 0);
 
-        // Разрываем соединение
+        // Р Р°Р·СЂС‹РІР°РµРј СЃРѕРµРґРёРЅРµРЅРёРµ
 		connection->Close();
 	}
 }
 
-// Выполнение UPDATE запросов
+// Р’С‹РїРѕР»РЅРµРЅРёРµ UPDATE Р·Р°РїСЂРѕСЃРѕРІ
 void updateQuery(TADOConnection* connection, TADOQuery* query,
 				 const std::vector<String>& parameters,
 				 const std::vector<String>& values) {
 	try {
-		// Начало транзакции
+		// РќР°С‡Р°Р»Рѕ С‚СЂР°РЅР·Р°РєС†РёРё
 		connection->BeginTrans();
 
-		// Прекращение работы запроса
+		// РџСЂРµРєСЂР°С‰РµРЅРёРµ СЂР°Р±РѕС‚С‹ Р·Р°РїСЂРѕСЃР°
 		query->Close();
 
-        // Установка параметров
+        // РЈСЃС‚Р°РЅРѕРІРєР° РїР°СЂР°РјРµС‚СЂРѕРІ
 		for (auto i = 0; i != parameters.size(); ++i)
 			query->Parameters->ParamValues[parameters[i]] = values[i];
 
-		// Выполнение запроса на модификацию данных
+		// Р’С‹РїРѕР»РЅРµРЅРёРµ Р·Р°РїСЂРѕСЃР° РЅР° РјРѕРґРёС„РёРєР°С†РёСЋ РґР°РЅРЅС‹С…
 		query->ExecSQL();
 
-		// Подтверждаем транзакцию (сделанные изменения)
+		// РџРѕРґС‚РІРµСЂР¶РґР°РµРј С‚СЂР°РЅР·Р°РєС†РёСЋ (СЃРґРµР»Р°РЅРЅС‹Рµ РёР·РјРµРЅРµРЅРёСЏ)
 		connection->CommitTrans();
 
-		resultMessage("Записей обработано: " + IntToStr(query->RowsAffected));
+		resultMessage("Р—Р°РїРёСЃРµР№ РѕР±СЂР°Р±РѕС‚Р°РЅРѕ: " + IntToStr(query->RowsAffected));
 	}
 	catch (Exception &exception) {
-		// Откатываем транзакцию в случае неудачи
+		// РћС‚РєР°С‚С‹РІР°РµРј С‚СЂР°РЅР·Р°РєС†РёСЋ РІ СЃР»СѓС‡Р°Рµ РЅРµСѓРґР°С‡Рё
 		connection->RollbackTrans();
 
-        // Вывод сообщения об ошибке
-        MessageDlg("Произошла ошибка при обновлении: " + exception.Message, mtError, TMsgDlgButtons() << mbOK, 0);
+        // Р’С‹РІРѕРґ СЃРѕРѕР±С‰РµРЅРёСЏ РѕР± РѕС€РёР±РєРµ
+        MessageDlg("РџСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР° РїСЂРё РѕР±РЅРѕРІР»РµРЅРёРё: " + exception.Message, mtError, TMsgDlgButtons() << mbOK, 0);
 
-		// Разрываем соединение
+		// Р Р°Р·СЂС‹РІР°РµРј СЃРѕРµРґРёРЅРµРЅРёРµ
 		connection->Close();
 	}
 }
