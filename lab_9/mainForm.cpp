@@ -42,8 +42,11 @@ void __fastcall TForm1::Edit1Change(TObject* Sender) {
 
 	if (isIntValue(Edit1->Text))
 		high_percentage = StrToInt(Edit1->Text);
-	else
+	else {
 		Edit1->Text = IntToStr(high_percentage);
+
+        warningMessage("Процент может быть только положительным целым числом!");
+	}
 
 	selectQuery(ADOConnection1, ADOQuery1, DBGrid1, Label1, GRID1_HEADERS);
 }
