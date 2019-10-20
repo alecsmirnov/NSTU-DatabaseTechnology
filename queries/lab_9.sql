@@ -392,10 +392,12 @@ DROP TABLE s, p, j, spj, c, e, q, r, v, w;
 --    * процент этой суммы от общей суммы по всем изделиям за год.
 -- Упорядочить по году и проценту. Выделить строки, где процент не меньше 50.
 
-SELECT izd.year, izd.n_izd, izd.max_post, izd.total_sum_post, ROUND(izd.total_sum_post * 100 / total.sum::numeric, 2) AS percent
-FROM (SELECT EXTRACT(year FROM spj.date_post) AS year, spj.n_izd, MAX(spj.kol) AS max_post, SUM(spj.kol * spj.cost) AS total_sum_post
+SELECT izd.year, izd.name, izd.max_post, izd.total_sum_post, ROUND(izd.total_sum_post * 100 / total.sum::numeric, 2) AS percent
+FROM (SELECT EXTRACT(year FROM spj.date_post) AS year, j.name, MAX(spj.kol) AS max_post, SUM(spj.kol * spj.cost) AS total_sum_post
       FROM spj
-      GROUP BY year, spj.n_izd
+      JOIN j
+      ON spj.n_izd = j.n_izd
+      GROUP BY year, j.name
      ) izd
 JOIN (SELECT EXTRACT(year FROM spj.date_post) AS year, SUM(spj.kol * spj.cost) AS sum
       FROM spj

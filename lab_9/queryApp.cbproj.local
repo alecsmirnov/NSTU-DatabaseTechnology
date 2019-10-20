@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
-  <Transactions>
-    <Transaction>2019.10.13 15:40:37.226,=C:\Users\Alex\Documents\Embarcadero\Studio\Projects\Project2PCH1.h</Transaction>
-    <Transaction>2019.10.13 15:40:37.671,=C:\Users\Alex\Documents\Embarcadero\Studio\Projects\Unit1.cpp</Transaction>
-    <Transaction>2019.10.13 15:41:07.208,C:\Users\Alex\Documents\Embarcadero\Studio\Projects\DB_Lab9\mainForm.cpp=C:\Users\Alex\Documents\Embarcadero\Studio\Projects\Unit1.cpp</Transaction>
-    <Transaction>2019.10.13 15:41:07.208,C:\Users\Alex\Documents\Embarcadero\Studio\Projects\DB_Lab9\mainForm.h=C:\Users\Alex\Documents\Embarcadero\Studio\Projects\Unit1.h</Transaction>
-    <Transaction>2019.10.13 15:41:07.208,C:\Users\Alex\Documents\Embarcadero\Studio\Projects\DB_Lab9\mainForm.dfm=C:\Users\Alex\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
-    <Transaction>2019.10.13 15:41:36.129,C:\Users\Alex\Documents\Embarcadero\Studio\Projects\DB_Lab9\queryAppPCH1.h=C:\Users\Alex\Documents\Embarcadero\Studio\Projects\Project2PCH1.h</Transaction>
-    <Transaction>2019.10.13 15:41:43.337,C:\Users\Alex\Documents\Embarcadero\Studio\Projects\DB_Lab9\queryApp.cbproj=C:\Users\Alex\Documents\Embarcadero\Studio\Projects\Project2.cbproj</Transaction>
+	<Transactions>
+    <Transaction>1899.12.30 00:00:00.000.208,C:\Users\Alex\Documents\Embarcadero\Studio\Projects\Unit1.h=C:\Users\Alex\Documents\Embarcadero\Studio\Projects\DB_Lab9\mainForm.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.226,=C:\Users\Alex\Documents\Embarcadero\Studio\Projects\Project2PCH1.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.129,C:\Users\Alex\Documents\Embarcadero\Studio\Projects\Project2PCH1.h=C:\Users\Alex\Documents\Embarcadero\Studio\Projects\DB_Lab9\queryAppPCH1.h</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.337,C:\Users\Alex\Documents\Embarcadero\Studio\Projects\Project2.cbproj=C:\Users\Alex\Documents\Embarcadero\Studio\Projects\DB_Lab9\queryApp.cbproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.208,C:\Users\Alex\Documents\Embarcadero\Studio\Projects\Unit1.dfm=C:\Users\Alex\Documents\Embarcadero\Studio\Projects\DB_Lab9\mainForm.dfm</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.671,=C:\Users\Alex\Documents\Embarcadero\Studio\Projects\Unit1.cpp</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.208,C:\Users\Alex\Documents\Embarcadero\Studio\Projects\Unit1.cpp=C:\Users\Alex\Documents\Embarcadero\Studio\Projects\DB_Lab9\mainForm.cpp</Transaction>
   </Transactions>
 </BorlandProject>

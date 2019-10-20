@@ -3,8 +3,8 @@ object Form1: TForm1
   Top = 0
   BorderStyle = bsDialog
   Caption = #1051#1072#1073#1086#1088#1072#1090#1086#1088#1085#1072#1103' '#1085#1086#1084#1077#1088' - 9'
-  ClientHeight = 228
-  ClientWidth = 471
+  ClientHeight = 446
+  ClientWidth = 855
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -13,39 +13,50 @@ object Form1: TForm1
   Font.Style = []
   OldCreateOrder = False
   Position = poMainFormCenter
-  ShowHint = False
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
     Left = 16
-    Top = 198
-    Width = 163
+    Top = 194
+    Width = 176
     Height = 13
-    Caption = #1050#1086#1083#1080#1095#1077#1089#1090#1074#1086' '#1086#1073#1088#1072#1086#1090#1072#1085#1085#1099#1093' '#1089#1090#1088#1086#1082
+    Caption = #1050#1086#1083#1080#1095#1077#1089#1090#1074#1086' '#1086#1073#1088#1072#1086#1090#1072#1085#1085#1099#1093' '#1089#1090#1088#1086#1082': 0'
   end
-  object GroupBox1: TGroupBox
-    Left = 16
+  object Label2: TLabel
+    Left = 556
+    Top = 194
+    Width = 176
+    Height = 13
+    Caption = #1050#1086#1083#1080#1095#1077#1089#1090#1074#1086' '#1086#1073#1088#1072#1086#1090#1072#1085#1085#1099#1093' '#1089#1090#1088#1086#1082': 0'
+  end
+  object Label3: TLabel
+    Left = 8
     Top = 8
-    Width = 105
-    Height = 47
-    Caption = #1047#1072#1087#1088#1086#1089
-    TabOrder = 7
-  end
-  object Button1: TButton
-    Left = 127
-    Top = 14
-    Width = 66
-    Height = 41
-    Caption = #1042#1099#1087#1086#1083#1085#1080#1090#1100
-    TabOrder = 0
-    OnClick = Button1Click
+    Width = 219
+    Height = 13
+    Caption = #1042#1099#1076#1077#1083#1080#1090#1100' '#1089#1090#1088#1086#1082#1080', '#1075#1076#1077' '#1087#1088#1086#1094#1077#1085#1090' '#1085#1077' '#1084#1077#1085#1100#1096#1077':'
   end
   object DBGrid1: TDBGrid
-    Left = 16
-    Top = 63
-    Width = 97
-    Height = 129
+    Left = 8
+    Top = 27
+    Width = 534
+    Height = 161
     DataSource = DataSource1
+    ReadOnly = True
+    TabOrder = 0
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'Tahoma'
+    TitleFont.Style = []
+    OnDrawColumnCell = DBGrid1DrawColumnCell
+  end
+  object DBGrid2: TDBGrid
+    Left = 548
+    Top = 27
+    Width = 294
+    Height = 161
+    DataSource = DataSource2
     ReadOnly = True
     TabOrder = 1
     TitleFont.Charset = DEFAULT_CHARSET
@@ -53,65 +64,22 @@ object Form1: TForm1
     TitleFont.Height = -11
     TitleFont.Name = 'Tahoma'
     TitleFont.Style = []
-    Visible = False
-    OnDrawColumnCell = DBGrid1DrawColumnCell
   end
   object Edit1: TEdit
-    Left = 199
-    Top = 16
-    Width = 76
-    Height = 17
+    Left = 233
+    Top = 8
+    Width = 29
+    Height = 16
+    AutoSize = False
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
     TabOrder = 2
-    TextHint = #1048#1079#1076#1077#1083#1080#1077
-    Visible = False
-  end
-  object Edit2: TEdit
-    Left = 199
-    Top = 34
-    Width = 76
-    Height = 17
-    TabOrder = 3
-    TextHint = #1043#1086#1076
-    Visible = False
-  end
-  object RadioButton1: TRadioButton
-    Left = 25
-    Top = 28
-    Width = 25
-    Height = 17
-    Caption = '1'
-    Checked = True
-    TabOrder = 4
-    TabStop = True
-    OnClick = RadioButton1Click
-  end
-  object RadioButton2: TRadioButton
-    Left = 56
-    Top = 28
-    Width = 33
-    Height = 17
-    Caption = '2'
-    TabOrder = 5
-    OnClick = RadioButton2Click
-  end
-  object RadioButton3: TRadioButton
-    Left = 88
-    Top = 28
-    Width = 25
-    Height = 17
-    Caption = '3'
-    TabOrder = 6
-    OnClick = RadioButton3Click
-  end
-  object Button2: TButton
-    Left = 281
-    Top = 14
-    Width = 66
-    Height = 41
-    Caption = #1054#1095#1080#1089#1090#1080#1090#1100
-    TabOrder = 8
-    Visible = False
-    OnClick = Button2Click
+    Text = '50'
+    OnChange = Edit1Change
   end
   object ADOConnection1: TADOConnection
     Connected = True
@@ -129,19 +97,113 @@ object Form1: TForm1
       '=0;ByteaAsLongVarBinary=0;UseServerSidePrepare=0;LowerCaseIdenti' +
       'fier=0;XaOpt=1"'
     LoginPrompt = False
-    Left = 392
-    Top = 24
+    Left = 32
+    Top = 219
   end
   object ADOQuery1: TADOQuery
     Connection = ADOConnection1
     CursorType = ctStatic
+    AfterScroll = ADOQuery1AfterScroll
     Parameters = <>
-    Left = 392
-    Top = 72
+    SQL.Strings = (
+      
+        'SELECT izd.year, izd.name, izd.max_post, izd.total_sum_post, ROU' +
+        'ND(izd.total_sum_post * 100 / total.sum::numeric, 2) AS percent'
+      
+        'FROM (SELECT EXTRACT(year FROM pmib6706.spj.date_post) AS year, ' +
+        'pmib6706.j.name, MAX(pmib6706.spj.kol) AS max_post, SUM(pmib6706' +
+        '.spj.kol * pmib6706.spj.cost) AS total_sum_post'
+      '            FROM pmib6706.spj'
+      '            JOIN pmib6706.j'
+      '            ON pmib6706.spj.n_izd = pmib6706.j.n_izd'
+      '            GROUP BY year, pmib6706.j.name'
+      '           ) izd'
+      
+        'JOIN (SELECT EXTRACT(year FROM pmib6706.spj.date_post) AS year, ' +
+        'SUM(pmib6706.spj.kol * pmib6706.spj.cost) AS sum'
+      '          FROM pmib6706.spj'
+      '          GROUP BY year'
+      '         ) total'
+      'ON izd.year = total.year'
+      'ORDER BY izd.year, percent;')
+    Left = 208
+    Top = 219
   end
   object DataSource1: TDataSource
     DataSet = ADOQuery1
-    Left = 392
-    Top = 120
+    Left = 128
+    Top = 219
+  end
+  object ADOQuery2: TADOQuery
+    Connection = ADOConnection1
+    CursorType = ctStatic
+    Parameters = <
+      item
+        Name = 'year'
+        Size = -1
+        Value = Null
+      end
+      item
+        Name = 'name'
+        Size = -1
+        Value = Null
+      end>
+    SQL.Strings = (
+      
+        'SELECT post.n_spj, post.sum, post.cost - avg.avg_price AS differ' +
+        'ence'
+      
+        'FROM (SELECT EXTRACT(year FROM pmib6706.spj.date_post) AS year, ' +
+        'pmib6706.spj.n_izd, pmib6706.spj.n_spj, SUM(pmib6706.spj.kol * p' +
+        'mib6706.spj.cost), pmib6706.spj.cost'
+      '            FROM pmib6706.spj'
+      
+        '            WHERE EXTRACT(year FROM pmib6706.spj.date_post) = :y' +
+        'ear'
+      '            AND pmib6706.spj.n_izd = (SELECT pmib6706.j.n_izd'
+      
+        '                                                         FROM pm' +
+        'ib6706.j'
+      
+        '                                                         WHERE p' +
+        'mib6706.j.name = :name)'
+      
+        '            GROUP BY year, pmib6706.spj.n_izd, pmib6706.spj.n_sp' +
+        'j, pmib6706.spj.cost'
+      '           ) post'
+      
+        'JOIN (SELECT EXTRACT(year FROM pmib6706.spj.date_post) AS year, ' +
+        'pmib6706.spj.n_izd, ROUND(AVG(pmib6706.spj.cost), 2) AS avg_pric' +
+        'e'
+      '          FROM pmib6706.spj'
+      '          GROUP BY year, pmib6706.spj.n_izd'
+      '         ) avg'
+      'ON post.year = avg.year AND post.n_izd = avg.n_izd;')
+    Left = 208
+    Top = 275
+  end
+  object DataSource2: TDataSource
+    DataSet = ADOQuery2
+    Left = 128
+    Top = 275
+  end
+  object ADOConnection2: TADOConnection
+    Connected = True
+    ConnectionString = 
+      'Provider=MSDASQL.1;Password=Ickejev3;Persist Security Info=True;' +
+      'User ID=pmi-b6706;Extended Properties="DSN=PostgreSQL30;DATABASE' +
+      '=students;SERVER=students.ami.nstu.ru;PORT=5432;UID=pmi-b6706;PW' +
+      'D=Ickejev3;SSLmode=disable;ReadOnly=0;Protocol=7.4;FakeOidIndex=' +
+      '0;ShowOidColumn=0;RowVersioning=0;ShowSystemTables=0;ConnSetting' +
+      's=;Fetch=100;Socket=4096;UnknownSizes=0;MaxVarcharSize=255;MaxLo' +
+      'ngVarcharSize=8190;Debug=0;CommLog=0;Optimizer=0;Ksqo=1;UseDecla' +
+      'reFetch=0;TextAsLongVarchar=1;UnknownsAsLongVarchar=0;BoolsAsCha' +
+      'r=1;Parse=0;CancelAsFreeStmt=0;ExtraSysTablePrefixes=dd_;LFConve' +
+      'rsion=1;UpdatableCursors=1;DisallowPremature=0;TrueIsMinus1=0;BI' +
+      '=0;ByteaAsLongVarBinary=0;UseServerSidePrepare=0;LowerCaseIdenti' +
+      'fier=0;XaOpt=1"'
+    LoginPrompt = False
+    Left = 32
+    Top = 275
   end
 end
