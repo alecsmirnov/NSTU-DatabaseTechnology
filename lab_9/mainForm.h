@@ -1,4 +1,4 @@
-п»ї#ifndef MAINFORM_H
+#ifndef MAINFORM_H
 #define MAINFORM_H
 
 #include <System.Classes.hpp>
@@ -15,44 +15,44 @@
 #include "updateForm.h"
 
 
-class TForm1 : public TForm {
+class TMainFormObj : public TForm {
 public:
-	__fastcall TForm1(TComponent* Owner);
+	__fastcall TMainFormObj(TComponent* owner);
 
 __published:
-	// Р—Р°РєСЂР°СЃРєР° СЃС‚СЂРѕРє DBGrid РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ СѓСЃР»РѕРІРёСЏ
-	void __fastcall DBGrid1DrawColumnCell(TObject* Sender, const TRect &Rect, int DataCol,
-										  TColumn* Column, TGridDrawState State);
-    // РЎРѕР±С‹С‚РёРµ DBGrid РїСЂРё РїРµСЂРµС…РѕРґРµ РѕС‚ РѕРґРЅРѕР№ СЃС‚СЂРѕРєРё Рє РґСЂСѓРіРѕР№
-	void __fastcall ADOQuery1AfterScroll(TDataSet* DataSet);
-    // РР·РјРµРЅРµРЅРёРµ Р·РЅР°С‡РµРЅРёСЏ РїСЂРѕС†РµРЅС‚Р° РґР»СЏ РІС‹РґРµР»РµРЅРёСЏ СЃС‚СЂРѕРє
-	void __fastcall Edit1Change(TObject* Sender);
+	// Закраска строк DBGrid в зависимости от условия
+	void __fastcall task1_gridDrawColumnCell(TObject* sender, const TRect &rect, int data_col,
+											 TColumn* column, TGridDrawState state);
+    // Событие DBGrid при переходе от одной строки к другой
+	void __fastcall task1_queryAfterScroll(TDataSet* data_set);
+    // Изменение значения процента для выделения строк
+	void __fastcall percent_editChange(TObject* sender);
 
-	// РћС‚РѕР±СЂР°Р¶РµРЅРёРµ С„РѕСЂРјС‹ РґР»СЏ Р·Р°РїСЂРѕСЃР° 3
-	void __fastcall Button1Click(TObject* Sender);
-	void __fastcall FormActivate(TObject* Sender);
+	// Отображение формы для запроса 3
+	void __fastcall update_form_show_buttonClick(TObject* sender);
+	void __fastcall FormActivate(TObject* sender);
 
 private:
-    // РўРµРєСѓС‰РµРµ Р·РЅР°С‡РµРЅРёРµ РіСЂР°РЅРёС‡РЅРѕРіРѕ Р·РЅР°С‡РµРЅРёСЏ РїСЂРѕС†РµРЅС‚РѕРІ
+    // Текущее значение граничного значения процентов
 	int high_percentage;
 
 __published:
-	TADOQuery* ADOQuery1;           // Р¤РѕСЂРјРёСЂРѕРІР°РЅРёРµ Р·Р°РїСЂРѕСЃР° Рє Р‘Рґ
-	TDataSource* DataSource1;       // РЎРѕРµРґРёРЅРµРЅРёРµ DBGrid Рё РїРѕРґРєР»СЋС‡РµРЅРЅРѕР№ Р‘Рґ
-	TDBGrid* DBGrid1;               // РўР°Р±Р»РёС‡РЅРѕРµ РѕС‚РѕР±СЂР°Р¶РµРЅРёРµ РґР°РЅРЅС‹С…
-	TLabel* Label1;
+	TADOQuery* task1_query;				// Формирование запроса к Бд
+	TDataSource* task1_data_source;		// Соединение DBGrid и подключенной Бд
+	TDBGrid* task1_grid;				// Табличное отображение данных
+	TLabel* task1_row_count_label;
 
-	TADOQuery* ADOQuery2;
-	TDataSource* DataSource2;
-	TDBGrid* DBGrid2;
-	TLabel* Label2;
+	TADOQuery* task2_query;
+	TDataSource* task2_data_source;
+	TDBGrid* task2_grid;
+	TLabel* task2_row_count_label;
 
-	TLabel* Label3;
-	TEdit* Edit1;
+	TLabel* percent_text_label;
+	TEdit* percent_edit;
 
-	TButton* Button1;
+	TButton* update_form_show_button;
 };
 
-extern PACKAGE TForm1* Form1;
+extern PACKAGE TMainFormObj* MainFormObj;
 
 #endif

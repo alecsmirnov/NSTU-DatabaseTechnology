@@ -1,4 +1,4 @@
-п»ї#include <vcl.h>
+#include <vcl.h>
 #pragma hdrstop
 
 #include "mainForm.h"
@@ -6,58 +6,58 @@
 #pragma package(smart_init)
 #pragma resource "*.dfm"
 
-TForm1* Form1;
+TMainFormObj* MainFormObj;
 
-// Р’РµСЂС…РЅСЏСЏ РіСЂР°РЅРёС†Р° РїСЂРѕС†РµРЅС‚РѕРІ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ (РїРѕ СѓСЃР»РѕРІРёСЋ Р·Р°РґР°РЅРёСЏ)
+// Верхняя граница процентов по умолчанию (по условию задания)
 static constexpr int DEFAULT_PERCENTAGE = 50;
 
-// РќР°Р·РІР°РЅРёСЏ РїР°СЂР°РјРµС‚СЂРѕРІ РґР»СЏ 2-РіРѕ Р·Р°РїСЂРѕСЃР°
+// Названия параметров для 2-го запроса
 static const std::vector<String> QUERY2_PARAMS = {"year", "name"};
 
 
-__fastcall TForm1::TForm1(TComponent* Owner) : TForm(Owner) {
+__fastcall TMainFormObj::TMainFormObj(TComponent* owner) : TForm(owner) {
 	high_percentage = DEFAULT_PERCENTAGE;
 
-   //	selectQuery(ADOConnection1, ADOQuery1, DBGrid1, Label1, GRID1_HEADERS);
+	//selectQuery(ADOConnection1, ADOQuery1, DBGrid1, Label1, GRID1_HEADERS);
 }
 
-// Р—Р°РєСЂР°СЃРєР° СЃС‚СЂРѕРє DBGrid РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ СѓСЃР»РѕРІРёСЏ (РџСЂРѕС†РµРЅС‚ РїСЂРѕРґР°Р¶ РЅРµ РјРµРЅСЊС€Рµ СѓРєР°Р·Р°РЅРЅРѕРіРѕ Р·РЅР°С‡РµРЅРёСЏ)
-void __fastcall TForm1::DBGrid1DrawColumnCell(TObject* Sender, const TRect &Rect,
-											  int DataCol, TColumn* Column, TGridDrawState State) {
-	if (high_percentage <= Form1->ADOQuery1->FieldByName("percent")->AsInteger) {
-		DBGrid1->Canvas->Brush->Color = clRed;
-		DBGrid1->Canvas->Font->Color = clWhite;
+// Закраска строк DBGrid в зависимости от условия (Процент продаж не меньше указанного значения)
+void __fastcall TMainFormObj::task1_gridDrawColumnCell(TObject* sender, const TRect &rect, int data_col,
+													   TColumn* column, TGridDrawState state) {
+	if (high_percentage <= task1_query->FieldByName("percent")->AsInteger) {
+		task1_grid->Canvas->Brush->Color = clRed;
+		task1_grid->Canvas->Font->Color = clWhite;
 
-		DBGrid1->Canvas->TextRect(Rect, Rect.Left, Rect.Top, Column->Field->DisplayText);
+		task1_grid->Canvas->TextRect(rect, rect.Left, rect.Top, column->Field->DisplayText);
 	}
 }
 
-// РћСЃСѓС‰РµСЃС‚РІР»РµРЅРёРµ РІС‹Р±РѕСЂРєРё 2-РіРѕ Р·Р°РїСЂРѕСЃР° РїРѕ С‚РµРєСѓС‰РµР№ СЃС‚СЂРѕРєРµ 1-РіРѕ Р·Р°РїСЂРѕСЃР°
-void __fastcall TForm1::ADOQuery1AfterScroll(TDataSet* DataSet) {
-	selectQuery(Form2->ADOConnection1, ADOQuery2, DBGrid2, Label2, QUERY2_PARAMS, ADOQuery1);
+// Осуществление выборки 2-го запроса по текущей строке 1-го запроса
+void __fastcall TMainFormObj::task1_queryAfterScroll(TDataSet* data_set) {
+	selectQuery(UpdateFormObj->fpmi_connection, task2_query, task2_grid, task2_row_count_label, QUERY2_PARAMS, task1_query);
 }
 
-void __fastcall TForm1::FormActivate(TObject* Sender) {
-	selectQuery(Form2->ADOConnection1, ADOQuery1, DBGrid1, Label1);
+void __fastcall TMainFormObj::FormActivate(TObject* sender) {
+	selectQuery(UpdateFormObj->fpmi_connection, task1_query, task1_grid, task1_row_count_label);
 }
 
-// РР·РјРµРЅРµРЅРёРµ Р·РЅР°С‡РµРЅРёСЏ РїСЂРѕС†РµРЅС‚Р°, РїРѕ РєРѕС‚РѕСЂРѕРјСѓ РїСЂРѕРёСЃС…РѕРґРёС‚ РІС‹РґРµР»РµРЅРёРµ СЃС‚СЂРѕРє
-void __fastcall TForm1::Edit1Change(TObject* Sender) {
+// Изменение значения процента, по которому происходит выделение строк
+void __fastcall TMainFormObj::percent_editChange(TObject* sender) {
 	high_percentage = DEFAULT_PERCENTAGE;
 
-	if (isIntValue(Edit1->Text)) {
-		high_percentage = StrToInt(Edit1->Text);
+	if (isIntValue(percent_edit->Text)) {
+		high_percentage = StrToInt(percent_edit->Text);
 
-		selectQuery(Form2->ADOConnection1, ADOQuery1, DBGrid1, Label1);
+		selectQuery(UpdateFormObj->fpmi_connection, task1_query, task1_grid, task1_row_count_label);
 	}
 	else {
-		Edit1->Text = IntToStr(high_percentage);
+		percent_edit->Text = IntToStr(high_percentage);
 
-		warningMessage("РџСЂРѕС†РµРЅС‚ РјРѕР¶РµС‚ Р±С‹С‚СЊ С‚РѕР»СЊРєРѕ РїРѕР»РѕР¶РёС‚РµР»СЊРЅС‹Рј С†РµР»С‹Рј С‡РёСЃР»РѕРј!");
+		warningMessage("Процент может быть только положительным целым числом!");
 	}
 }
 
-// РћС‚РѕР±СЂР°Р¶РµРЅРёРµ С„РѕСЂРјС‹ РґР»СЏ Р·Р°РїСЂРѕСЃР° 3
-void __fastcall TForm1::Button1Click(TObject* Sender) {
-	Form2->Show();
+// Отображение формы для запроса 3
+void __fastcall TMainFormObj::update_form_show_buttonClick(TObject* sender) {
+	UpdateFormObj->Show();
 }

@@ -1,4 +1,4 @@
-п»ї#ifndef UPDATEFORM_H
+#ifndef UPDATEFORM_H
 #define UPDATEFORM_H
 
 #include <System.Classes.hpp>
@@ -15,35 +15,35 @@
 #include "dbFunctions.h"
 
 
-class TForm2 : public TForm {
+class TUpdateFormObj : public TForm {
 public:
-	__fastcall TForm2(TComponent* Owner);
+	__fastcall TUpdateFormObj(TComponent* owner);
 
 __published:
-	// РЎРѕР±С‹С‚РёРµ DBGrid РїСЂРё РїРµСЂРµС…РѕРґРµ РѕС‚ РѕРґРЅРѕР№ СЃС‚СЂРѕРєРё Рє РґСЂСѓРіРѕР№
-	void __fastcall ADOQuery1AfterScroll(TDataSet* DataSet);
-	// Р’С‹РїРѕР»РЅРµРЅРёРµ Р·Р°РїСЂРѕСЃР° РЅР° РѕР±РЅРѕРІР»РµРЅРёРµ С†РµРЅС‹ РґРµС‚Р°Р»Рё РІС‹Р±СЂР°РЅРЅРѕР№ РїРѕСЃС‚Р°РІРєРё
-	void __fastcall Button1Click(TObject* Sender);
+	// Событие DBGrid при переходе от одной строки к другой
+	void __fastcall select_queryAfterScroll(TDataSet* data_set);
+	// Выполнение запроса на обновление цены детали выбранной поставки
+	void __fastcall update_buttonClick(TObject* sender);
 
 __published:
-	TADOConnection* ADOConnection1;		// РЎРІСЏР·СЊ РїСЂРёР»РѕР¶РµРЅРёСЏ СЃ Р‘Рґ
+	TADOConnection* fpmi_connection;		// Связь приложения с Бд
 
-	TADOQuery* ADOQuery1;               // Р¤РѕСЂРјРёСЂРѕРІР°РЅРёРµ Р·Р°РїСЂРѕСЃР° Рє Р‘Рґ
-	TDataSource* DataSource1;           // РЎРѕРµРґРёРЅРµРЅРёРµ DBGrid Рё РїРѕРґРєР»СЋС‡РµРЅРЅРѕР№ Р‘Рґ
-	TDBGrid* DBGrid1;                   // РўР°Р±Р»РёС‡РЅРѕРµ РѕС‚РѕР±СЂР°Р¶РµРЅРёРµ РґР°РЅРЅС‹С…
+	TADOQuery* select_query;				// Формирование запроса к Бд
+	TDataSource* fpmi_data_source;			// Соединение DBGrid и подключенной Бд
+	TDBGrid* grid;							// Табличное отображение данных
 
-	TADOQuery* ADOQuery2;
-	TLabel* Label1;
-	TEdit* Edit1;
-	TButton* Button1;
+	TADOQuery* update_query;
+	TLabel* n_post_label;
+	TEdit* det_cost_edit;
+	TButton* update_button;
 
-	TLabel* Label2;
+	TLabel* row_count_label;
 
-	TLabel* Label3;
-	TLabel* Label4;
-	TGroupBox* GroupBox1;
+	TLabel* n_post_text_label;
+	TLabel* det_cost_text_edit;
+	TGroupBox* group_box;
 };
 
-extern PACKAGE TForm2* Form2;
+extern PACKAGE TUpdateFormObj* UpdateFormObj;
 
 #endif
