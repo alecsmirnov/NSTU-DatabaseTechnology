@@ -1,4 +1,4 @@
-п»ї#ifndef UPDATEFORM_H
+#ifndef UPDATEFORM_H
 #define UPDATEFORM_H
 
 #include <System.Classes.hpp>
@@ -20,17 +20,17 @@ public:
 	__fastcall TUpdateFormObj(TComponent* owner);
 
 __published:
-	// РЎРѕР±С‹С‚РёРµ DBGrid РїСЂРё РїРµСЂРµС…РѕРґРµ РѕС‚ РѕРґРЅРѕР№ СЃС‚СЂРѕРєРё Рє РґСЂСѓРіРѕР№
+	// Событие DBGrid при переходе от одной строки к другой
 	void __fastcall select_queryAfterScroll(TDataSet* data_set);
-	// Р’С‹РїРѕР»РЅРµРЅРёРµ Р·Р°РїСЂРѕСЃР° РЅР° РѕР±РЅРѕРІР»РµРЅРёРµ С†РµРЅС‹ РґРµС‚Р°Р»Рё РІС‹Р±СЂР°РЅРЅРѕР№ РїРѕСЃС‚Р°РІРєРё
+	// Выполнение запроса на обновление цены детали выбранной поставки
 	void __fastcall update_buttonClick(TObject* sender);
 
 __published:
-	TADOConnection* fpmi_connection;		// РЎРІСЏР·СЊ РїСЂРёР»РѕР¶РµРЅРёСЏ СЃ Р‘Рґ
+	TADOConnection* fpmi_connection;		// Связь приложения с Бд
 
-	TADOQuery* select_query;				// Р¤РѕСЂРјРёСЂРѕРІР°РЅРёРµ Р·Р°РїСЂРѕСЃР° Рє Р‘Рґ
-	TDataSource* fpmi_data_source;			// РЎРѕРµРґРёРЅРµРЅРёРµ DBGrid Рё РїРѕРґРєР»СЋС‡РµРЅРЅРѕР№ Р‘Рґ
-	TDBGrid* grid;							// РўР°Р±Р»РёС‡РЅРѕРµ РѕС‚РѕР±СЂР°Р¶РµРЅРёРµ РґР°РЅРЅС‹С…
+	TADOQuery* select_query;				// Формирование запроса к Бд
+	TDataSource* fpmi_data_source;			// Соединение DBGrid и подключенной Бд
+	TDBGrid* grid;							// Табличное отображение данных
 
 	TADOQuery* update_query;
 	TLabel* n_post_label;

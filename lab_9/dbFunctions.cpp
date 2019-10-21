@@ -1,10 +1,10 @@
-п»ї#include "dbFunctions.h"
+#include "dbFunctions.h"
 
 #include <string>
 #include <cctype>
 
 
-// РџСЂРѕРІРµСЂРєР° СЃС‚СЂРѕРєРё РЅР° С†РµР»РѕРµ РїРѕР»РѕР¶РёС‚РµР»СЊРЅРѕРµ С‡РёСЃР»Рѕ
+// Проверка строки на целое положительное число
 bool isIntValue(String string) {
 	AnsiString ansi_str(string.c_str());
 	std::string s(ansi_str.c_str());
@@ -16,45 +16,45 @@ bool isIntValue(String string) {
 	return !s.empty() && it == s.end();
 }
 
-// Р’С‹РїРѕР»РЅРµРЅРёРµ Р·Р°РїСЂРѕСЃР° РЅР° РІС‹Р±РѕСЂРєСѓ РґР°РЅРЅС‹С…
+// Выполнение запроса на выборку данных
 void selectQuery(TADOConnection* connection, TADOQuery* query,
 				 TDBGrid* grid, TLabel* label,
-				 const std::vector<String>& parameters,
-				 TADOQuery* source_query) {
+                 TADOQuery* source_query,
+				 const std::vector<String>& parameters) {
 	try {
-		query->Close();     				// РџСЂРµРєСЂР°С‰РµРЅРёРµ СЂР°Р±РѕС‚С‹ Р·Р°РїСЂРѕСЃР°
+		query->Close();     				// Прекращение работы запроса
 		for (std::vector<String>::size_type i = 0; i != parameters.size(); ++i)
 			query->Parameters->ParamValues[parameters[i]] = source_query->FieldByName(parameters[i])->AsString;
-		query->Open();      				// РћС‚РєСЂС‹С‚РёРµ Р·Р°РїСЂРѕСЃР°
+		query->Open();      				// Открытие запроса
 
-		label->Caption = "Р—Р°РїРёСЃРµР№ РѕР±СЂР°Р±РѕС‚Р°РЅРѕ: " + IntToStr(grid->DataSource->DataSet->RecordCount);
+		label->Caption = "Записей обработано: " + IntToStr(grid->DataSource->DataSet->RecordCount);
 	}
 	catch (Exception& exception) {
-		connection->Close();    			// Р Р°Р·СЂС‹РІ СЃРѕРµРґРёРЅРµРЅРёСЏ
+		connection->Close();    			// Разрыв соединения
 
 		exceptionMessage(exception);
 	}
 }
 
-// Р’С‹РїРѕР»РЅРµРЅРёРµ Р·Р°РїСЂРѕСЃР° РЅР° РјРѕРґРёС„РёРєР°С†РёСЋ РґР°РЅРЅС‹С…
+// Выполнение запроса на модификацию данных
 void updateQuery(TADOConnection* connection, TADOQuery* query,
 				 const std::vector<String>& parameters,
 				 const std::vector<String>& values) {
 	try {
-		connection->BeginTrans();           // РќР°С‡Р°Р»Рѕ С‚СЂР°РЅР·Р°РєС†РёРё
+		connection->BeginTrans();           // Начало транзакции
 
-		query->Close();                     // РџСЂРµРєСЂР°С‰РµРЅРёРµ СЂР°Р±РѕС‚С‹ Р·Р°РїСЂРѕСЃР°
+		query->Close();                     // Прекращение работы запроса
 		for (std::vector<String>::size_type i = 0; i != parameters.size(); ++i)
 			query->Parameters->ParamValues[parameters[i]] = values[i];
-		query->ExecSQL();                   // Р’С‹РїРѕР»РЅРµРЅРёРµ Р·Р°РїСЂРѕСЃР°
+		query->ExecSQL();                   // Выполнение запроса
 
-		connection->CommitTrans();          // РџРѕРґС‚РІРµСЂР¶РґРµРЅРёРµ С‚СЂР°РЅР·Р°РєС†РёРё
+		connection->CommitTrans();          // Подтверждение транзакции
 
-		resultMessage("Р—Р°РїРёСЃРµР№ РѕР±СЂР°Р±РѕС‚Р°РЅРѕ: " + IntToStr(query->RowsAffected));
+		resultMessage("Записей обработано: " + IntToStr(query->RowsAffected));
 	}
 	catch (Exception &exception) {
-		connection->RollbackTrans();		// РћС‚РєР°С‚ С‚СЂР°РЅР·Р°РєС†РёРё
-		connection->Close();            	// Р Р°Р·СЂС‹РІ СЃРѕРµРґРёРЅРµРЅРёСЏ
+		connection->RollbackTrans();		// Откат транзакции
+		connection->Close();            	// Разрыв соединения
 
    		exceptionMessage(exception);
 	}
