@@ -2,15 +2,16 @@
 #pragma hdrstop
 #include <tchar.h>
 
-USEFORM("updateForm.cpp", Form2);
-USEFORM("mainForm.cpp", Form1);
-//---------------------------------------------------------------------------
+
+USEFORM("updateForm.cpp", UpdateFormObj);
+USEFORM("mainForm.cpp", MainFormObj);
+
 int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int) {
 	try {
 		Application->Initialize();
 		Application->MainFormOnTaskBar = true;
-		Application->CreateForm(__classid(TForm1), &Form1);
-		Application->CreateForm(__classid(TForm2), &Form2);
+		Application->CreateForm(__classid(TMainFormObj), &MainFormObj);
+		Application->CreateForm(__classid(TUpdateFormObj), &UpdateFormObj);
 		Application->Run();
 	}
 	catch (Exception &exception) {

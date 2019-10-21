@@ -115,8 +115,11 @@
         <CppCompile Include="dbFunctions.cpp">
             <BuildOrder>4</BuildOrder>
         </CppCompile>
+        <None Include="dbFunctions.h">
+            <BuildOrder>5</BuildOrder>
+        </None>
         <CppCompile Include="mainForm.cpp">
-            <Form>Form1</Form>
+            <Form>MainFormObj</Form>
             <FormType>dfm</FormType>
             <DependentOn>mainForm.h</DependentOn>
             <BuildOrder>2</BuildOrder>
@@ -129,7 +132,7 @@
             <PCH>true</PCH>
         </PCHCompile>
         <CppCompile Include="updateForm.cpp">
-            <Form>Form2</Form>
+            <Form>UpdateFormObj</Form>
             <FormType>dfm</FormType>
             <DependentOn>updateForm.h</DependentOn>
             <BuildOrder>3</BuildOrder>

@@ -1,4 +1,4 @@
-#include <vcl.h>
+п»ї#include <vcl.h>
 #pragma hdrstop
 
 #include "updateForm.h"
@@ -8,7 +8,7 @@
 
 TUpdateFormObj* UpdateFormObj;
 
-// Названия параметров для 3-го запроса
+// РќР°Р·РІР°РЅРёСЏ РїР°СЂР°РјРµС‚СЂРѕРІ РґР»СЏ 3-РіРѕ Р·Р°РїСЂРѕСЃР°
 static const std::vector<String> QUERY_PARAMS = {"n_spj", "cost"};
 
 
@@ -16,13 +16,13 @@ __fastcall TUpdateFormObj::TUpdateFormObj(TComponent* owner) : TForm(owner) {
 	selectQuery(fpmi_connection, select_query, grid, row_count_label);
 }
 
-// Выбор номера поставки и цены детали по текущей строке таблицы поставок
+// Р’С‹Р±РѕСЂ РЅРѕРјРµСЂР° РїРѕСЃС‚Р°РІРєРё Рё С†РµРЅС‹ РґРµС‚Р°Р»Рё РїРѕ С‚РµРєСѓС‰РµР№ СЃС‚СЂРѕРєРµ С‚Р°Р±Р»РёС†С‹ РїРѕСЃС‚Р°РІРѕРє
 void __fastcall TUpdateFormObj::select_queryAfterScroll(TDataSet* data_set) {
 	n_post_label->Caption = select_query->FieldByName(QUERY_PARAMS[0])->AsString;
 	det_cost_edit->Text = select_query->FieldByName(QUERY_PARAMS[1])->AsString;
 }
 
-// Выполнение запроса на обновление цены детали выбранной поставки
+// Р’С‹РїРѕР»РЅРµРЅРёРµ Р·Р°РїСЂРѕСЃР° РЅР° РѕР±РЅРѕРІР»РµРЅРёРµ С†РµРЅС‹ РґРµС‚Р°Р»Рё РІС‹Р±СЂР°РЅРЅРѕР№ РїРѕСЃС‚Р°РІРєРё
 void __fastcall TUpdateFormObj::update_buttonClick(TObject* sender) {
 	if (isIntValue(det_cost_edit->Text)) {
 		updateQuery(fpmi_connection, update_query, QUERY_PARAMS, {n_post_label->Caption, det_cost_edit->Text});
@@ -30,5 +30,5 @@ void __fastcall TUpdateFormObj::update_buttonClick(TObject* sender) {
 		selectQuery(fpmi_connection, select_query, grid, row_count_label);
 	}
 	else
-		warningMessage("Цена может быть только положительным целым числом!");
+		warningMessage("Р¦РµРЅР° РјРѕР¶РµС‚ Р±С‹С‚СЊ С‚РѕР»СЊРєРѕ РїРѕР»РѕР¶РёС‚РµР»СЊРЅС‹Рј С†РµР»С‹Рј С‡РёСЃР»РѕРј!");
 }

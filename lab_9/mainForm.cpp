@@ -1,4 +1,4 @@
-#include <vcl.h>
+п»ї#include <vcl.h>
 #pragma hdrstop
 
 #include "mainForm.h"
@@ -8,10 +8,10 @@
 
 TMainFormObj* MainFormObj;
 
-// Верхняя граница процентов по умолчанию (по условию задания)
+// Р’РµСЂС…РЅСЏСЏ РіСЂР°РЅРёС†Р° РїСЂРѕС†РµРЅС‚РѕРІ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ (РїРѕ СѓСЃР»РѕРІРёСЋ Р·Р°РґР°РЅРёСЏ)
 static constexpr int DEFAULT_PERCENTAGE = 50;
 
-// Названия параметров для 2-го запроса
+// РќР°Р·РІР°РЅРёСЏ РїР°СЂР°РјРµС‚СЂРѕРІ РґР»СЏ 2-РіРѕ Р·Р°РїСЂРѕСЃР°
 static const std::vector<String> QUERY2_PARAMS = {"year", "name"};
 
 
@@ -21,7 +21,7 @@ __fastcall TMainFormObj::TMainFormObj(TComponent* owner) : TForm(owner) {
 	//selectQuery(ADOConnection1, ADOQuery1, DBGrid1, Label1, GRID1_HEADERS);
 }
 
-// Закраска строк DBGrid в зависимости от условия (Процент продаж не меньше указанного значения)
+// Р—Р°РєСЂР°СЃРєР° СЃС‚СЂРѕРє DBGrid РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ СѓСЃР»РѕРІРёСЏ (РџСЂРѕС†РµРЅС‚ РїСЂРѕРґР°Р¶ РЅРµ РјРµРЅСЊС€Рµ СѓРєР°Р·Р°РЅРЅРѕРіРѕ Р·РЅР°С‡РµРЅРёСЏ)
 void __fastcall TMainFormObj::task1_gridDrawColumnCell(TObject* sender, const TRect &rect, int data_col,
 													   TColumn* column, TGridDrawState state) {
 	if (high_percentage <= task1_query->FieldByName("percent")->AsInteger) {
@@ -32,7 +32,7 @@ void __fastcall TMainFormObj::task1_gridDrawColumnCell(TObject* sender, const TR
 	}
 }
 
-// Осуществление выборки 2-го запроса по текущей строке 1-го запроса
+// РћСЃСѓС‰РµСЃС‚РІР»РµРЅРёРµ РІС‹Р±РѕСЂРєРё 2-РіРѕ Р·Р°РїСЂРѕСЃР° РїРѕ С‚РµРєСѓС‰РµР№ СЃС‚СЂРѕРєРµ 1-РіРѕ Р·Р°РїСЂРѕСЃР°
 void __fastcall TMainFormObj::task1_queryAfterScroll(TDataSet* data_set) {
 	selectQuery(UpdateFormObj->fpmi_connection, task2_query, task2_grid, task2_row_count_label, QUERY2_PARAMS, task1_query);
 }
@@ -41,7 +41,7 @@ void __fastcall TMainFormObj::FormActivate(TObject* sender) {
 	selectQuery(UpdateFormObj->fpmi_connection, task1_query, task1_grid, task1_row_count_label);
 }
 
-// Изменение значения процента, по которому происходит выделение строк
+// РР·РјРµРЅРµРЅРёРµ Р·РЅР°С‡РµРЅРёСЏ РїСЂРѕС†РµРЅС‚Р°, РїРѕ РєРѕС‚РѕСЂРѕРјСѓ РїСЂРѕРёСЃС…РѕРґРёС‚ РІС‹РґРµР»РµРЅРёРµ СЃС‚СЂРѕРє
 void __fastcall TMainFormObj::percent_editChange(TObject* sender) {
 	high_percentage = DEFAULT_PERCENTAGE;
 
@@ -53,11 +53,11 @@ void __fastcall TMainFormObj::percent_editChange(TObject* sender) {
 	else {
 		percent_edit->Text = IntToStr(high_percentage);
 
-		warningMessage("Процент может быть только положительным целым числом!");
+		warningMessage("РџСЂРѕС†РµРЅС‚ РјРѕР¶РµС‚ Р±С‹С‚СЊ С‚РѕР»СЊРєРѕ РїРѕР»РѕР¶РёС‚РµР»СЊРЅС‹Рј С†РµР»С‹Рј С‡РёСЃР»РѕРј!");
 	}
 }
 
-// Отображение формы для запроса 3
+// РћС‚РѕР±СЂР°Р¶РµРЅРёРµ С„РѕСЂРјС‹ РґР»СЏ Р·Р°РїСЂРѕСЃР° 3
 void __fastcall TMainFormObj::update_form_show_buttonClick(TObject* sender) {
 	UpdateFormObj->Show();
 }

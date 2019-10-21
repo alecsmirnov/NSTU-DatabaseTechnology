@@ -1,4 +1,4 @@
-#ifndef DBFUNCTIONS_H
+п»ї#ifndef DBFUNCTIONS_H
 #define DBFUNCTIONS_H
 
 #include <Data.Win.ADODB.hpp>
@@ -7,32 +7,32 @@
 #include <vector>
 
 
-// Вывод окна сообщения с предупреждением
+// Р’С‹РІРѕРґ РѕРєРЅР° СЃРѕРѕР±С‰РµРЅРёСЏ СЃ РїСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµРј
 static inline void warningMessage(String text) {
-	Application->MessageBox(text.c_str(), L"Внимание", MB_ICONWARNING);
+	Application->MessageBox(text.c_str(), L"Р’РЅРёРјР°РЅРёРµ", MB_ICONWARNING);
 }
 
-// Вывод окна сообщения с результатом
+// Р’С‹РІРѕРґ РѕРєРЅР° СЃРѕРѕР±С‰РµРЅРёСЏ СЃ СЂРµР·СѓР»СЊС‚Р°С‚РѕРј
 static inline void resultMessage(String text) {
-	Application->MessageBox(text.c_str(), L"Результат", NULL);
+	Application->MessageBox(text.c_str(), L"Р РµР·СѓР»СЊС‚Р°С‚", NULL);
 }
 
-// Вывод окна c описанием ошибки
+// Р’С‹РІРѕРґ РѕРєРЅР° c РѕРїРёСЃР°РЅРёРµРј РѕС€РёР±РєРё
 static inline void exceptionMessage(const Exception& exception) {
-	MessageDlg("Произошла ошибка при выполнении запроса: " + exception.Message,
+	MessageDlg("РџСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР° РїСЂРё РІС‹РїРѕР»РЅРµРЅРёРё Р·Р°РїСЂРѕСЃР°: " + exception.Message,
 			   mtError, TMsgDlgButtons() << mbOK, 0);
 }
 
-// Проверка строки на целое число
+// РџСЂРѕРІРµСЂРєР° СЃС‚СЂРѕРєРё РЅР° С†РµР»РѕРµ С‡РёСЃР»Рѕ
 bool isIntValue(String string);
 
-// Выполнение запроса на выборку данных
+// Р’С‹РїРѕР»РЅРµРЅРёРµ Р·Р°РїСЂРѕСЃР° РЅР° РІС‹Р±РѕСЂРєСѓ РґР°РЅРЅС‹С…
 void selectQuery(TADOConnection* connection, TADOQuery* query,
 				 TDBGrid* grid, TLabel* label,
 				 const std::vector<String>& parameters = std::vector<String>(),
 				 TADOQuery* source_query = nullptr);
 
-// Выполнение запроса на модификацию данных
+// Р’С‹РїРѕР»РЅРµРЅРёРµ Р·Р°РїСЂРѕСЃР° РЅР° РјРѕРґРёС„РёРєР°С†РёСЋ РґР°РЅРЅС‹С…
 void updateQuery(TADOConnection* connection, TADOQuery* query,
 				 const std::vector<String>& parameters,
 				 const std::vector<String>& values);
