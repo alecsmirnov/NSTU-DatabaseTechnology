@@ -3,7 +3,7 @@ object Form1: TForm1
   Top = 0
   BorderStyle = bsDialog
   Caption = #1047#1072#1087#1088#1086#1089' 1, 2'
-  ClientHeight = 223
+  ClientHeight = 338
   ClientWidth = 851
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -13,6 +13,7 @@ object Form1: TForm1
   Font.Style = []
   OldCreateOrder = False
   Position = poMainFormCenter
+  OnActivate = FormActivate
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
@@ -42,7 +43,9 @@ object Form1: TForm1
     Width = 534
     Height = 161
     DataSource = DataSource1
+    ParentShowHint = False
     ReadOnly = True
+    ShowHint = True
     TabOrder = 0
     TitleFont.Charset = DEFAULT_CHARSET
     TitleFont.Color = clWindowText
@@ -90,27 +93,8 @@ object Form1: TForm1
     TabOrder = 3
     OnClick = Button1Click
   end
-  object ADOConnection1: TADOConnection
-    Connected = True
-    ConnectionString = 
-      'Provider=MSDASQL.1;Password=Ickejev3;Persist Security Info=True;' +
-      'User ID=pmi-b6706;Extended Properties="DSN=PostgreSQL30;DATABASE' +
-      '=students;SERVER=students.ami.nstu.ru;PORT=5432;UID=pmi-b6706;PW' +
-      'D=Ickejev3;SSLmode=disable;ReadOnly=0;Protocol=7.4;FakeOidIndex=' +
-      '0;ShowOidColumn=0;RowVersioning=0;ShowSystemTables=0;ConnSetting' +
-      's=;Fetch=100;Socket=4096;UnknownSizes=0;MaxVarcharSize=255;MaxLo' +
-      'ngVarcharSize=8190;Debug=0;CommLog=0;Optimizer=0;Ksqo=1;UseDecla' +
-      'reFetch=0;TextAsLongVarchar=1;UnknownsAsLongVarchar=0;BoolsAsCha' +
-      'r=1;Parse=0;CancelAsFreeStmt=0;ExtraSysTablePrefixes=dd_;LFConve' +
-      'rsion=1;UpdatableCursors=1;DisallowPremature=0;TrueIsMinus1=0;BI' +
-      '=0;ByteaAsLongVarBinary=0;UseServerSidePrepare=0;LowerCaseIdenti' +
-      'fier=0;XaOpt=1"'
-    LoginPrompt = False
-    Left = 32
-    Top = 219
-  end
   object ADOQuery1: TADOQuery
-    Connection = ADOConnection1
+    Connection = Form2.ADOConnection1
     CursorType = ctStatic
     AfterScroll = ADOQuery1AfterScroll
     Parameters = <>
@@ -135,16 +119,16 @@ object Form1: TForm1
       '         ) total'
       'ON izd.year = total.year'
       'ORDER BY izd.year, percent;')
-    Left = 208
+    Left = 104
     Top = 219
   end
   object DataSource1: TDataSource
     DataSet = ADOQuery1
-    Left = 128
+    Left = 24
     Top = 219
   end
   object ADOQuery2: TADOQuery
-    Connection = ADOConnection1
+    Connection = Form2.ADOConnection1
     CursorType = ctStatic
     Parameters = <
       item
@@ -188,31 +172,12 @@ object Form1: TForm1
       '          GROUP BY year, pmib6706.spj.n_izd'
       '         ) avg'
       'ON post.year = avg.year AND post.n_izd = avg.n_izd;')
-    Left = 208
-    Top = 275
+    Left = 264
+    Top = 219
   end
   object DataSource2: TDataSource
     DataSet = ADOQuery2
-    Left = 128
-    Top = 275
-  end
-  object ADOConnection2: TADOConnection
-    Connected = True
-    ConnectionString = 
-      'Provider=MSDASQL.1;Password=Ickejev3;Persist Security Info=True;' +
-      'User ID=pmi-b6706;Extended Properties="DSN=PostgreSQL30;DATABASE' +
-      '=students;SERVER=students.ami.nstu.ru;PORT=5432;UID=pmi-b6706;PW' +
-      'D=Ickejev3;SSLmode=disable;ReadOnly=0;Protocol=7.4;FakeOidIndex=' +
-      '0;ShowOidColumn=0;RowVersioning=0;ShowSystemTables=0;ConnSetting' +
-      's=;Fetch=100;Socket=4096;UnknownSizes=0;MaxVarcharSize=255;MaxLo' +
-      'ngVarcharSize=8190;Debug=0;CommLog=0;Optimizer=0;Ksqo=1;UseDecla' +
-      'reFetch=0;TextAsLongVarchar=1;UnknownsAsLongVarchar=0;BoolsAsCha' +
-      'r=1;Parse=0;CancelAsFreeStmt=0;ExtraSysTablePrefixes=dd_;LFConve' +
-      'rsion=1;UpdatableCursors=1;DisallowPremature=0;TrueIsMinus1=0;BI' +
-      '=0;ByteaAsLongVarBinary=0;UseServerSidePrepare=0;LowerCaseIdenti' +
-      'fier=0;XaOpt=1"'
-    LoginPrompt = False
-    Left = 32
-    Top = 275
+    Left = 184
+    Top = 219
   end
 end

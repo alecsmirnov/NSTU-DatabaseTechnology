@@ -112,6 +112,9 @@
         <BCC_PCHName_Clang>queryAppPCH1.h</BCC_PCHName_Clang>
     </PropertyGroup>
     <ItemGroup>
+        <CppCompile Include="dbFunctions.cpp">
+            <BuildOrder>4</BuildOrder>
+        </CppCompile>
         <CppCompile Include="mainForm.cpp">
             <Form>Form1</Form>
             <FormType>dfm</FormType>
@@ -131,8 +134,8 @@
             <DependentOn>updateForm.h</DependentOn>
             <BuildOrder>3</BuildOrder>
         </CppCompile>
-        <FormResources Include="mainForm.dfm"/>
         <FormResources Include="updateForm.dfm"/>
+        <FormResources Include="mainForm.dfm"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

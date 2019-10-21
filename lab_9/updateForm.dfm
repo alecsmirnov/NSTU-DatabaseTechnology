@@ -3,7 +3,7 @@ object Form2: TForm2
   Top = 0
   BorderStyle = bsDialog
   Caption = #1047#1072#1087#1088#1086#1089' 3'
-  ClientHeight = 201
+  ClientHeight = 322
   ClientWidth = 771
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -80,6 +80,42 @@ object Form2: TForm2
     TabOrder = 2
     OnClick = Button1Click
   end
+  object ADOQuery1: TADOQuery
+    Connection = ADOConnection1
+    CursorType = ctStatic
+    AfterScroll = ADOQuery1AfterScroll
+    Parameters = <>
+    SQL.Strings = (
+      'SELECT pmib6706.spj.*'
+      'FROM pmib6706.spj')
+    Left = 200
+    Top = 200
+  end
+  object DataSource1: TDataSource
+    DataSet = ADOQuery1
+    Left = 120
+    Top = 200
+  end
+  object ADOQuery2: TADOQuery
+    Connection = ADOConnection1
+    Parameters = <
+      item
+        Name = 'cost'
+        Size = -1
+        Value = Null
+      end
+      item
+        Name = 'n_spj'
+        Size = -1
+        Value = Null
+      end>
+    SQL.Strings = (
+      'UPDATE pmib6706.spj '
+      'SET cost = :cost'
+      'WHERE pmib6706.spj.n_spj = :n_spj')
+    Left = 280
+    Top = 200
+  end
   object ADOConnection1: TADOConnection
     Connected = True
     ConnectionString = 
@@ -97,66 +133,6 @@ object Form2: TForm2
       'fier=0;XaOpt=1"'
     LoginPrompt = False
     Left = 32
-    Top = 200
-  end
-  object ADOQuery1: TADOQuery
-    Connection = ADOConnection1
-    CursorType = ctStatic
-    AfterScroll = ADOQuery1AfterScroll
-    Parameters = <>
-    SQL.Strings = (
-      'SELECT pmib6706.spj.*'
-      'FROM pmib6706.spj')
-    Left = 200
-    Top = 200
-  end
-  object DataSource1: TDataSource
-    DataSet = ADOQuery1
-    Left = 120
-    Top = 200
-  end
-  object ADOConnection2: TADOConnection
-    Connected = True
-    ConnectionString = 
-      'Provider=MSDASQL.1;Password=Ickejev3;Persist Security Info=True;' +
-      'User ID=pmi-b6706;Extended Properties="DSN=PostgreSQL30;DATABASE' +
-      '=students;SERVER=students.ami.nstu.ru;PORT=5432;UID=pmi-b6706;PW' +
-      'D=Ickejev3;SSLmode=disable;ReadOnly=0;Protocol=7.4;FakeOidIndex=' +
-      '0;ShowOidColumn=0;RowVersioning=0;ShowSystemTables=0;ConnSetting' +
-      's=;Fetch=100;Socket=4096;UnknownSizes=0;MaxVarcharSize=255;MaxLo' +
-      'ngVarcharSize=8190;Debug=0;CommLog=0;Optimizer=0;Ksqo=1;UseDecla' +
-      'reFetch=0;TextAsLongVarchar=1;UnknownsAsLongVarchar=0;BoolsAsCha' +
-      'r=1;Parse=0;CancelAsFreeStmt=0;ExtraSysTablePrefixes=dd_;LFConve' +
-      'rsion=1;UpdatableCursors=1;DisallowPremature=0;TrueIsMinus1=0;BI' +
-      '=0;ByteaAsLongVarBinary=0;UseServerSidePrepare=0;LowerCaseIdenti' +
-      'fier=0;XaOpt=1"'
-    LoginPrompt = False
-    Left = 408
-    Top = 200
-  end
-  object ADOQuery2: TADOQuery
-    Connection = ADOConnection2
-    Parameters = <
-      item
-        Name = 'cost'
-        Size = -1
-        Value = Null
-      end
-      item
-        Name = 'n_spj'
-        Size = -1
-        Value = Null
-      end>
-    SQL.Strings = (
-      'UPDATE pmib6706.spj '
-      'SET cost = :cost'
-      'WHERE pmib6706.spj.n_spj = :n_spj')
-    Left = 576
-    Top = 200
-  end
-  object DataSource2: TDataSource
-    DataSet = ADOQuery2
-    Left = 496
     Top = 200
   end
 end

@@ -22,23 +22,17 @@ public:
 __published:
 	// Событие DBGrid при переходе от одной строки к другой
 	void __fastcall ADOQuery1AfterScroll(TDataSet* DataSet);
-    // Выполнение запроса на обновление цены детали выбранной поставки
+	// Выполнение запроса на обновление цены детали выбранной поставки
 	void __fastcall Button1Click(TObject* Sender);
 
 __published:
-    // Связь приложения с Бд
-	TADOConnection* ADOConnection1;
-    // Формирование запроса к Бд
-	TADOQuery* ADOQuery1;
-    // Соединение DBGrid и подключенной Бд
-	TDataSource* DataSource1;
-    // Табличное отображение данных
-	TDBGrid* DBGrid1;
+	TADOConnection* ADOConnection1;		// Связь приложения с Бд
 
-	TADOConnection* ADOConnection2;
+	TADOQuery* ADOQuery1;               // Формирование запроса к Бд
+	TDataSource* DataSource1;           // Соединение DBGrid и подключенной Бд
+	TDBGrid* DBGrid1;                   // Табличное отображение данных
+
 	TADOQuery* ADOQuery2;
-	TDataSource* DataSource2;
-
 	TLabel* Label1;
 	TEdit* Edit1;
 	TButton* Button1;

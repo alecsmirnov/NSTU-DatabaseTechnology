@@ -21,7 +21,7 @@ public:
 
 __published:
 	// Закраска строк DBGrid в зависимости от условия
-	void __fastcall DBGrid1DrawColumnCell(TObject* Sender, const TRect& Rect, int DataCol,
+	void __fastcall DBGrid1DrawColumnCell(TObject* Sender, const TRect &Rect, int DataCol,
 										  TColumn* Column, TGridDrawState State);
     // Событие DBGrid при переходе от одной строки к другой
 	void __fastcall ADOQuery1AfterScroll(TDataSet* DataSet);
@@ -30,23 +30,18 @@ __published:
 
 	// Отображение формы для запроса 3
 	void __fastcall Button1Click(TObject* Sender);
+	void __fastcall FormActivate(TObject* Sender);
 
 private:
     // Текущее значение граничного значения процентов
 	int high_percentage;
 
 __published:
-	// Связь приложения с Бд
-	TADOConnection* ADOConnection1;
-    // Формирование запроса к Бд
-	TADOQuery* ADOQuery1;
-    // Соединение DBGrid и подключенной Бд
-	TDataSource* DataSource1;
-    // Табличное отображение данных
-	TDBGrid* DBGrid1;
+	TADOQuery* ADOQuery1;           // Формирование запроса к Бд
+	TDataSource* DataSource1;       // Соединение DBGrid и подключенной Бд
+	TDBGrid* DBGrid1;               // Табличное отображение данных
 	TLabel* Label1;
 
-	TADOConnection* ADOConnection2;
 	TADOQuery* ADOQuery2;
 	TDataSource* DataSource2;
 	TDBGrid* DBGrid2;
