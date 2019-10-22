@@ -1,4 +1,4 @@
-#ifndef UPDATEFORM_H
+п»ї#ifndef UPDATEFORM_H
 #define UPDATEFORM_H
 
 #include <System.Classes.hpp>
@@ -21,10 +21,10 @@ public:
 
 __published:
 	void __fastcall FormShow(TObject* sender);
-	// Выборка номера поставки и цены по SELECT запросу всей таблицы
+	// Р’С‹Р±РѕСЂРєР° РЅРѕРјРµСЂР° РїРѕСЃС‚Р°РІРєРё Рё С†РµРЅС‹ РїРѕ SELECT Р·Р°РїСЂРѕСЃСѓ РІСЃРµР№ С‚Р°Р±Р»РёС†С‹
 	void __fastcall select_queryAfterScroll(TDataSet* data_set);
 
-	// Выполнение 3-го запроса (обновление цены детали выбранной поставки)
+	// Р’С‹РїРѕР»РЅРµРЅРёРµ 3-РіРѕ Р·Р°РїСЂРѕСЃР° (РѕР±РЅРѕРІР»РµРЅРёРµ С†РµРЅС‹ РґРµС‚Р°Р»Рё РІС‹Р±СЂР°РЅРЅРѕР№ РїРѕСЃС‚Р°РІРєРё)
 	void __fastcall update_buttonClick(TObject* sender);
 
 __published:
