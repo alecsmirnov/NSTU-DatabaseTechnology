@@ -13,6 +13,7 @@ object UpdateFormObj: TUpdateFormObj
   Font.Style = []
   OldCreateOrder = False
   Position = poMainFormCenter
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object row_count_label: TLabel
@@ -86,7 +87,13 @@ object UpdateFormObj: TUpdateFormObj
     AfterScroll = select_queryAfterScroll
     Parameters = <>
     SQL.Strings = (
-      'SELECT pmib6706.spj.*'
+      'SELECT pmib6706.spj.n_spj AS "'#1053#1086#1084#1077#1088' '#1087#1086#1089#1090#1072#1074#1082#1080'",'
+      '             pmib6706.spj.n_post AS "'#1053#1086#1084#1077#1088' '#1087#1086#1089#1090#1072#1074#1097#1080#1082#1072'",'
+      '             pmib6706.spj.n_det AS "'#1053#1086#1084#1077#1088' '#1076#1077#1090#1072#1083#1080'", '
+      '             pmib6706.spj.n_izd AS "'#1053#1086#1084#1077#1088' '#1080#1079#1076#1077#1083#1080#1103'", '
+      '             pmib6706.spj.kol AS "'#1050#1086#1083'-'#1074#1086'", '
+      '             pmib6706.spj.date_post AS "'#1044#1072#1090#1072'", '
+      '             pmib6706.spj.cost AS "'#1062#1077#1085#1072' '#1076#1077#1090#1072#1083#1080'"'
       'FROM pmib6706.spj')
     Left = 224
     Top = 200
@@ -100,23 +107,24 @@ object UpdateFormObj: TUpdateFormObj
     Connection = fpmi_connection
     Parameters = <
       item
-        Name = 'cost'
+        Name = #1062#1077#1085#1072' '#1076#1077#1090#1072#1083#1080
         Size = -1
         Value = Null
       end
       item
-        Name = 'n_spj'
+        Name = #1053#1086#1084#1077#1088' '#1087#1086#1089#1090#1072#1074#1082#1080
         Size = -1
         Value = Null
       end>
     SQL.Strings = (
       'UPDATE pmib6706.spj '
-      'SET cost = :cost'
-      'WHERE pmib6706.spj.n_spj = :n_spj')
+      'SET cost = :"'#1062#1077#1085#1072' '#1076#1077#1090#1072#1083#1080'"'
+      'WHERE pmib6706.spj.n_spj = :"'#1053#1086#1084#1077#1088' '#1087#1086#1089#1090#1072#1074#1082#1080'"')
     Left = 312
     Top = 200
   end
   object fpmi_connection: TADOConnection
+    Connected = True
     ConnectionString = 
       'Provider=MSDASQL.1;Password=Ickejev3;Persist Security Info=True;' +
       'User ID=pmi-b6706;Extended Properties="DSN=PostgreSQL30;DATABASE' +
@@ -131,7 +139,6 @@ object UpdateFormObj: TUpdateFormObj
       'I=0;ByteaAsLongVarBinary=0;UseServerSidePrepare=0;LowerCaseIdent' +
       'ifier=0;XaOpt=1"'
     LoginPrompt = False
-    Provider = 'MSDASQL.1'
     Left = 32
     Top = 200
   end

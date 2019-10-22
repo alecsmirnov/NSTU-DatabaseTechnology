@@ -20,8 +20,10 @@ public:
 	__fastcall TUpdateFormObj(TComponent* owner);
 
 __published:
+	void __fastcall FormShow(TObject* sender);
 	// Событие DBGrid при переходе от одной строки к другой
 	void __fastcall select_queryAfterScroll(TDataSet* data_set);
+
 	// Выполнение запроса на обновление цены детали выбранной поставки
 	void __fastcall update_buttonClick(TObject* sender);
 

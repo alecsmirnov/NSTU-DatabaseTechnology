@@ -9,10 +9,12 @@
 TUpdateFormObj* UpdateFormObj;
 
 // Названия параметров для 3-го запроса
-static const std::vector<String> UPDATE_PARAMS = {"n_spj", "cost"};
+static const std::vector<String> UPDATE_PARAMS = {"Номер поставки", "Цена детали"};
 
 
-__fastcall TUpdateFormObj::TUpdateFormObj(TComponent* owner) : TForm(owner) {
+__fastcall TUpdateFormObj::TUpdateFormObj(TComponent* owner) : TForm(owner) {}
+
+void __fastcall TUpdateFormObj::FormShow(TObject* sender) {
 	selectQuery(fpmi_connection, select_query, grid, row_count_label);
 }
 

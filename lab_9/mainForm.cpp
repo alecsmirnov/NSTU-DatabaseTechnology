@@ -12,7 +12,7 @@ TMainFormObj* MainFormObj;
 static constexpr int DEFAULT_PERCENTAGE = 50;
 
 // Названия параметров для 2-го запроса
-static const std::vector<String> SELECT_PARAMS = {"year", "name"};
+static const std::vector<String> SELECT_PARAMS = {"Год", "Номер изделия"};
 
 
 __fastcall TMainFormObj::TMainFormObj(TComponent* owner) : TForm(owner) {
@@ -26,7 +26,7 @@ void __fastcall TMainFormObj::FormActivate(TObject* sender) {
 // Закраска строк DBGrid в зависимости от условия (Процент продаж не меньше указанного значения)
 void __fastcall TMainFormObj::task1_gridDrawColumnCell(TObject* sender, const TRect &rect, int data_col,
 													   TColumn* column, TGridDrawState state) {
-	if (high_percentage <= task1_query->FieldByName("percent")->AsInteger) {
+	if (high_percentage <= task1_query->FieldByName("Процент")->AsInteger) {
 		task1_grid->Canvas->Brush->Color = clRed;
 		task1_grid->Canvas->Font->Color = clWhite;
 
