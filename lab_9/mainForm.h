@@ -1,4 +1,4 @@
-#ifndef MAINFORM_H
+п»ї#ifndef MAINFORM_H
 #define MAINFORM_H
 
 #include <System.Classes.hpp>
@@ -22,19 +22,19 @@ public:
 __published:
 	void __fastcall FormActivate(TObject* sender);
 
-	// Закраска строк таблицы в зависимости от верхней границы процента
+	// Р—Р°РєСЂР°СЃРєР° СЃС‚СЂРѕРє С‚Р°Р±Р»РёС†С‹ РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ РІРµСЂС…РЅРµР№ РіСЂР°РЅРёС†С‹ РїСЂРѕС†РµРЅС‚Р°
 	void __fastcall task1_gridDrawColumnCell(TObject* sender, const TRect &rect, int data_col,
 											 TColumn* column, TGridDrawState state);
-    // Осуществление выборки 2-го запроса по текущей строке 1-го запроса
+    // РћСЃСѓС‰РµСЃС‚РІР»РµРЅРёРµ РІС‹Р±РѕСЂРєРё 2-РіРѕ Р·Р°РїСЂРѕСЃР° РїРѕ С‚РµРєСѓС‰РµР№ СЃС‚СЂРѕРєРµ 1-РіРѕ Р·Р°РїСЂРѕСЃР°
 	void __fastcall task1_queryAfterScroll(TDataSet* data_set);
-    // Изменение значения процента для выделения строк
+    // РР·РјРµРЅРµРЅРёРµ Р·РЅР°С‡РµРЅРёСЏ РїСЂРѕС†РµРЅС‚Р° РґР»СЏ РІС‹РґРµР»РµРЅРёСЏ СЃС‚СЂРѕРє
 	void __fastcall percent_editChange(TObject* sender);
 
-	// Отображение формы для 3-го запроса
+	// РћС‚РѕР±СЂР°Р¶РµРЅРёРµ С„РѕСЂРјС‹ РґР»СЏ 3-РіРѕ Р·Р°РїСЂРѕСЃР°
 	void __fastcall update_form_show_buttonClick(TObject* sender);
 
 private:
-    // Текущее значение граничного значения процентов
+    // РўРµРєСѓС‰РµРµ Р·РЅР°С‡РµРЅРёРµ РіСЂР°РЅРёС‡РЅРѕРіРѕ Р·РЅР°С‡РµРЅРёСЏ РїСЂРѕС†РµРЅС‚РѕРІ
 	int high_percentage;
 
 __published:

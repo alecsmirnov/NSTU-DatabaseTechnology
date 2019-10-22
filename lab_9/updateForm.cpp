@@ -1,4 +1,4 @@
-#include <vcl.h>
+п»ї#include <vcl.h>
 #pragma hdrstop
 
 #include "updateForm.h"
@@ -8,8 +8,8 @@
 
 TUpdateFormObj* UpdateFormObj;
 
-// Названия параметров для 3-го запроса
-static const std::vector<String> UPDATE_PARAMS = {"Номер поставки", "Цена детали"};
+// РќР°Р·РІР°РЅРёСЏ РїР°СЂР°РјРµС‚СЂРѕРІ РґР»СЏ 3-РіРѕ Р·Р°РїСЂРѕСЃР°
+static const std::vector<String> UPDATE_PARAMS = {"РќРѕРјРµСЂ РїРѕСЃС‚Р°РІРєРё", "Р¦РµРЅР° РґРµС‚Р°Р»Рё"};
 
 
 __fastcall TUpdateFormObj::TUpdateFormObj(TComponent* owner) : TForm(owner) {}
@@ -18,13 +18,13 @@ void __fastcall TUpdateFormObj::FormShow(TObject* sender) {
 	selectQuery(fpmi_connection, select_query, grid, row_count_label);
 }
 
-// Выборка номера поставки и цены по SELECT запросу всей таблицы
+// Р’С‹Р±РѕСЂРєР° РЅРѕРјРµСЂР° РїРѕСЃС‚Р°РІРєРё Рё С†РµРЅС‹ РїРѕ SELECT Р·Р°РїСЂРѕСЃСѓ РІСЃРµР№ С‚Р°Р±Р»РёС†С‹
 void __fastcall TUpdateFormObj::select_queryAfterScroll(TDataSet* data_set) {
 	n_post_label->Caption = select_query->FieldByName(UPDATE_PARAMS[0])->AsString;
 	det_cost_edit->Text = select_query->FieldByName(UPDATE_PARAMS[1])->AsString;
 }
 
-// Выполнение 3-го запроса (обновление цены детали выбранной поставки)
+// Р’С‹РїРѕР»РЅРµРЅРёРµ 3-РіРѕ Р·Р°РїСЂРѕСЃР° (РѕР±РЅРѕРІР»РµРЅРёРµ С†РµРЅС‹ РґРµС‚Р°Р»Рё РІС‹Р±СЂР°РЅРЅРѕР№ РїРѕСЃС‚Р°РІРєРё)
 void __fastcall TUpdateFormObj::update_buttonClick(TObject* sender) {
 	if (isIntValue(det_cost_edit->Text)) {
 		std::vector<String> update_values = {n_post_label->Caption, det_cost_edit->Text};
@@ -33,5 +33,5 @@ void __fastcall TUpdateFormObj::update_buttonClick(TObject* sender) {
 		selectQuery(fpmi_connection, select_query, grid, row_count_label);
 	}
 	else
-		warningMessage("Цена может быть только положительным целым числом!");
+		warningMessage("Р¦РµРЅР° РјРѕР¶РµС‚ Р±С‹С‚СЊ С‚РѕР»СЊРєРѕ РїРѕР»РѕР¶РёС‚РµР»СЊРЅС‹Рј С†РµР»С‹Рј С‡РёСЃР»РѕРј!");
 }
