@@ -39,7 +39,7 @@ void __fastcall TMainFormObj::task1_queryAfterScroll(TDataSet* data_set) {
 	selectQuery(UpdateFormObj->fpmi_connection, task2_query, task2_grid, task2_row_count_label, task1_query, SELECT_PARAMS);
 }
 
-// Изменение значения процента, по которому происходит выделение строк
+// Изменение значения процента для выделения строк
 void __fastcall TMainFormObj::percent_editChange(TObject* sender) {
 	if (isIntValue(percent_edit->Text)) {
 		high_percentage = StrToInt(percent_edit->Text);

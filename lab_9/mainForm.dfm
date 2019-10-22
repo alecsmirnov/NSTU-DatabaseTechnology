@@ -3,7 +3,7 @@ object MainFormObj: TMainFormObj
   Top = 0
   BorderStyle = bsDialog
   Caption = #1047#1072#1087#1088#1086#1089' 1, 2'
-  ClientHeight = 222
+  ClientHeight = 221
   ClientWidth = 932
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -134,7 +134,7 @@ object MainFormObj: TMainFormObj
       '           ON izd.year = total.year'
       '          ) info'
       'ON posts.year = info.year AND posts.n_izd = info.n_izd'
-      'ORDER BY posts.year, info.percent;')
+      'ORDER BY posts.year, info.percent NULLS FIRST;')
     Left = 136
     Top = 219
   end

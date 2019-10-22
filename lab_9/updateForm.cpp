@@ -18,13 +18,13 @@ void __fastcall TUpdateFormObj::FormShow(TObject* sender) {
 	selectQuery(fpmi_connection, select_query, grid, row_count_label);
 }
 
-// Выбор номера поставки и цены детали по текущей строке таблицы поставок
+// Выборка номера поставки и цены по SELECT запросу всей таблицы
 void __fastcall TUpdateFormObj::select_queryAfterScroll(TDataSet* data_set) {
 	n_post_label->Caption = select_query->FieldByName(UPDATE_PARAMS[0])->AsString;
 	det_cost_edit->Text = select_query->FieldByName(UPDATE_PARAMS[1])->AsString;
 }
 
-// Выполнение запроса на обновление цены детали выбранной поставки
+// Выполнение 3-го запроса (обновление цены детали выбранной поставки)
 void __fastcall TUpdateFormObj::update_buttonClick(TObject* sender) {
 	if (isIntValue(det_cost_edit->Text)) {
 		std::vector<String> update_values = {n_post_label->Caption, det_cost_edit->Text};

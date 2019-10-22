@@ -22,10 +22,10 @@ public:
 __published:
 	void __fastcall FormActivate(TObject* sender);
 
-	// Закраска строк DBGrid в зависимости от условия
+	// Закраска строк таблицы в зависимости от верхней границы процента
 	void __fastcall task1_gridDrawColumnCell(TObject* sender, const TRect &rect, int data_col,
 											 TColumn* column, TGridDrawState state);
-    // Событие DBGrid при переходе от одной строки к другой
+    // Осуществление выборки 2-го запроса по текущей строке 1-го запроса
 	void __fastcall task1_queryAfterScroll(TDataSet* data_set);
     // Изменение значения процента для выделения строк
 	void __fastcall percent_editChange(TObject* sender);
@@ -38,9 +38,9 @@ private:
 	int high_percentage;
 
 __published:
-	TADOQuery* task1_query;				// Формирование запроса к Бд
-	TDataSource* task1_data_source;		// Соединение DBGrid и подключенной Бд
-	TDBGrid* task1_grid;				// Табличное отображение данных
+	TADOQuery* task1_query;
+	TDataSource* task1_data_source;
+	TDBGrid* task1_grid;
 	TLabel* task1_row_count_label;
 
 	TADOQuery* task2_query;

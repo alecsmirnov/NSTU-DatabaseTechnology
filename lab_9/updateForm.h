@@ -21,18 +21,18 @@ public:
 
 __published:
 	void __fastcall FormShow(TObject* sender);
-	// Событие DBGrid при переходе от одной строки к другой
+	// Выборка номера поставки и цены по SELECT запросу всей таблицы
 	void __fastcall select_queryAfterScroll(TDataSet* data_set);
 
-	// Выполнение запроса на обновление цены детали выбранной поставки
+	// Выполнение 3-го запроса (обновление цены детали выбранной поставки)
 	void __fastcall update_buttonClick(TObject* sender);
 
 __published:
-	TADOConnection* fpmi_connection;		// Связь приложения с Бд
+	TADOConnection* fpmi_connection;
 
-	TADOQuery* select_query;				// Формирование запроса к Бд
-	TDataSource* fpmi_data_source;			// Соединение DBGrid и подключенной Бд
-	TDBGrid* grid;							// Табличное отображение данных
+	TADOQuery* select_query;
+	TDataSource* fpmi_data_source;
+	TDBGrid* grid;
 
 	TADOQuery* update_query;
 	TLabel* n_post_label;

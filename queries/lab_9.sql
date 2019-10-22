@@ -413,7 +413,7 @@ LEFT JOIN (SELECT izd.year, izd.n_izd, izd.max_post, izd.total_sum_post, ROUND(i
            ON izd.year = total.year
           ) info
 ON posts.year = info.year AND posts.n_izd = info.n_izd
-ORDER BY posts.year, info.percent;
+ORDER BY posts.year, info.percent NULLS FIRST;
 
 -- 2) Для указанных изделия и года по каждой поставке вывести:
 --    * сумму поставки;
