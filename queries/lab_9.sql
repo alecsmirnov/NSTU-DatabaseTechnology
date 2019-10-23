@@ -420,11 +420,10 @@ ORDER BY posts.year, info.percent NULLS FIRST;
 --    * разницу между ценой детали в поставке и средней ценой детали за год.
 
 SELECT post.n_spj, post.sum, post.cost - avg.avg_price AS difference
-FROM (SELECT EXTRACT(year FROM spj.date_post) AS year, spj.n_izd, spj.n_spj, SUM(spj.kol * spj.cost), spj.cost
+FROM (SELECT EXTRACT(year FROM spj.date_post) AS year, spj.n_izd, spj.n_spj, spj.kol * spj.cost AS sum, spj.cost
       FROM spj
       WHERE EXTRACT(year FROM spj.date_post) = 2011
       AND spj.n_izd = 'J3'
-      GROUP BY year, spj.n_izd, spj.n_spj, spj.cost
      ) post
 JOIN (SELECT EXTRACT(year FROM spj.date_post) AS year, spj.n_izd, ROUND(AVG(spj.cost), 2) AS avg_price
       FROM spj

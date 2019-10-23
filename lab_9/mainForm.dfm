@@ -3,7 +3,7 @@ object MainFormObj: TMainFormObj
   Top = 0
   BorderStyle = bsDialog
   Caption = #1047#1072#1087#1088#1086#1089' 1, 2'
-  ClientHeight = 221
+  ClientHeight = 218
   ClientWidth = 932
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -107,7 +107,7 @@ object MainFormObj: TMainFormObj
       'FROM (SELECT years.year, izds.n_izd, izds.name'
       
         '      FROM (SELECT DISTINCT EXTRACT(year FROM pmib6706.spj.date_' +
-        'post) AS year '
+        'post) AS year'
       '            FROM pmib6706.spj'
       '           ) years'
       '      CROSS JOIN (SELECT pmib6706.j.n_izd, pmib6706.j.name'
@@ -121,7 +121,8 @@ object MainFormObj: TMainFormObj
       
         '           FROM (SELECT EXTRACT(year FROM pmib6706.spj.date_post' +
         ') AS year, pmib6706.spj.n_izd, MAX(pmib6706.spj.kol) AS max_post' +
-        ', SUM(pmib6706.spj.kol * pmib6706.spj.cost) AS total_sum_post'
+        ',                        SUM(pmib6706.spj.kol * pmib6706.spj.cos' +
+        't) AS total_sum_post'
       '                 FROM pmib6706.spj'
       '                 GROUP BY year, pmib6706.spj.n_izd'
       '                ) izd'
@@ -163,27 +164,22 @@ object MainFormObj: TMainFormObj
         '.cost - avg.avg_price AS "'#1056#1072#1079#1085#1086#1089#1090#1100'"'
       
         'FROM (SELECT EXTRACT(year FROM pmib6706.spj.date_post) AS year, ' +
-        'pmib6706.spj.n_izd, pmib6706.spj.n_spj, SUM(pmib6706.spj.kol * p' +
-        'mib6706.spj.cost), pmib6706.spj.cost'
+        'pmib6706.spj.n_izd, pmib6706.spj.n_spj, pmib6706.spj.kol * pmib6' +
+        '706.spj.cost AS sum, pmib6706.spj.cost'
       '            FROM pmib6706.spj'
       
         '            WHERE EXTRACT(year FROM pmib6706.spj.date_post) = :'#1043 +
         #1086#1076
       '            AND pmib6706.spj.n_izd = :"'#1053#1086#1084#1077#1088' '#1080#1079#1076#1077#1083#1080#1103'"'
-      
-        '            GROUP BY year, pmib6706.spj.n_izd, pmib6706.spj.n_sp' +
-        'j, pmib6706.spj.cost'
       '           ) post'
       
         'JOIN (SELECT EXTRACT(year FROM pmib6706.spj.date_post) AS year, ' +
         'pmib6706.spj.n_izd, ROUND(AVG(pmib6706.spj.cost), 2) AS avg_pric' +
         'e'
-      '          FROM pmib6706.spj'
-      '          GROUP BY year, pmib6706.spj.n_izd'
-      '         ) avg'
-      'ON post.year = avg.year AND post.n_izd = avg.n_izd;'
-      ''
-      '')
+      '      FROM pmib6706.spj'
+      '      GROUP BY year, pmib6706.spj.n_izd'
+      '     ) avg'
+      'ON post.year = avg.year AND post.n_izd = avg.n_izd;')
     Left = 328
     Top = 219
   end
