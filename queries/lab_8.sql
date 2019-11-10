@@ -21,5 +21,4 @@ WHERE v.n_v IN (SELECT max_v.n_v
                       WHERE v.n_izd = max_date.n_izd AND v.date_begin = max_date.date
                      ) AS max_v
                 ON q.n_izd = max_v.n_izd
-                WHERE q.n_det = 'P2'
-               );
+                WHERE q.n_det = 'P2');
