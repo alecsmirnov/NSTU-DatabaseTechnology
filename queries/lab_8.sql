@@ -3,6 +3,7 @@
 SELECT v.*
 FROM v
 WHERE v.n_izd ='J2' AND v.date_begin <= '2011-06-01'
+ORDER BY v.date_begin DESC
 LIMIT 1;
 
 
