@@ -2,7 +2,8 @@
 
 SELECT v.*
 FROM v
-WHERE v.n_izd ='J2' AND v.date_begin >= '2011-06-01';
+WHERE v.n_izd ='J2' AND v.date_begin <= '2011-06-01'
+LIMIT 1;
 
 
 -- 2) Для изделий, в состав которых входит заданная деталь, сдвинуть
