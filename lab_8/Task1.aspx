@@ -23,7 +23,14 @@
             lfconversion=1;updatablecursors=1;disallowpremature=0;trueisminus1=0;bi=0;byteaaslongvarbinary=0;useserversideprepare=0;
             lowercaseidentifier=0;xaopt=1" ProviderName="System.Data.Odbc" SelectCommand="SELECT pmib6706.j.n_izd, pmib6706.j.name FROM pmib6706.j">
         </asp:SqlDataSource>
-        <asp:SqlDataSource ID="task1DataSource" runat="server" ConnectionString="Dsn=PostgreSQL30;database=students;server=students.ami.nstu.ru;port=5432;uid=pmi-b6706;pwd=Ickejev3;sslmode=disable;readonly=0;protocol=7.4;fakeoidindex=0;showoidcolumn=0;rowversioning=0;showsystemtables=0;fetch=100;socket=4096;unknownsizes=0;maxvarcharsize=255;maxlongvarcharsize=8190;debug=0;commlog=0;optimizer=0;ksqo=1;usedeclarefetch=0;textaslongvarchar=1;unknownsaslongvarchar=0;boolsaschar=1;parse=0;cancelasfreestmt=0;extrasystableprefixes=dd_;lfconversion=1;updatablecursors=1;disallowpremature=0;trueisminus1=0;bi=0;byteaaslongvarbinary=0;useserversideprepare=0;lowercaseidentifier=0;xaopt=1" ProviderName="System.Data.Odbc" SelectCommand="SELECT pmib6706.v.n_izd AS &quot;Номер изделия&quot;, pmib6706.v.date_begin AS &quot;Дата начала&quot;, pmib6706.v.cost AS &quot;Цена&quot; FROM pmib6706.v WHERE pmib6706.v.n_izd = ? AND pmib6706.v.date_begin &lt;= ? ORDER BY pmib6706.v.date_begin DESC LIMIT 1;">
+        <asp:SqlDataSource ID="task1DataSource" runat="server" ConnectionString="Dsn=PostgreSQL30;database=students;server=students.ami.nstu.ru;
+            port=5432;uid=pmi-b6706;pwd=Ickejev3;sslmode=disable;readonly=0;protocol=7.4;fakeoidindex=0;showoidcolumn=0;rowversioning=0;
+            showsystemtables=0;fetch=100;socket=4096;unknownsizes=0;maxvarcharsize=255;maxlongvarcharsize=8190;debug=0;commlog=0;optimizer=0;
+            ksqo=1;usedeclarefetch=0;textaslongvarchar=1;unknownsaslongvarchar=0;boolsaschar=1;parse=0;cancelasfreestmt=0;extrasystableprefixes=dd_;
+            lfconversion=1;updatablecursors=1;disallowpremature=0;trueisminus1=0;bi=0;byteaaslongvarbinary=0;useserversideprepare=0;
+            lowercaseidentifier=0;xaopt=1" ProviderName="System.Data.Odbc" SelectCommand="SELECT pmib6706.v.n_izd AS &quot;Номер изделия&quot;, 
+            pmib6706.v.date_begin AS &quot;Дата начала&quot;, pmib6706.v.cost AS &quot;Цена&quot; 
+            FROM pmib6706.v WHERE pmib6706.v.n_izd = ? AND pmib6706.v.date_begin &lt;= ? ORDER BY pmib6706.v.date_begin DESC LIMIT 1;">
             <SelectParameters>
                 <asp:ControlParameter ControlID="izdDropDownList" Name="n_izd" PropertyName="SelectedValue" />
                 <asp:ControlParameter ControlID="beginDateCalendar" Name="date_begin" PropertyName="SelectedDate" />
