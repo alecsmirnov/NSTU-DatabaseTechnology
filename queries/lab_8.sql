@@ -24,3 +24,6 @@ WHERE v.n_v IN (SELECT max_v.n_v
                      ) AS max_v
                 ON q.n_izd = max_v.n_izd
                 WHERE q.n_det = 'P2');
+
+
+
