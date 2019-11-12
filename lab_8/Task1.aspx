@@ -5,17 +5,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>Запрос 1</title>
-    <style type="text/css">
-        #form1 {
-            height: 567px;
-            margin-bottom: 364px;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
     <form id="task1Form" runat="server">
-        <h1 class="title">Цена на изделие</h1>
-        <div>Название изделия:</div> 
         <asp:SqlDataSource ID="izdSelectDataSource" runat="server" ConnectionString="Dsn=PostgreSQL30;database=students;server=students.ami.nstu.ru;
             port=5432;uid=pmi-b6706;pwd=Ickejev3;sslmode=disable;readonly=0;protocol=7.4;fakeoidindex=0;showoidcolumn=0;rowversioning=0;
             showsystemtables=0;fetch=100;socket=4096;unknownsizes=0;maxvarcharsize=255;maxlongvarcharsize=8190;debug=0;commlog=0;optimizer=0;
@@ -36,19 +29,40 @@
                 <asp:ControlParameter ControlID="beginDateCalendar" Name="date_begin" PropertyName="SelectedDate" />
             </SelectParameters>
         </asp:SqlDataSource>
-        <asp:DropDownList ID="izdDropDownList" runat="server" DataSourceID="izdSelectDataSource" DataTextField="name" DataValueField="n_izd">
-        </asp:DropDownList>
-        <div>Дата начала действия цены:</div> 
-        <asp:Calendar ID="beginDateCalendar" runat="server"></asp:Calendar>
-        <asp:Button ID="execButton" runat="server" OnClick="execButton_Click" Text="Найти" /><br /><br />
-        <asp:Label ID="infoLabel" runat="server" Text="Выберети изделие и дату действия цены!"></asp:Label>
-        <asp:GridView ID="task1GridView" runat="server" AutoGenerateColumns="False">
-            <Columns>
-                <asp:BoundField DataField="Номер изделия" HeaderText="Номер изделия" />
-                <asp:BoundField DataField="Дата начала" HeaderText="Дата начала" DataFormatString="{0:MM/dd/yyyy}" htmlencode="false" />
-                <asp:BoundField DataField="Цена" HeaderText="Цена" />
-            </Columns>
-        </asp:GridView>
+        <h1 class="title">Цена на изделие</h1>
+        <div class="view">
+            <div class="box">
+                <div class="interface_block">
+                    <div>Название изделия:</div> 
+                    <asp:DropDownList ID="izdDropDownList" runat="server" DataSourceID="izdSelectDataSource" DataTextField="name" DataValueField="n_izd">
+                    </asp:DropDownList>
+                </div>
+                <div>Дата начала действия цены:</div> 
+                <div class="calendar_block">
+                    <asp:Calendar ID="beginDateCalendar" runat="server" BackColor="White" BorderColor="White" BorderWidth="1px" Font-Names="Verdana" Font-Size="9pt" ForeColor="Black" Height="190px" Width="350px">
+                        <DayHeaderStyle Font-Bold="True" Font-Size="8pt" />
+                        <NextPrevStyle Font-Bold="True" Font-Size="8pt" ForeColor="#333333" VerticalAlign="Bottom" />
+                        <OtherMonthDayStyle ForeColor="#999999" />
+                        <SelectedDayStyle BackColor="#B03B21" ForeColor="White" />
+                        <TitleStyle BackColor="White" BorderColor="#CCCCCC" BorderWidth="1px" Font-Bold="True" Font-Size="12pt" ForeColor="#B03B21" />
+                        <TodayDayStyle BackColor="White" Wrap="True" />
+                    </asp:Calendar>
+                </div>
+            </div>
+            <div class="button_block">
+                <asp:Button ID="execButton" runat="server" OnClick="execButton_Click" Text="Найти" />
+            </div><br />
+            <div class="box">
+                <asp:Label ID="infoLabel" runat="server" Text="Выберети изделие и дату действия цены!"></asp:Label>
+                <asp:GridView ID="task1GridView" runat="server" AutoGenerateColumns="false" HorizontalAlign="Center">
+                    <Columns>
+                        <asp:BoundField DataField="Номер изделия" HeaderText="Номер изделия" />
+                        <asp:BoundField DataField="Дата начала" HeaderText="Дата начала" DataFormatString="{0:MM/dd/yyyy}" htmlencode="false" />
+                        <asp:BoundField DataField="Цена" HeaderText="Цена" />
+                    </Columns>
+                </asp:GridView>
+            </div>
+        </div>
     </form>
 </body>
 </html>
