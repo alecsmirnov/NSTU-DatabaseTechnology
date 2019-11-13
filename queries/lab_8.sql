@@ -25,5 +25,19 @@ WHERE v.n_v IN (SELECT max_v.n_v
                 ON q.n_izd = max_v.n_izd
                 WHERE q.n_det = 'P2');
 
+-- вариант 2
 
-
+UPDATE v 
+SET date_begin = date_begin - interval '1 month'
+WHERE v.n_v IN (SELECT max_v.n_v
+                FROM q
+                JOIN (SELECT out_v.n_v, out_v.n_izd, out_v.date_begin
+                      FROM v AS out_v
+                      WHERE out_v.date_begin = (SELECT v.date_begin
+                                                FROM v
+                                                WHERE v.n_izd = out_v.n_izd
+                                                ORDER BY v.date_begin DESC
+                                                LIMIT 1)
+                     ) AS max_v
+                ON q.n_izd = max_v.n_izd
+                WHERE q.n_det = 'P2');

@@ -10,7 +10,14 @@
 .view {
     text-align: center;
     margin: auto;
-    width: 30%;
+}
+
+.task1 {
+    width: 400px;
+}
+
+.task2 {
+    width: 460px;
 }
 
 .box {

@@ -9,7 +9,7 @@
 </head>
 <body>
     <form id="task1Form" runat="server">
-        <asp:SqlDataSource ID="izdSelectDataSource" runat="server" ConnectionString="Dsn=PostgreSQL30;database=students;server=students.ami.nstu.ru;
+        <asp:SqlDataSource ID="jDataSource" runat="server" ConnectionString="Dsn=PostgreSQL30;database=students;server=students.ami.nstu.ru;
             port=5432;uid=pmi-b6706;pwd=Ickejev3;sslmode=disable;readonly=0;protocol=7.4;fakeoidindex=0;showoidcolumn=0;rowversioning=0;
             showsystemtables=0;fetch=100;socket=4096;unknownsizes=0;maxvarcharsize=255;maxlongvarcharsize=8190;debug=0;commlog=0;optimizer=0;
             ksqo=1;usedeclarefetch=0;textaslongvarchar=1;unknownsaslongvarchar=0;boolsaschar=1;parse=0;cancelasfreestmt=0;extrasystableprefixes=dd_;
@@ -25,16 +25,17 @@
             pmib6706.v.date_begin AS &quot;Дата начала&quot;, pmib6706.v.cost AS &quot;Цена&quot; 
             FROM pmib6706.v WHERE pmib6706.v.n_izd = ? AND pmib6706.v.date_begin &lt;= ? ORDER BY pmib6706.v.date_begin DESC LIMIT 1;">
             <SelectParameters>
-                <asp:ControlParameter ControlID="izdDropDownList" Name="n_izd" PropertyName="SelectedValue" />
+                <asp:ControlParameter ControlID="jDropDownList" Name="n_izd" PropertyName="SelectedValue" />
                 <asp:ControlParameter ControlID="beginDateCalendar" Name="date_begin" PropertyName="SelectedDate" />
             </SelectParameters>
         </asp:SqlDataSource>
+
         <h1 class="title">Цена на изделие</h1>
-        <div class="view">
+        <div class="view task1">
             <div class="box">
                 <div class="interface_block">
                     <div>Название изделия:</div> 
-                    <asp:DropDownList ID="izdDropDownList" runat="server" DataSourceID="izdSelectDataSource" DataTextField="name" DataValueField="n_izd">
+                    <asp:DropDownList ID="jDropDownList" runat="server" DataSourceID="jDataSource" DataTextField="name" DataValueField="n_izd">
                     </asp:DropDownList>
                 </div>
                 <div>Дата начала действия цены:</div> 
@@ -62,6 +63,9 @@
                     </Columns>
                 </asp:GridView>
             </div>
+            <div class="button_block">
+                <asp:Button ID="task2Button" runat="server" Text="Запрос 2" OnClick="task2Button_Click" />
+            </div><br />
         </div>
     </form>
 </body>

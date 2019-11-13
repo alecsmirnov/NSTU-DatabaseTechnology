@@ -6,12 +6,12 @@ using System.Web.Security;
 using System.Web.SessionState;
 using System.Web.Routing;
 
-
 namespace DB_queries {
     public class Global : System.Web.HttpApplication {
         void RegisterRoutes(RouteCollection routes) {
+            // Создаём маршруты для указанных страниц
             routes.MapPageRoute(null, "Task1", "~/Task1.aspx");
-            //routes.MapPageRoute(null, "Task2", "~/Task2.aspx");
+            routes.MapPageRoute(null, "Task2", "~/Task2.aspx");
         }
 
         protected void Application_Start(object sender, EventArgs e) {

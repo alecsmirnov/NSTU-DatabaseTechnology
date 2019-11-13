@@ -70,6 +70,7 @@
     <Content Include="Global.asax" />
     <Content Include="style.css" />
     <Content Include="Task1.aspx" />
+    <Content Include="Task2.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -83,6 +84,13 @@
     </Compile>
     <Compile Include="Task1.aspx.designer.cs">
       <DependentUpon>Task1.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Task2.aspx.cs">
+      <DependentUpon>Task2.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Task2.aspx.designer.cs">
+      <DependentUpon>Task2.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
