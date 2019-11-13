@@ -38,7 +38,7 @@
                     <asp:DropDownList ID="pDropDownList" runat="server" AutoPostBack="True" DataSourceID="pDataSource" DataTextField="name" DataValueField="n_det">
                     </asp:DropDownList>
                 </div>
-                <div>Изделия, входящие в состав детали:</div>
+                <div>Цены на изделия, входящие в состав детали:</div>
                 <asp:GridView ID="vGridView" runat="server" DataSourceID="vDataSource" AutoGenerateColumns="false" HorizontalAlign="Center">
                     <Columns>
                         <asp:BoundField DataField="n_v" HeaderText="Номер цены" />
