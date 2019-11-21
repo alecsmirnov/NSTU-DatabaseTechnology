@@ -28,19 +28,16 @@ namespace DB_queries {
 
             string query_text = "UPDATE pmib6706.v " +
                                 "SET date_begin = date_begin - interval '1 month' " +
-                                "WHERE pmib6706.v.n_v IN (SELECT max_v.n_v " +
-                                                         "FROM pmib6706.q " +
-                                                         "JOIN (SELECT out_v.n_v, out_v.n_izd, out_v.date_begin " +
-                                                               "FROM pmib6706.v AS out_v " +
-                                                               "WHERE out_v.date_begin = (SELECT in_v.date_begin " +
-                                                                                         "FROM pmib6706.v AS in_v " +
-                                                                                         "WHERE in_v.n_izd = out_v.n_izd " +
-                                                                                         "ORDER BY in_v.date_begin DESC " +
-                                                                                         "LIMIT 1) " +
-                                                               ") AS max_v " +
-                                                         "ON pmib6706.q.n_izd = max_v.n_izd " +
-                                                         "WHERE pmib6706.q.n_det = ?);";
-
+                                "WHERE pmib6706.v.n_v IN (SELECT (SELECT pmib6706.v.n_v " +
+                                                                 "FROM pmib6706.v " +
+                                                                 "WHERE pmib6706.v.n_izd = out_v.n_izd " +
+                                                                 "ORDER BY pmib6706.v.date_begin DESC " +
+                                                                 "LIMIT 1) " +
+                                                         "FROM (SELECT DISTINCT pmib6706.q.n_izd " +
+                                                               "FROM pmib6706.q " +
+                                                               "WHERE pmib6706.q.n_det = ? " +
+                                                               ") out_v);";
+        
             // Создание объекта запроса
             OdbcCommand command = new OdbcCommand(query_text, connection);
 

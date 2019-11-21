@@ -71,7 +71,9 @@
     <Content Include="style.css" />
     <Content Include="Task1.aspx" />
     <Content Include="Task2.aspx" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">

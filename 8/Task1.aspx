@@ -14,7 +14,8 @@
             showsystemtables=0;fetch=100;socket=4096;unknownsizes=0;maxvarcharsize=255;maxlongvarcharsize=8190;debug=0;commlog=0;optimizer=0;
             ksqo=1;usedeclarefetch=0;textaslongvarchar=1;unknownsaslongvarchar=0;boolsaschar=1;parse=0;cancelasfreestmt=0;extrasystableprefixes=dd_;
             lfconversion=1;updatablecursors=1;disallowpremature=0;trueisminus1=0;bi=0;byteaaslongvarbinary=0;useserversideprepare=0;
-            lowercaseidentifier=0;xaopt=1" ProviderName="System.Data.Odbc" SelectCommand="SELECT pmib6706.j.n_izd, pmib6706.j.name FROM pmib6706.j">
+            lowercaseidentifier=0;xaopt=1" ProviderName="System.Data.Odbc" SelectCommand="SELECT pmib6706.j.n_izd, 
+            pmib6706.j.n_izd || ' - ' || pmib6706.j.name AS izd_name FROM pmib6706.j">
         </asp:SqlDataSource>
         <asp:SqlDataSource ID="task1DataSource" runat="server" ConnectionString="Dsn=PostgreSQL30;database=students;server=students.ami.nstu.ru;
             port=5432;uid=pmi-b6706;pwd=Ickejev3;sslmode=disable;readonly=0;protocol=7.4;fakeoidindex=0;showoidcolumn=0;rowversioning=0;
@@ -34,13 +35,14 @@
         <div class="view task1">
             <div class="box">
                 <div class="interface_block">
-                    <div>Название изделия:</div> 
-                    <asp:DropDownList ID="jDropDownList" runat="server" DataSourceID="jDataSource" DataTextField="name" DataValueField="n_izd">
+                    <div>Изделие:</div> 
+                    <asp:DropDownList ID="jDropDownList" runat="server" DataSourceID="jDataSource" DataTextField="izd_name" DataValueField="n_izd">
                     </asp:DropDownList>
                 </div>
                 <div>Дата начала действия цены:</div> 
                 <div class="calendar_block">
-                    <asp:Calendar ID="beginDateCalendar" runat="server" BackColor="White" BorderColor="White" BorderWidth="1px" Font-Names="Verdana" Font-Size="9pt" ForeColor="Black" Height="190px" Width="350px">
+                    <asp:Calendar ID="beginDateCalendar" runat="server" BackColor="White" BorderColor="White" BorderWidth="1px" Font-Names="Verdana" 
+                                  Font-Size="9pt" ForeColor="Black" Height="190px" Width="350px" VisibleDate="2011-01-01">
                         <DayHeaderStyle Font-Bold="True" Font-Size="8pt" />
                         <NextPrevStyle Font-Bold="True" Font-Size="8pt" ForeColor="#333333" VerticalAlign="Bottom" />
                         <OtherMonthDayStyle ForeColor="#999999" />
