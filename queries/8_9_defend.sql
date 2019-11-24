@@ -1,21 +1,22 @@
 ﻿-- Лабораторная 8 - Вариант 2
 
-SELECT posts.n_post, dets.n_det
-FROM (SELECT spj.n_post, spj.n_det
-      FROM spj
-      GROUP BY spj.n_post, spj.n_det
-      HAVING COUNT(DISTINCT spj.cost) = 1
-     ) posts
-LEFT JOIN (SELECT spj.n_det
+SELECT dets.n_det, posts.n_post
+FROM (SELECT spj.n_det
       FROM spj
       GROUP BY spj.n_det
       HAVING SUM(spj.kol) < (SELECT AVG(sums.val)
                              FROM (SELECT SUM(spj.kol) AS val
                                    FROM spj
-                                   ORDER BY spj.n_det
-                                  ) sums)
+                                   GROUP BY spj.n_det
+                                  ) sums
+                            )
      ) dets
-ON posts.n_det = dets.n_det;
+LEFT JOIN (SELECT spj.n_det, spj.n_post
+           FROM spj
+           GROUP BY spj.n_post, spj.n_det
+           HAVING COUNT(DISTINCT spj.cost) = 1
+          ) posts
+ON dets.n_det = posts.n_det;
 
 
 -- Лабораторная 9 - Вариант 11
