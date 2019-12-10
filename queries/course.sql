@@ -62,7 +62,20 @@ INSERT INTO product_pdb3
 SELECT *
 FROM product_cdb;
 
+-- Запись инициализации в журнал
+
+INSERT INTO log(db_name, db_priority, operation, operation_date, old_data, new_data)
+SELECT 'product_cdb', 0, operation, operation_date, 'NULL', n || ', ' || name || ', ' || town || ', ' || operation || ', ' ||  operation_date 
+FROM product_cdb;
 
 INSERT INTO log(db_name, db_priority, operation, operation_date, old_data, new_data)
 SELECT 'product_pdb1', 1, operation, operation_date, 'NULL', n || ', ' || name || ', ' || town || ', ' || operation || ', ' ||  operation_date 
 FROM product_pdb1;
+
+INSERT INTO log(db_name, db_priority, operation, operation_date, old_data, new_data)
+SELECT 'product_pdb2', 2, operation, operation_date, 'NULL', n || ', ' || name || ', ' || town || ', ' || operation || ', ' ||  operation_date 
+FROM product_pdb2;
+
+INSERT INTO log(db_name, db_priority, operation, operation_date, old_data, new_data)
+SELECT 'product_pdb3', 3, operation, operation_date, 'NULL', n || ', ' || name || ', ' || town || ', ' || operation || ', ' ||  operation_date 
+FROM product_pdb3;
