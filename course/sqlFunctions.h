@@ -91,12 +91,12 @@ void dbTableDelete(const char* table_name) {
 }
 
 // Вставка данныех в журнал
-void logTableInsert(const char* table_name, int db_priority, const char* n_condition, const char* operation, const char* old_data, const char* new_data) {
+void logTableInsert(const char* table_name, int db_priority, const char* operation, const char* n_condition, const char* old_data, const char* new_data) {
 	EXEC SQL BEGIN DECLARE SECTION;
 	char* sql_text = NULL;
 	EXEC SQL END DECLARE SECTION;
 
-	sql_text = (char*)malloc(sizeof(char) * (strlen(table_name) + 3 + strlen(n_condition) + strlen(operation) + strlen(old_data) + 
+	sql_text = (char*)malloc(sizeof(char) * (strlen(table_name) + 3 + strlen(operation) + strlen(n_condition)  + strlen(old_data) + 
 											 strlen(new_data) + strlen(LOG_INSERT_PATTERN) + 1));
 	sprintf(sql_text, LOG_INSERT_PATTERN, table_name, db_priority, operation, old_data, new_data, table_name, n_condition);
 
@@ -114,14 +114,15 @@ void logTableInsert(const char* table_name, int db_priority, const char* n_condi
 // Вставка данных с записью в журнал
 static inline void dbTableInsertLog(const char* table_name, const char* name, const char* operation) {
 	dbTableInsert(table_name, name, operation);
-	logTableInsert(table_name, getPriority(table_name), LOG_INSERT_CONDITION, operation, "''", name);
+	logTableInsert(table_name, getPriority(table_name), operation, LOG_INSERT_CONDITION, "''", name);
 }
 
 // Обновление данных с записью в журнал
 static inline void dbTableUpdateLog(const char* table_name, const char* name, const char* operation) {
-	char* log_condition = makeLogCondition(1, table_name);
+	char* log_condition = (char*)malloc(sizeof(char) * (strlen(LOG_UPDATE_CONDITION) + strlen(table_name) + 1));
+	sprintf(log_condition, LOG_UPDATE_CONDITION, table_name);
 
-	logTableInsert(table_name, getPriority(table_name), log_condition, operation, "name", name);
+	logTableInsert(table_name, getPriority(table_name), operation, log_condition, "name", name);
 	dbTableUpdate(table_name, name, operation);
 
 	free(log_condition);
@@ -129,9 +130,10 @@ static inline void dbTableUpdateLog(const char* table_name, const char* name, co
 
 // Удаление данных с записью в журнал
 static inline void dbTableDeleteLog(const char* table_name, const char* operation) {
-	char* log_condition = makeLogCondition(2, table_name);
+	char* log_condition = (char*)malloc(sizeof(char) * (strlen(LOG_DELETE_CONDITION) + strlen(table_name) + 1));
+	sprintf(log_condition, LOG_DELETE_CONDITION, table_name);
 
-	logTableInsert(table_name, getPriority(table_name), log_condition, operation, "name", "");
+	logTableInsert(table_name, getPriority(table_name), operation, log_condition, "name", "");
 	dbTableDelete(table_name);
 
 	free(log_condition);

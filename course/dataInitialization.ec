@@ -21,6 +21,7 @@ static void dbInit(const char* input_filename) {
 				dbTableInsertLog(table_list[i], data[j], "Начальная вставка");
 		}
 
+		i = 0;
 		for (; i != lines_count; ++i)
 			free(data[i]);
 		free(data);
