@@ -10,7 +10,7 @@ EXEC SQL INCLUDE "sqlFunctions.h";
 #define ARGS_COUNT 3
 
 #define DEFAULT_OPERATION_COUNT      10
-#define DEFAULT_OPERATION_SLEEP_TIME 2
+#define DEFAULT_OPERATION_SLEEP_TIME 0
 
 enum OPERATION {
 	OPERATION_INSERT, 
@@ -41,7 +41,7 @@ static void systemStart(const char* update_filename, uint32_t operation_count, u
 				case OPERATION_DELETE: dbTableDeleteLog(table_list[table_num], operation_list[operation_num]); break;
 			}
 
-			printf("%d. %s\n", i, operation_list[operation_num]);
+			printf("%d. %s в таблице %s\n", i + 1, operation_list[operation_num], table_list[table_num]);
 			sleep(operation_sleep_time);
 		}
 

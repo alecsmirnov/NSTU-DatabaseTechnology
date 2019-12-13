@@ -30,3 +30,17 @@ CREATE TABLE log (n serial PRIMARY KEY,
                   n_data integer,
                   old_data varchar(20),
                   new_data varchar(20));
+
+-- Репликация 
+
+SELECT log.n_data, log.operation, log.operation_date, log.new_data
+FROM log
+WHERE log.n IN (SELECT (SELECT in_log.n
+                        FROM log AS in_log
+                        WHERE in_log.n_data = out_log.n_data
+                        ORDER BY in_log.operation_date DESC, in_log.db_priority ASC
+                        LIMIT 1
+                       ) AS late
+                FROM log AS out_log
+                GROUP BY out_log.n_data)
+AND log.new_data != '';

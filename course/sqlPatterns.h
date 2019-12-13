@@ -31,7 +31,7 @@ const char* DB_DELETE_PATTERN = QUERY_QUOTE(
 
 const char* LOG_INSERT_PATTERN = QUERY_QUOTE(
 	INSERT INTO log(db_name, db_priority, operation, operation_date, n_data, old_data, new_data)
-	SELECT '%s', %d, '%s', operation_date, n, %s, '%s'
+	SELECT '%s', %d, '%s', DATE_TRUNC('second', NOW()), n, %s, '%s'
 	FROM %s
 	WHERE n = %s
 );

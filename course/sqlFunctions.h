@@ -91,7 +91,8 @@ void dbTableDelete(const char* table_name) {
 }
 
 // Вставка данныех в журнал
-void logTableInsert(const char* table_name, int db_priority, const char* operation, const char* n_condition, const char* old_data, const char* new_data) {
+void logTableInsert(const char* table_name, int db_priority, const char* operation, const char* n_condition, 
+					const char* old_data, const char* new_data) {
 	EXEC SQL BEGIN DECLARE SECTION;
 	char* sql_text = NULL;
 	EXEC SQL END DECLARE SECTION;

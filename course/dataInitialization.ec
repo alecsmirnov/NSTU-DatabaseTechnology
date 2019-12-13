@@ -12,10 +12,12 @@ static void dbInit(const char* input_filename) {
 	char** data = readData(INPUT_FILE, &lines_count);
 
 	if (data != NULL) {
-		printf("Идёт инициализация...\n");
+		printf("Идёт инициализация данных...\n");
 
 		uint8_t i = 0;
 		for (; i != TABLE_LIST_SIZE; ++i) {
+			printf("%s\n", table_list[i]);
+
 			size_t j = 0;
 			for (; j != lines_count; ++j)
 				dbTableInsertLog(table_list[i], data[j], "Начальная вставка");
@@ -26,7 +28,7 @@ static void dbInit(const char* input_filename) {
 			free(data[i]);
 		free(data);
 
-		printf("Инициализация завершена!\n");
+		printf("Инициализация данных завершена!\n");
 	}
 }
 
