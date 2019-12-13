@@ -1,41 +1,37 @@
 #include <stdio.h>
 #include <stdint.h>
 
-EXEC SQL INCLUDE "esqlFunctions.h";	
+EXEC SQL INCLUDE "databaseFunctions.h";	
+EXEC SQL INCLUDE "sqlFunctions.h";	
 
-#define DATA_SIZE 10
+#define USER_FILE  "input/user.txt"
+#define INPUT_FILE "input/input_data.txt"
 
-static void dbInit() {
-	const char* data[DATA_SIZE] = {"Жёсткий диск",
-								   "Перфоратор", 
-								   "Считыватель", 
-								   "Принтер",
-								   "Флоппи-диск", 
-								   "Терминал",
-								   "Лента", 
-								   "Кулер",
-								   "Процессор", 
-								   "Блок питания"};
+static void dbInit(const char* input_filename) {
+	size_t lines_count = 0;
+	char** data = readData(INPUT_FILE, &lines_count);
 
-	const char* operation = "Начальная вставка";
+	if (data != NULL) {
+		printf("Идёт инициализация...\n");
 
-	uint8_t i = 0;
-	for (; i != TABLE_LIST_SIZE; ++i) {
-		uint8_t j = 0;
-		for (; j != DATA_SIZE; ++j)
-			dbTableInsertLog(table_list[i], data[j], operation);
+		uint8_t i = 0;
+		for (; i != TABLE_LIST_SIZE; ++i) {
+			size_t j = 0;
+			for (; j != lines_count; ++j)
+				dbTableInsertLog(table_list[i], data[j], "Начальная вставка");
+		}
+
+		for (; i != lines_count; ++i)
+			free(data[i]);
+		free(data);
+
+		printf("Инициализация завершена!\n");
 	}
 }
 
 int main(int argc, char* argv[]) {
-	const char* user_login    = "pmi-b6706"; 
-	const char* user_password = "Ickejev3";
-	const char* user_scheme   = "pmib6706";
-
-	connectToDatabase(user_login, user_password);
-	connectToScheme(user_scheme);
-
-	dbInit();
+	dbConnect(USER_FILE);
+	dbInit(INPUT_FILE);
 
 	return 0;
 }
