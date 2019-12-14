@@ -5,8 +5,19 @@
 
 #include <stdbool.h>
 
-#define LOG_LIST_SIZE   2
-#define TABLE_LIST_SIZE 4
+enum LOG_LIST {
+	LOG_LIST_GENERAL,
+	LOG_LIST_LOG,
+	LOG_LIST_SIZE
+};
+
+enum TABLE_LIST {
+	TABLE_LIST_PDB1,
+	TABLE_LIST_PDB2,
+	TABLE_LIST_PDB3,
+	TABLE_LIST_CDB,
+	TABLE_LIST_SIZE
+};
 
 // Перечень таблиц и приоритетов в схеме репликаций 
 const char* log_list[LOG_LIST_SIZE]     = {"general_log", "log"};
@@ -170,6 +181,34 @@ static inline void dbTableDeleteLog(const char* table_name, const char* operatio
 	dbTableDelete(table_name);
 
 	free(log_condition);
+}
+
+// Репликация данных
+void dbReplication() {
+	EXEC SQL BEGIN DECLARE SECTION;
+	const char* sql_lock_text = LOCK_TABLE_PATTERN;
+	const char* sql_replication_text = REPLICATION_PATTERN;
+	const char* sql_gen_log_insert_text = GENERAL_LOG_INSERT_PATTERN;
+	EXEC SQL END DECLARE SECTION;
+
+	EXEC SQL BEGIN WORK;
+
+	//EXEC SQL PREPARE query FROM :sql_lock_text;
+	//EXEC SQL EXECUTE query;
+	//errorHandle("lock data");
+
+	dbClearTable(table_list[TABLE_LIST_CDB]);
+	dbClearSequence(table_list[TABLE_LIST_CDB]);
+
+	EXEC SQL PREPARE query FROM :sql_replication_text;
+	EXEC SQL EXECUTE query;
+	errorHandle("data replication");
+
+	EXEC SQL PREPARE query FROM :sql_gen_log_insert_text;
+	EXEC SQL EXECUTE query;
+	errorHandle("insert general log data");
+
+	EXEC SQL COMMIT WORK;
 }
 
 #endif
