@@ -44,3 +44,14 @@ WHERE log.n IN (SELECT (SELECT in_log.n
                 FROM log AS out_log
                 GROUP BY out_log.n_data)
 AND log.new_data != '';
+
+
+SELECT t1.new_n_izd, t1.new_name,t1.new_o_type,t1.new_date
+FROM
+(SELECT old_n_izd, MAX(date_operation)
+FROM log
+WHERE new_n_izd IS NOT NULL
+GROUP BY old_n_izd
+) as t
+JOIN log as t1 on t1.date_operation = max and t1.old_n_izd = t.old_n_izd
+ORDER BY new_n_izd asc

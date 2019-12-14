@@ -1,5 +1,6 @@
 #include <stdint.h>
 #include <unistd.h>
+#include <time.h>
 
 EXEC SQL INCLUDE "databaseFunctions.h";	
 EXEC SQL INCLUDE "sqlFunctions.h";			
@@ -28,11 +29,9 @@ static void systemStart(const char* update_filename, uint32_t operation_count, u
 
 		printf("Идёт имитация работы системы...\n");
 
-		uint32_t i = 0;
-		for (; i != operation_count; ++i) {
+		for (uint32_t i = 0; i != operation_count; ++i) {
 			int table_num = rand() % TABLE_LIST_SIZE;
 			int operation_num = rand() % OPERATION_LIST_SIZE;
-
 			int data_num = rand() % lines_count;
 			
 			switch (operation_num) {
@@ -45,8 +44,7 @@ static void systemStart(const char* update_filename, uint32_t operation_count, u
 			sleep(operation_sleep_time);
 		}
 
-		i = 0;
-		for (; i != lines_count; ++i)
+		for (uint32_t i = 0; i != lines_count; ++i)
 			free(data[i]);
 		free(data);
 

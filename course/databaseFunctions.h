@@ -57,8 +57,7 @@ void dbConnect(const char* user_filename) {
 		connectToDatabase(data[USER_INFO_LOGIN], data[USER_INFO_PASSWORD]);
 		connectToScheme(data[USER_INFO_SCHEME]);
 
-		size_t i = 0;
-		for (; i != lines_count; ++i)
+		for (size_t i = 0; i != lines_count; ++i)
 			free(data[i]);
 		free(data);
 	}
