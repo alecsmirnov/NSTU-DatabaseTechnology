@@ -14,7 +14,6 @@ const char* CLEAR_SEQUENCE_PATTERN = QUERY_QUOTE(
 	ALTER SEQUENCE %1$s_n_seq RESTART WITH 1
 );
 
-
 // Шаблоны динамических запросов 
 const char* DB_INSERT_PATTERN = QUERY_QUOTE(
 	INSERT INTO %1$s(n, name, operation, operation_date)
@@ -38,13 +37,32 @@ const char* DB_DELETE_PATTERN = QUERY_QUOTE(
                LIMIT 1)
 );
 
-/*
-const char* DB_TABLE_COPY_PATTERN = QUERY_QUOTE(
-	INSERT INTO %2$s
-	SELECT * FROM %1$s
+// Шабллны репликации данных
+const char* LOCK_TABLE_PATTERN = QUERY_QUOTE(
+	LOCK TABLE product_cdb, product_pdb1, product_pdb2, product_pdb3 IN EXCLUSIVE
 );
-*/
 
+const char* REPLICATION_PATTERN = QUERY_QUOTE(
+	INSERT INTO product_cdb(name, operation, operation_date)
+	SELECT new_data, operation, operation_date
+	FROM log
+	WHERE n IN (SELECT MAX(n) 
+	            FROM log
+	            GROUP BY operation_date)
+	AND new_data != ''
+);
+
+const char* GENERAL_LOG_INSERT_PATTERN = QUERY_QUOTE(
+	INSERT INTO general_log
+	SELECT *
+	FROM log
+	WHERE n IN (SELECT MAX(n) 
+	            FROM log
+	            GROUP BY operation_date)
+	AND new_data != ''
+);
+
+// Шаблон журналирования таблиц
 const char* LOG_INSERT_PATTERN = QUERY_QUOTE(
 	INSERT INTO log(db_name, db_priority, operation, operation_date, n_data, old_data, new_data)
 	SELECT '%1$s', %2$d, '%3$s', DATE_TRUNC('second', NOW()), n, %4$s, '%5$s'
