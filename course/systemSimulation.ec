@@ -20,6 +20,10 @@ enum OPERATION {
 	OPERATION_LIST_SIZE
 };
 
+static inline int getRandomVal(int base) {
+	return rand() % base;
+}
+
 static void systemStart(const char* update_filename, uint32_t operation_count, uint32_t operation_sleep_time) {
 	size_t lines_count = 0;
 	char** data = readData(update_filename, &lines_count);
@@ -30,9 +34,9 @@ static void systemStart(const char* update_filename, uint32_t operation_count, u
 		printf("Идёт имитация работы системы...\n");
 
 		for (uint32_t i = 0; i != operation_count; ++i) {
-			int table_num = rand() % TABLE_LIST_SIZE;
-			int operation_num = rand() % OPERATION_LIST_SIZE;
-			int data_num = rand() % lines_count;
+			int table_num = getRandomVal(TABLE_LIST_SIZE - 1);
+			int operation_num = getRandomVal(OPERATION_LIST_SIZE);
+			int data_num = getRandomVal(lines_count);
 			
 			switch (operation_num) {
 				case OPERATION_INSERT: dbTableInsertLog(table_list[table_num], data[data_num], operation_list[operation_num]); break;

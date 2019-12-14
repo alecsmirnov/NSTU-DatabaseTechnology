@@ -64,10 +64,10 @@ const char* GENERAL_LOG_INSERT_PATTERN = QUERY_QUOTE(
 
 // Шаблон журналирования таблиц
 const char* LOG_INSERT_PATTERN = QUERY_QUOTE(
-	INSERT INTO log(db_name, db_priority, operation, operation_date, n_data, old_data, new_data)
-	SELECT '%1$s', %2$d, '%3$s', DATE_TRUNC('second', NOW()), n, %4$s, '%5$s'
+	INSERT INTO log(db_name, operation, operation_date, n_data, old_data, new_data)
+	SELECT '%1$s', '%2$s', DATE_TRUNC('second', NOW()), n, %3$s, '%4$s'
 	FROM %1$s
-	WHERE n = %6$s
+	WHERE n = %5$s
 );
 
 // Условия для записи в журнал
