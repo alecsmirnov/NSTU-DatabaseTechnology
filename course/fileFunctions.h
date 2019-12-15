@@ -8,10 +8,10 @@
 
 // Удаление символов новой строки
 static inline void removeNewline(char* string) {
-    size_t len = strlen(string);
+	size_t len = strlen(string);
 
-    if (len && string[len - 1] == '\n')
-        string[len - 1] = '\0';
+	if (len && string[len - 1] == '\n')
+		string[len - 1] = '\0';
 }
 
 // Прочитать строковые данные из файла

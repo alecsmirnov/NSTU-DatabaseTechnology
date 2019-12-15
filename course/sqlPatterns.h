@@ -3,6 +3,7 @@
 
 #define QUERY_QUOTE(...) #__VA_ARGS__
 
+
 static const char* CLEAR_TABLE_PATTERN = QUERY_QUOTE(
 	TRUNCATE %1$s
 );
@@ -19,19 +20,19 @@ static const char* DB_INSERT_PATTERN = QUERY_QUOTE(
 
 static const char* DB_UPDATE_PATTERN = QUERY_QUOTE(
 	UPDATE %1$s
-    SET name = ?, operation = ?, operation_date = DATE_TRUNC('second', NOW())
-    WHERE n = (SELECT n
-    	       FROM %1$s
-    	       ORDER BY n
-    	       LIMIT 1)
+	SET name = ?, operation = ?, operation_date = DATE_TRUNC('second', NOW())
+	WHERE n = (SELECT n
+			   FROM %1$s
+			   ORDER BY n
+			   LIMIT 1)
 );
 
 static const char* DB_DELETE_PATTERN = QUERY_QUOTE(
 	DELETE FROM %1$s
 	WHERE n = (SELECT n
 			   FROM %1$s
-               ORDER BY n DESC
-               LIMIT 1)
+			   ORDER BY n DESC
+			   LIMIT 1)
 );
 
 // Шаблоны репликации данных
@@ -48,11 +49,11 @@ static const char* GENERAL_LOG_INSERT_PATTERN = QUERY_QUOTE(
 static const char* LOG_FILTER_PATTERN = QUERY_QUOTE(
 	DELETE FROM log
 	WHERE n NOT IN (SELECT MAX(n) AS n
-	                FROM log
-	                WHERE operation_date = (SELECT MAX(operation_date)
-	                                        FROM log AS in_log
-	                                        WHERE in_log.n_data = log.n_data)
-	                GROUP BY n_data)
+					FROM log
+					WHERE operation_date = (SELECT MAX(operation_date)
+											FROM log AS in_log
+											WHERE in_log.n_data = log.n_data)
+					GROUP BY n_data)
 );
 
 static const char* REPLICATION_PATTERN = QUERY_QUOTE(
@@ -77,9 +78,9 @@ static const char* LOG_INSERT_CONDITION = QUERY_QUOTE(
 
 static const char* LOG_UPDATE_CONDITION = QUERY_QUOTE(
 	(SELECT n
-     FROM %1$s
-     ORDER BY n
-     LIMIT 1)
+	 FROM %1$s
+	 ORDER BY n
+	 LIMIT 1)
 );
 
 static const char* LOG_DELETE_CONDITION = QUERY_QUOTE(
