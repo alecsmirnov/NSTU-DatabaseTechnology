@@ -115,24 +115,6 @@ void dbTableDelete(const char* table_name) {
 	free(sql_text);
 }
 
-/*
-// Копирование данных для таблиц product_pdbi, product_cdb
-void dbTableCopy(const char* table_src, const char* table_dest) {
-	EXEC SQL BEGIN DECLARE SECTION;
-	char* sql_text = NULL;
-	EXEC SQL END DECLARE SECTION;
-
-	sql_text = (char*)malloc(sizeof(char) * (strlen(DB_TABLE_COPY_PATTERN) + strlen(table_src)  + strlen(table_dest) + 1));
-	sprintf(sql_text, DB_TABLE_COPY_PATTERN, table_src, table_dest);
-
-	EXEC SQL PREPARE query FROM :sql_text;
-	EXEC SQL EXECUTE query;
-	errorHandle("copying data");
-
-	free(sql_text);
-}
-*/
-
 // Вставка данныех в журнал
 void logTableInsert(const char* table_name, const char* operation, const char* n_condition, 
 					const char* old_data, const char* new_data) {
@@ -148,7 +130,7 @@ void logTableInsert(const char* table_name, const char* operation, const char* n
 
 	EXEC SQL PREPARE query FROM :sql_text;
 	EXEC SQL EXECUTE query;
-	errorHandle("insert log data");
+	errorHandle("log data insert");
 
 	EXEC SQL COMMIT WORK;
 
@@ -187,15 +169,24 @@ static inline void dbTableDeleteLog(const char* table_name, const char* operatio
 void dbReplication() {
 	EXEC SQL BEGIN DECLARE SECTION;
 	const char* sql_lock_text = LOCK_TABLE_PATTERN;
-	const char* sql_replication_text = REPLICATION_PATTERN;
 	const char* sql_gen_log_insert_text = GENERAL_LOG_INSERT_PATTERN;
+	const char* sql_log_filter_text = LOG_FILTER_PATTERN;
+	const char* sql_replication_text = REPLICATION_PATTERN;
 	EXEC SQL END DECLARE SECTION;
 
 	EXEC SQL BEGIN WORK;
 
-	//EXEC SQL PREPARE query FROM :sql_lock_text;
-	//EXEC SQL EXECUTE query;
-	//errorHandle("lock data");
+	EXEC SQL PREPARE query FROM :sql_lock_text;
+	EXEC SQL EXECUTE query;
+	errorHandle("data lock");
+
+	EXEC SQL PREPARE query FROM :sql_gen_log_insert_text;
+	EXEC SQL EXECUTE query;
+	errorHandle("general log data insert");
+
+	EXEC SQL PREPARE query FROM :sql_log_filter_text;
+	EXEC SQL EXECUTE query;
+	errorHandle("log filter");
 
 	dbClearTable(table_list[TABLE_LIST_CDB]);
 	dbClearSequence(table_list[TABLE_LIST_CDB]);
@@ -203,10 +194,6 @@ void dbReplication() {
 	EXEC SQL PREPARE query FROM :sql_replication_text;
 	EXEC SQL EXECUTE query;
 	errorHandle("data replication");
-
-	EXEC SQL PREPARE query FROM :sql_gen_log_insert_text;
-	EXEC SQL EXECUTE query;
-	errorHandle("insert general log data");
 
 	EXEC SQL COMMIT WORK;
 }

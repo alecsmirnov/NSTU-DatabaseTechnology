@@ -8,6 +8,6 @@ EXEC SQL INCLUDE "sqlFunctions.h";
 int main(int argc, char* argv[]) {
 	dbConnect(USER_FILE);
 	dbReplication();
-
+	
 	return 0;
 }

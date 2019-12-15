@@ -40,10 +40,15 @@ CREATE TABLE general_log (n serial PRIMARY KEY,
 
 -- Репликация 
 
+DELETE FROM log
+WHERE n NOT IN (SELECT MAX(n) AS n
+                FROM log
+                WHERE operation_date = (SELECT MAX(operation_date)
+                                        FROM log AS in_log
+                                        WHERE in_log.n_data = log.n_data)
+                GROUP BY n_data)
+
 INSERT INTO product_cdb(name, operation, operation_date)
 SELECT new_data, operation, operation_date
 FROM log
-WHERE n IN (SELECT MAX(n) 
-            FROM log
-            GROUP BY operation_date)
-AND new_data != '';
+WHERE new_data != ''

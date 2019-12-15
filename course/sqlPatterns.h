@@ -37,26 +37,32 @@ const char* DB_DELETE_PATTERN = QUERY_QUOTE(
                LIMIT 1)
 );
 
-// Шабллны репликации данных
-// LOCK TABLE product_pdb1, product_pdb2, product_pdb3 IN EXCLUSIVE
+// Шаблоны репликации данных
 const char* LOCK_TABLE_PATTERN = QUERY_QUOTE(
-	LOCK TABLE product_pdb1, product_pdb2, product_pdb3 IN EXCLUSIVE
+	LOCK TABLE product_pdb1, product_pdb2, product_pdb3
+);
+
+const char* GENERAL_LOG_INSERT_PATTERN = QUERY_QUOTE(
+	INSERT INTO general_log(db_name, operation, operation_date, n_data, old_data, new_data)
+	SELECT db_name, operation, operation_date, n_data, old_data, new_data
+	FROM log
+);
+
+const char* LOG_FILTER_PATTERN = QUERY_QUOTE(
+	DELETE FROM log
+	WHERE n NOT IN (SELECT MAX(n) AS n
+	                FROM log
+	                WHERE operation_date = (SELECT MAX(operation_date)
+	                                        FROM log AS in_log
+	                                        WHERE in_log.n_data = log.n_data)
+	                GROUP BY n_data)
 );
 
 const char* REPLICATION_PATTERN = QUERY_QUOTE(
 	INSERT INTO product_cdb(name, operation, operation_date)
 	SELECT new_data, operation, operation_date
 	FROM log
-	WHERE n IN (SELECT MAX(n) 
-	            FROM log
-	            GROUP BY operation_date)
-	AND new_data != ''
-);
-
-const char* GENERAL_LOG_INSERT_PATTERN = QUERY_QUOTE(
-	INSERT INTO general_log
-	SELECT *
-	FROM log
+	WHERE new_data != ''
 );
 
 // Шаблон журналирования таблиц
