@@ -56,8 +56,8 @@ static const char* LOG_FILTER_PATTERN = QUERY_QUOTE(
 );
 
 static const char* REPLICATION_PATTERN = QUERY_QUOTE(
-	INSERT INTO product_cdb(name, operation, operation_date)
-	SELECT new_data, operation, operation_date
+	INSERT INTO product_cdb(n, name, operation, operation_date)
+	SELECT n_data, new_data, operation, operation_date
 	FROM log
 	WHERE new_data != ''
 );

@@ -6,7 +6,7 @@
 #include "sqlFunctions.h"
 
 #define USER_FILE  "input/user.txt"
-#define INPUT_FILE "input/input_data.txt"
+#define INPUT_FILE "input/init_data.txt"
 
 static void dbClear() {
 	printf("Идёт очистка данных...\n");

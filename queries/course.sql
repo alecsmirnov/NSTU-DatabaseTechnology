@@ -48,7 +48,7 @@ WHERE n NOT IN (SELECT MAX(n) AS n
                                         WHERE in_log.n_data = log.n_data)
                 GROUP BY n_data)
 
-INSERT INTO product_cdb(name, operation, operation_date)
-SELECT new_data, operation, operation_date
+INSERT INTO product_cdb(n, name, operation, operation_date)
+SELECT n_data, new_data, operation, operation_date
 FROM log
-WHERE new_data != ''
+WHERE new_data != '';
