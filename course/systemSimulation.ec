@@ -2,8 +2,9 @@
 #include <unistd.h>
 #include <time.h>
 
-EXEC SQL INCLUDE "databaseFunctions.h";	
-EXEC SQL INCLUDE "sqlFunctions.h";			
+#include "databaseFunctions.h"	
+#define TABLES_GLOBAL
+#include "sqlFunctions.h"			
 
 #define USER_FILE   "input/user.txt"
 #define UPDATE_FILE "input/update_data.txt"

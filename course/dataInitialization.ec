@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdint.h>
 
-EXEC SQL INCLUDE "databaseFunctions.h";	
-EXEC SQL INCLUDE "sqlFunctions.h";	
+#include "databaseFunctions.h"
+#define TABLES_GLOBAL
+#include "sqlFunctions.h"
 
 #define USER_FILE  "input/user.txt"
 #define INPUT_FILE "input/input_data.txt"
