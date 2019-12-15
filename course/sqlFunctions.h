@@ -17,12 +17,10 @@ typedef enum TABLE_LIST {
 	TABLE_LIST_SIZE
 } TABLE_LIST;
 
-
 #ifdef TABLES_GLOBAL
 	extern const char* log_list[LOG_LIST_SIZE];
 	extern const char* table_list[TABLE_LIST_SIZE];
 #else
-	// Перечень таблиц и приоритетов в схеме репликаций 
 	const char* log_list[LOG_LIST_SIZE]     = {"general_log", "log"};
 	const char* table_list[TABLE_LIST_SIZE] = {"product_pdb1", "product_pdb2", "product_pdb3", "product_cdb"};
 #endif
