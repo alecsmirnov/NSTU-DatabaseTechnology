@@ -1,6 +1,7 @@
 #include <stdio.h>
 
-EXEC SQL INCLUDE "esqlFunctionExec.hec";
+#include "databaseFunctions.h"
+#include "sqlFunctions.h"
 
 // Поменять местами вес деталей из Рима и из Парижа, т. е. деталям из Рима 
 // установить вес детали из Парижа, а деталям из Парижа установить вес детали из Рима. 
@@ -22,7 +23,6 @@ static void task2() {
              WHERE p.town IN ('Рим', 'Париж');
 
     printf("\nRows processed: %d\n", sqlca.sqlerrd[2]);
-
 	errorHandle("task 2");
 
 	EXEC SQL COMMIT WORK;
@@ -32,7 +32,7 @@ static void task2() {
 }
 
 int main(int argc, char* argv[]) {
-	functionExec(argc, argv, task2);
+	sqlExec(argc, argv, task2);
 
 	return 0;
 }

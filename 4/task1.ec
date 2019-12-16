@@ -1,6 +1,7 @@
 #include <stdio.h>
 
-EXEC SQL INCLUDE "esqlFunctionExec.hec";
+#include "databaseFunctions.h"
+#include "sqlFunctions.h"
 
 // Выдать число деталей, поставлявшихся для изделий, у которых есть поставки с весом от 5000 до 6000.
 static void task1() {
@@ -16,7 +17,6 @@ static void task1() {
                                  FROM spj
                                  JOIN p ON spj.n_det = p.n_det
                                  WHERE spj.kol * p.ves BETWEEN 5000 AND 6000);
-
     errorHandle("task 1");
 
 	EXEC SQL COMMIT WORK;
@@ -25,7 +25,7 @@ static void task1() {
 }
 
 int main(int argc, char* argv[]) {
-	functionExec(argc, argv, task1);
+	sqlExec(argc, argv, task1);
 
 	return 0;
 }

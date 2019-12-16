@@ -1,6 +1,7 @@
 #include <stdio.h>
 
-EXEC SQL INCLUDE "esqlFunctionExec.hec";
+#include "databaseFunctions.h"
+#include "sqlFunctions.h"
 
 // Выдать полную информацию о деталях, которые поставлялись ТОЛЬКО поставщиками, проживающими в Афинах.
 static void task5() {
@@ -22,7 +23,7 @@ static void task5() {
 }
 
 int main(int argc, char* argv[]) {
-	functionExec(argc, argv, task5);
+	sqlExec(argc, argv, task5);
 
 	return 0;
 }
