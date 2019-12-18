@@ -1,45 +1,7 @@
 #include <stdio.h>
 
-EXEC SQL INCLUDE "esqlFunctions.hec";
-
-#define ARGS_COUNT 5				// Количество входных параметров
-
-#define FIELD_LEN  40				// Длина поля для информаци						
-
-// Проверка существования детали с указанным номером
-static bool isPExistItem(const char* item) {
-	EXEC SQL BEGIN DECLARE SECTION;
-	int count = 0;
-	EXEC SQL END DECLARE SECTION;
-
-	const char* query_text = "SELECT COUNT(*)\
-							  FROM p\
-							  WHERE p.n_det = ?";
-
-	if (isEmptyTable(query_text, item))
-		printf("Table is empty!\n");
-	else {
-		EXEC SQL BEGIN DECLARE SECTION;
-		const char* sql_query_text = query_text;
-		const char* sql_item = item;
-		EXEC SQL END DECLARE SECTION;
-
-		EXEC SQL PREPARE query FROM :sql_query_text;
-		EXEC SQL DECLARE exist_cursor CURSOR FOR query;
-		errorHandle("cursor declaration");
-
-		EXEC SQL OPEN exist_cursor USING :sql_item;
-		errorHandle("cursor opening");
-
-		if (sqlca.sqlcode == ECPG_NO_ERROR)
-			EXEC SQL FETCH exist_cursor INTO :count;
-
-		EXEC SQL CLOSE exist_cursor;
-		errorHandle("cursor close");
-	}
-
-	return count;
-}
+#include "databaseFunctions.h"
+#include "sqlFunctions.h"
 
 // Выполнить SELECT запрос для динамического условия с аргументом
 static void selectFromTable(const char* query_text, const char* query_arg) {
@@ -48,7 +10,7 @@ static void selectFromTable(const char* query_text, const char* query_arg) {
 		const char* sql_query_text = query_text;
 		const char* sql_query_arg = query_arg;
 
-		char town[FIELD_LEN + 1];
+		char town[2 * FIELD_LEN + 1];
 		int count;
 		int total;
 		double percent;
@@ -97,25 +59,7 @@ static void task3(const char* query_arg) {
 }
 
 int main(int argc, char* argv[]) {
-	if (argc != ARGS_COUNT)
-		fprintf(stderr, "Invalid count of command line items!\n");
-	else {
-		char* user_login    = dynamicStrCpy(argv[1]);
-		char* user_password = dynamicStrCpy(argv[2]);
-		char* user_scheme   = dynamicStrCpy(argv[3]);
-		char* query_arg     = dynamicStrCpy(argv[4]);
-
-		// Подключение к базе данных и схеме
-		connectToDatabase(user_login, user_password);
-		connectToScheme(user_scheme);
-
-		task3(query_arg);
-
-		free(user_login);
-		free(user_password);
-		free(user_scheme);
-		free(query_arg);
-	}
+	sqlExec(argc, argv, task3);
 
 	return 0;
 }

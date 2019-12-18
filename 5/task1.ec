@@ -1,8 +1,7 @@
 #include <stdio.h>
 
-EXEC SQL INCLUDE "esqlFunctions.hec";
-
-#define ARGS_COUNT 4				// Количество входных параметров				
+#include "databaseFunctions.h"
+#include "sqlFunctions.h"
 
 // Выполнить SELECT запрос для динамического условия
 static void selectFromTable(const char* query_text) {
@@ -33,23 +32,7 @@ static void task1() {
 }
 
 int main(int argc, char* argv[]) {
-	if (argc != ARGS_COUNT)
-		fprintf(stderr, "Invalid count of command line items!\n");
-	else {
-		char* user_login    = dynamicStrCpy(argv[1]);
-		char* user_password = dynamicStrCpy(argv[2]);
-		char* user_scheme   = dynamicStrCpy(argv[3]);
-
-		// Подключение к базе данных и схеме
-		connectToDatabase(user_login, user_password);
-		connectToScheme(user_scheme);
-
-		task1();
-
-		free(user_login);
-		free(user_password);
-		free(user_scheme);
-	}
+	sqlExec(argc, argv, task1);
 
 	return 0;
 }

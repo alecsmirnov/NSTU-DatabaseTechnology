@@ -1,61 +1,19 @@
 #include <stdio.h>
 
-EXEC SQL INCLUDE "esqlFunctions.hec";
+#include "databaseFunctions.h"
+#include "sqlFunctions.h"
 
-#define ARGS_COUNT 5				// Количество входных параметров
-
-#define NUMBER_LEN 12				// Длина поля для номеров
-#define FIELD_LEN  40				// Длина поля для информаци						
-
-// Проверка существования изделия с указанным городом
-static bool isJExistTown(const char* town) {
-	EXEC SQL BEGIN DECLARE SECTION;
-	int count = 0;
-	EXEC SQL END DECLARE SECTION;
-
-	const char* query_text = "SELECT COUNT(*)\
-							  FROM j\
-							  WHERE j.town = ?";
-
-	// Проверка таблицы на пустоту
-	if (isEmptyTable(query_text, town))
-		printf("Table is empty!\n");
-	else {
-		EXEC SQL BEGIN DECLARE SECTION;
-		const char* sql_query_text = query_text;
-		const char* sql_town = town;
-		EXEC SQL END DECLARE SECTION;
-
-		EXEC SQL PREPARE query FROM :sql_query_text;
-		EXEC SQL DECLARE exist_cursor CURSOR FOR query;
-		errorHandle("cursor declaration");
-
-		// Открываем курсор с аргументом
-		EXEC SQL OPEN exist_cursor USING :sql_town;
-		errorHandle("cursor opening");
-
-		if (sqlca.sqlcode == ECPG_NO_ERROR)
-			EXEC SQL FETCH exist_cursor INTO :count;
-
-		EXEC SQL CLOSE exist_cursor;
-		errorHandle("cursor close");
-	}
-
-	return count;
-}
-
-// Выполнить SELECT запрос для динамического условия с аргументом
 static void selectFromTable(const char* query_text, const char* query_arg) {
 	if (isJExistTown(query_arg)) {
 		EXEC SQL BEGIN DECLARE SECTION;
 		const char* sql_query_text = query_text;
 		const char* sql_query_arg = query_arg;
 
-		char n_izd[NUMBER_LEN + 1];
-		char izd_name[FIELD_LEN + 1];
-		char n_det[NUMBER_LEN + 1];
-		char det_name[FIELD_LEN + 1];
-		char cvet[FIELD_LEN + 1];
+		char n_izd[2 * NUMBER_LEN + 1];
+		char izd_name[2 * FIELD_LEN + 1];
+		char n_det[2 * NUMBER_LEN + 1];
+		char det_name[2 * FIELD_LEN + 1];
+		char cvet[2 * FIELD_LEN + 1];
 		int sum;
 		EXEC SQL END DECLARE SECTION;
 
@@ -98,25 +56,7 @@ static void task2(const char* query_arg) {
 }
 
 int main(int argc, char* argv[]) {
-	if (argc != ARGS_COUNT)
-		fprintf(stderr, "Invalid count of command line items!\n");
-	else {
-		char* user_login    = dynamicStrCpy(argv[1]);
-		char* user_password = dynamicStrCpy(argv[2]);
-		char* user_scheme   = dynamicStrCpy(argv[3]);
-		char* query_arg     = dynamicStrCpy(argv[4]);
-
-		// Подключение к базе данных и схеме
-		connectToDatabase(user_login, user_password);
-		connectToScheme(user_scheme);
-
-		task2(query_arg);
-
-		free(user_login);
-		free(user_password);
-		free(user_scheme);
-		free(query_arg);
-	}
+	sqlExec(argc, argv, task2);
 
 	return 0;
 }
