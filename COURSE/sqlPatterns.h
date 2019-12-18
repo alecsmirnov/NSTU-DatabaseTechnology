@@ -3,7 +3,6 @@
 
 #define QUERY_QUOTE(...) #__VA_ARGS__
 
-
 static const char* CLEAR_TABLE_PATTERN = QUERY_QUOTE(
 	TRUNCATE %1$s
 );

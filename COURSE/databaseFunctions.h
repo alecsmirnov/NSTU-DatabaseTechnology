@@ -4,7 +4,6 @@
 #include "fileFunctions.h"
 
 #define SERVER "students@fpm2.ami.nstu.ru"
-//EXEC SQL DEFINE SERVER "students@fpm2.ami.nstu.ru";
 
 // Подключение к базе данных по указанному логину и паролю
 void connectToDatabase(const char* login, const char* password);
